@@ -1,0 +1,124 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- value of the radius property measured in degrees. One degree is about 
+		110km. Value of 0.01 is about one kilometer. -->
+	<bean id="radius" class="java.lang.Double">
+		<constructor-arg value="1.0" />
+	</bean>
+
+	<!-- DAL layer -->
+	<bean id="Persistence" class="itti.com.pl.arena.cm.server.persistence.jdbc.JdbcPersistence"
+		init-method="init" destroy-method="shutdown">
+		<property name="jdbcProperties" ref="JdbcProperties" />
+	</bean>
+
+	<!-- Database properties -->
+	<bean id="JdbcProperties" class="itti.com.pl.arena.cm.server.persistence.jdbc.JdbcProperties">
+		<property name="propertiesFile" value="jdbc.properties" />
+	</bean>
+
+	<!-- Servlet layer: listens for Location data from GPS device (smartphone) -->
+	<bean id="GpsListener" class="itti.com.pl.arena.cm.server.web.servlet.GpsListener"
+		init-method="init" destroy-method="shutdown">
+		<!-- location listeners, will be notified, when new position info will 
+			be received -->
+		<property name="listeners">
+			<array>
+				<ref bean="PlatformTracker" />
+			</array>
+		</property>
+	</bean>
+
+	<!-- dummy GPS object used for developing/testing purposes TODO: must be 
+		removed/commented out before official release -->
+	<bean id="GpsListenerMock" class="itti.com.pl.arena.cm.server.utils.GpsListenerMock"
+		init-method="init" destroy-method="shutdown">
+		<property name="listeners">
+			<array>
+				<ref bean="PlatformTracker" />
+			</array>
+		</property>
+		<property name="start" ref="dummyStartLocation" />
+		<property name="destination" ref="dummyEndLocation" />
+		<!-- how many 'hops' is between start and destination -->
+		<property name="steps" value="10000" />
+	</bean>
+	<!-- initial location of the dummy platform -->
+	<bean id="dummyStartLocation" class="itti.com.pl.arena.cm.dto.Location">
+		<constructor-arg name="longitude" value="53.17654" />
+		<constructor-arg name="latitude" value="17.34342" />
+	</bean>
+	<!-- destination of the dummy platform -->
+	<bean id="dummyEndLocation" class="itti.com.pl.arena.cm.dto.Location">
+		<constructor-arg name="longitude" value="53.37654" />
+		<constructor-arg name="latitude" value="17.14342" />
+	</bean>
+
+	<!-- Ontology bean -->
+	<bean id="Ontology"
+		class="itti.com.pl.arena.cm.server.ontology.ContextModuleOntologyManager"
+		init-method="init" destroy-method="shutdown">
+		<!-- properties: ontology location and namespace -->
+		<property name="ontologyRepository" value="/var/lib/arenabus/repository" />
+		<property name="ontologyLocation" value="Arena_update_v10h2.owl" />
+		<property name="ontologyNamespace"
+			value="http://www.owl-ontologies.com/Ontology1350654591.owl#" />
+	</bean>
+
+	<!-- Geoportal bean -->
+	<bean id="Geoportal" class="itti.com.pl.arena.cm.server.geoportal.gov.pl.GeoportalService"
+		init-method="init" destroy-method="shutdown" />
+
+	<!-- Service layer -->
+	<bean id="PlatformTracker" class="itti.com.pl.arena.cm.server.service.PlatformTracker"
+		init-method="init" destroy-method="shutdown">
+		<property name="persistence" ref="Persistence" />
+		<property name="ontology" ref="Ontology" />
+		<!-- name of the platform -->
+		<property name="platformId" value="Vehicle_Ford_Focus" />
+		<!-- JMS bean (inform other objects, that parking has been reached -->
+		<property name="platformListener" ref="ContextModuleJmsService" />
+		<!-- IDLE time between platform stop and 'destinationReached' method called 
+			(used to avoid false notification -->
+		<property name="maxIdleTime" value="300" />
+	</bean>
+
+	<!-- Communication layer -->
+	<bean id="ContextModuleJmsService"
+		class="itti.com.pl.arena.cm.server.service.jms.ContextModuleJmsService"
+		init-method="init" destroy-method="shutdown">
+
+		<property name="ontology" ref="Ontology" />
+		<property name="geoportal" ref="Geoportal" />
+		<property name="brokerUrl" value="127.0.0.1" />
+		<!-- current IP address by default -->
+		<!-- <property name="localIpAddress" value="localhost"/> -->
+		<!-- random port, can be changed using any other value -->
+		<property name="connectionPort" value="45444" />
+		<!-- radius used for that service -->
+		<property name="radius" ref="radius" />
+	</bean>
+
+	<!-- periodical tasks -->
+	<task:scheduled-tasks scheduler="CmScheduler">
+		<!-- once per five seconds update GPS location of the mock GPS device -->
+		<!-- <task:scheduled ref="GpsListenerMock" method="updateLocation"
+			fixed-delay="5000" />
+		-->
+		<task:scheduled ref="PlatformTracker" method="checkPlatformStopped"
+			fixed-delay="5000" />
+	</task:scheduled-tasks>
+
+	<task:scheduler id="CmScheduler" pool-size="5" />
+
+
+</beans>

@@ -1,0 +1,22 @@
+maven settings.xml:
+<server>
+        <id>TomcatServer</id>
+        <username>admin</username>
+        <password>password</password>
+</server>
+
+tomcat roles settings:
+  <role rolename="manager"/>
+  <role rolename="admin"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-gui"/>
+  <user username="admin" password="password" roles="admin,manager,manager-script,manager-gui"/>
+
+add library to the Tomcat:
+/opt/apache-tomcat-7.0.37/lib/zmq.jar
+
+plugin settings:
+tomcat:redeploy
+
+debug:
+localhost:8000

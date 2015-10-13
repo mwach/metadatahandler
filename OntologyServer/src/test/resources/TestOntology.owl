@@ -1,0 +1,2039 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:assert="http://www.owl-ontologies.com/assert.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns="http://www.owl-ontologies.com/Ontology1350654591.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://www.owl-ontologies.com/Ontology1350654591.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/3.3/swrla.owl"/>
+    <owl:imports rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="Mobility">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;&#xD;
+      Description of means of moving from one point to another. E.g. parking &#xD;
+      has one main entrance, paths, sidewalk along the car parking zone. &#xD;
+    &lt;/p&gt;</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="General_information_about_Parking"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Petrol_station">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Cafe_Restaurant">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Summer">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Weather"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Lorry">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Vehicle"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:ID="Dynamic_object"/>
+      <owl:Class rdf:ID="Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Static_object">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Object"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Autumn">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Weather"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Cafe_Restaurant_zone">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Infrastructure"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Car_services_facilities">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Sidewalk">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Infrastructure"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Toilets_zone">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Infrastructure"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Track_and_lorry_parking">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Infrastructure"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Camera"/>
+  <owl:Class rdf:about="#Weather">
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Petrol_refuelling_area">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Infrastructure"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Infrastructure">
+    <rdfs:subClassOf rdf:resource="#Static_object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Vulnerabilities">
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Toilets">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Fence">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ATM">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Lawn">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Matrix">
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Morphology">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;&#xD;
+      Description of the way the building and infrastructure are distibuted. &#xD;
+      E.g. car parking is arranged along the sidewalk.&#xD;
+    &lt;/p&gt;</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Car">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Vehicle"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="LPG_auto_gas_refuelling_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Time">
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Historic_data">
+    <rdfs:subClassOf rdf:resource="#General_information_about_Parking"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;&#xD;
+      Past events occured in the parking or parking zone related to some &#xD;
+      particular threats. &#xD;
+    &lt;/p&gt;</rdfs:comment>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="General_parking_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Other_building">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Service_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Dynamic_object">
+    <rdfs:subClassOf rdf:resource="#Object"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Man">
+    <rdfs:subClassOf rdf:resource="#Dynamic_object"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Bus_stop_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Vehicle">
+    <rdfs:subClassOf rdf:resource="#Dynamic_object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Entrance">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Vehicle_with_cameras"/>
+  <owl:Class rdf:ID="Truck">
+    <rdfs:subClassOf rdf:resource="#Vehicle"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Hotel">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Caretaker_cabin">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Building"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Winter">
+    <rdfs:subClassOf rdf:resource="#Weather"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Spring">
+    <rdfs:subClassOf rdf:resource="#Weather"/>
+  </owl:Class>
+  <owl:Class>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="#Dynamic_object"/>
+      <owl:Class rdf:about="#Static_object"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Parking"/>
+  <owl:Class rdf:about="#Building">
+    <rdfs:subClassOf rdf:resource="#Static_object"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Smoking_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Car_parking_zone">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Car_wash_area">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Bus">
+    <rdfs:subClassOf rdf:resource="#Vehicle"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Road">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Trees">
+    <rdfs:subClassOf rdf:resource="#Infrastructure"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="Parking_has_dynamic_objects">
+    <rdfs:range rdf:resource="#Dynamic_object"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Vehicle_has_close_objects">
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+    <rdfs:range rdf:resource="#Object"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Parking_has_building">
+    <rdfs:range rdf:resource="#Building"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Parking_has_Cameras">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range rdf:resource="#Camera"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Parking_has_season">
+    <rdfs:range rdf:resource="#Weather"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Vehicle_has_visible_objects">
+    <rdfs:range rdf:resource="#Object"/>
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Objects_in_camera_view">
+    <rdfs:range rdf:resource="#Object"/>
+    <rdfs:domain rdf:resource="#Camera"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Close_and_visible_objects">
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+    <rdfs:range rdf:resource="#Object"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Vehicle_has_distant_objects">
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+    <rdfs:range rdf:resource="#Object"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Vehicle_has_cameras">
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+    <rdfs:range rdf:resource="#Camera"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Parking_has_vulnerabilities">
+    <rdfs:range rdf:resource="#Vulnerabilities"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Parking_has_infrastructure">
+    <rdfs:range rdf:resource="#Infrastructure"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_angle_min">
+    <rdfs:domain rdf:resource="#Camera"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_direction">
+    <rdfs:domain rdf:resource="#Camera"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_GPS_x">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Object"/>
+          <owl:Class rdf:about="#Parking"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_angle">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_angle_max">
+    <rdfs:domain rdf:resource="#Camera"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_width">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Object"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_GPS_coordinates">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Object"/>
+          <owl:Class rdf:about="#Parking"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Fence_has_type">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:domain rdf:resource="#Fence"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >wall</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >net</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_morphology">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_angle_x">
+    <rdfs:domain rdf:resource="#Camera"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_position_x">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Camera"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Zone_ident">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Infrastructure"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_view_area_GPS_coordinates">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Camera"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Plane_name">
+    <rdfs:domain rdf:resource="#Infrastructure"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_GPS_y">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Parking"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+          <owl:Class rdf:about="#Object"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Name">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Infrastructure"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_distance">
+    <rdfs:domain rdf:resource="#Object"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_floors">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Building"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_fence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >wall</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >no fence</rdf:first>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >net</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Threat_severity">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >Medium</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >High</rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:rest>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >Low</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Distance_parameter">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Vehicle_with_cameras"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_length">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Object"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_historic_data">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_GPS_bearing">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Dynamic_object"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_desciption">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_angle_y">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Camera"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_function">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Dynamic_object"/>
+          <owl:Class rdf:about="#Static_object"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_type">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Camera"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_time_and_date">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_has_height">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Object"/>
+          <owl:Class rdf:about="#Vehicle_with_cameras"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Camera_has_position_y">
+    <rdfs:domain rdf:resource="#Camera"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Object_description">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Object"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Parking_has_vulnerability">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Busy route</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Busy time of the year</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Busy time of the day</rdf:first>
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Remote area</rdf:first>
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Bad weather conditions</rdf:first>
+                </rdf:rest>
+              </rdf:rest>
+            </rdf:rest>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Wind_strenght_m_h">
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Season_has_characteristics">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                >ice on lakes, rivers</rdf:first>
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:parseType="Resource">
+                    <rdf:rest rdf:parseType="Resource">
+                      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                      >snowy</rdf:first>
+                      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    </rdf:rest>
+                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                    >trees with leaves</rdf:first>
+                  </rdf:rest>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+                  >trees without leaves</rdf:first>
+                </rdf:rest>
+              </rdf:rest>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+              >sunny</rdf:first>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >rainy</rdf:first>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >windy</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="#Weather"/>
+  </owl:DatatypeProperty>
+  <owl:FunctionalProperty rdf:ID="Parking_has_visability">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >good-no obstacles</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >poor-obstacles</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="Parking_has_risk_level">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="#Parking"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Low</rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Medium</rdf:first>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >High</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:FunctionalProperty>
+  <Lorry rdf:ID="Lorry_A1"/>
+  <Vehicle_with_cameras rdf:ID="Vehicle_Ford_Focus">
+    <Object_has_width rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >1.7</Object_has_width>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >53.143456</Object_has_GPS_y>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >18.129004</Object_has_GPS_x>
+    <Object_has_height rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >1.46</Object_has_height>
+    <Object_has_length rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >4.455</Object_has_length>
+  </Vehicle_with_cameras>
+  <Fence rdf:ID="Fence_A"/>
+  <Man rdf:ID="Man_A2">
+    <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Man is smoking cigarette</Object_has_function>
+  </Man>
+  <Car rdf:ID="Car_A1"/>
+  <owl:DataRange>
+    <owl:oneOf rdf:parseType="Resource">
+      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+      >Rainy</rdf:first>
+      <rdf:rest rdf:parseType="Resource">
+        <rdf:rest rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >Windy</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >Cloudily</rdf:first>
+          </rdf:rest>
+        </rdf:rest>
+        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >Sunny</rdf:first>
+      </rdf:rest>
+    </owl:oneOf>
+  </owl:DataRange>
+  <Toilets_zone rdf:ID="Toilets_zone_A">
+    <Parking_has_infrastructure>
+      <Toilets rdf:ID="Toilets_A">
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        ></Object_has_function>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >0.0</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        ></Object_has_GPS_coordinates>
+      </Toilets>
+    </Parking_has_infrastructure>
+  </Toilets_zone>
+  <Trees rdf:ID="Tree_A"/>
+  <Parking rdf:ID="Parking_Paris">
+    <Parking_has_infrastructure>
+      <Lawn rdf:ID="Lawn_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267319,48.724505</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266939,48.724336</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267177,48.724646</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266779,48.724488</Object_has_GPS_coordinates>
+      </Lawn>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Cafe_Restaurant_zone rdf:ID="Cafe_Restaurant_zone_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267637,48.724900</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267717,48.724932</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267654,48.724984</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267570,48.724946</Object_has_GPS_coordinates>
+      </Cafe_Restaurant_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Lawn rdf:ID="Lawn_P2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267480,48.724804</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267459,48.724825</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266904,48.724559</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266889,48.724575</Object_has_GPS_coordinates>
+      </Lawn>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Smoking_area rdf:ID="Smoking_area_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267593,48.724812</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267554,48.724792</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267574,48.724831</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267531,48.724812</Object_has_GPS_coordinates>
+      </Smoking_area>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_P3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267596,48.724610</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267397,48.724515</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267557,48.724642</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267359,48.724551</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_P4">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267766,48.724569</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267413,48.724418</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267730,48.724608</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267385,48.724445</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2.266861,48.724227</Object_has_GPS_coordinates>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2.267584,48.724902</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_P2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267624,48.724452</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267595,48.724339</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267264,48.724213</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267173,48.724277</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_P2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267541,48.724659</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267325,48.724559</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267505,48.724694</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267287,48.724594</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2.266919,48.724244</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_P3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267796,48.724429</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.268280,48.724686</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.268222,48.724743</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267681,48.724464</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="Sagem_building">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267346,48.725036</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267432,48.724954</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267257,48.724867</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267344,48.724780</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267253,48.724741</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267168,48.724820</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266516,48.724536</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.266358,48.724619</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_infrastructure>
+      <Lawn rdf:ID="Lawn_P3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.268047,48.724789</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267979,48.724899</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267938,48.724885</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267871,48.724924</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267947,48.725005</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.268182,48.724781</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267779,48.724572</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267718,48.724629</Object_has_GPS_coordinates>
+      </Lawn>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >2.267538,48.724865</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267549,48.724773</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267511,48.724805</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267250,48.724631</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267213,48.724665</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267719,48.724795</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267785,48.724778</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267850,48.724805</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267838,48.724848</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267746,48.724846</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Track_and_lorry_parking rdf:ID="Track_and_lorry_parking_P1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267575,48.724772</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267631,48.724800</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267733,48.724726</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267773,48.724672</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.268013,48.724830</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267872,48.724683</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267872,48.724735</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267652,48.724707</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267975,48.724895</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267921,48.724871</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267938,48.724789</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2.267976,48.724737</Object_has_GPS_coordinates>
+      </Track_and_lorry_parking>
+    </Parking_has_infrastructure>
+  </Parking>
+  <Lorry rdf:ID="Lorry_A3"/>
+  <Car rdf:ID="Car_A2"/>
+  <Lorry rdf:ID="Lorry_A2">
+    <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Object_has_function>
+  </Lorry>
+  <owl:DataRange>
+    <owl:oneOf rdf:parseType="Resource">
+      <rdf:rest rdf:parseType="Resource">
+        <rdf:rest rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+            >Remote area</rdf:first>
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+          >Busy time of a year</rdf:first>
+        </rdf:rest>
+        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >Busy time of a day</rdf:first>
+      </rdf:rest>
+      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+      >Busy route</rdf:first>
+    </owl:oneOf>
+  </owl:DataRange>
+  <Historic_data rdf:ID="Historic_data_58">
+    <Parking_has_historic_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Parking_has_historic_data>
+  </Historic_data>
+  <Car rdf:ID="Car_A3"/>
+  <Vehicle_with_cameras rdf:ID="Vehicle_CNA0544">
+    <Object_has_width rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >2.5</Object_has_width>
+    <Vehicle_has_close_objects>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9460344758260064,51.43867130704911</Object_has_GPS_coordinates>
+        <Object_has_distance rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >5.85</Object_has_distance>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.43814</Object_has_GPS_y>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9462978388697596,51.43813908461308</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9463569511615311,51.43815475021816</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.9462978</Object_has_GPS_x>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459776248763485,51.43865020539195</Object_has_GPS_coordinates>
+        <Object_has_angle rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >180.0</Object_has_angle>
+      </Car_parking_zone>
+    </Vehicle_has_close_objects>
+    <Vehicle_has_close_objects>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R3">
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459975627791373,51.43820879017812</Object_has_GPS_coordinates>
+        <Object_has_angle rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >220.0</Object_has_angle>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459415470690769,51.43853769808071</Object_has_GPS_coordinates>
+        <Object_has_distance rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >3.0</Object_has_distance>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.438538</Object_has_GPS_y>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.94594157</Object_has_GPS_x>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9458292331226337,51.43851182606194</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9461136737910225,51.43823281792604</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Vehicle_has_close_objects>
+    <Vehicle_has_visible_objects rdf:resource="#Car_parking_zone_R1"/>
+    <Distance_parameter rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >6.0</Distance_parameter>
+    <Vehicle_has_cameras>
+      <Camera rdf:ID="Camera_2">
+        <Camera_has_angle_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >135.0</Camera_has_angle_y>
+        <Camera_has_angle_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >135.0</Camera_has_angle_x>
+        <Camera_has_direction rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >20</Camera_has_direction>
+        <Camera_has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >spherical</Camera_has_type>
+        <Camera_angle_max rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >180.0</Camera_angle_max>
+        <Camera_angle_min rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >90.0</Camera_angle_min>
+      </Camera>
+    </Vehicle_has_cameras>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >51.43807</Object_has_GPS_y>
+    <Object_has_length rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >4.5</Object_has_length>
+    <Vehicle_has_distant_objects>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459925808940228,51.43808043293024</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459430848085326,51.43807275150005</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457231518443621,51.4384308597181</Object_has_GPS_coordinates>
+        <Object_has_distance rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >7.56</Object_has_distance>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.43808</Object_has_GPS_y>
+        <Object_has_angle rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >100.0</Object_has_angle>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457853931879312,51.43844879959661</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.9459926</Object_has_GPS_x>
+      </Car_parking_zone>
+    </Vehicle_has_distant_objects>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-0.9459925</Object_has_GPS_x>
+    <Object_has_GPS_bearing rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >60</Object_has_GPS_bearing>
+    <Object_has_height rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >2.0</Object_has_height>
+  </Vehicle_with_cameras>
+  <Lawn rdf:ID="Lawn_A"/>
+  <swrl:Variable rdf:ID="e"/>
+  <Sidewalk rdf:ID="Sidewalk_A"/>
+  <Matrix rdf:ID="Matrix_A"/>
+  <Vehicle_with_cameras rdf:ID="Vehicle_CB04432">
+    <Object_has_height rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >2.2</Object_has_height>
+    <Vehicle_has_visible_objects rdf:resource="#Car_parking_zone_R1"/>
+    <Object_has_length rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >5.0</Object_has_length>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >51.43922</Object_has_GPS_y>
+    <Distance_parameter rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >6.0</Distance_parameter>
+    <Object_has_width rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >2.5</Object_has_width>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-0.9459843</Object_has_GPS_x>
+    <Vehicle_has_close_objects rdf:resource="#Car_parking_zone_R3"/>
+    <Object_has_GPS_bearing rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >180</Object_has_GPS_bearing>
+    <Vehicle_has_cameras>
+      <Camera rdf:ID="Camera_1">
+        <Camera_has_angle_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >120.0</Camera_has_angle_x>
+        <Camera_has_angle_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >90.0</Camera_has_angle_y>
+        <Camera_has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >infrared</Camera_has_type>
+        <Camera_has_direction rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >45</Camera_has_direction>
+        <Camera_angle_min rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >90.0</Camera_angle_min>
+        <Camera_angle_max rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >180.0</Camera_angle_max>
+      </Camera>
+    </Vehicle_has_cameras>
+    <Vehicle_has_close_objects rdf:resource="#Car_parking_zone_R1"/>
+    <Vehicle_has_distant_objects rdf:resource="#Car_parking_zone_R2"/>
+  </Vehicle_with_cameras>
+  <LPG_auto_gas_refuelling_area rdf:ID="LPG_auto_gas_refuelling_area_2"/>
+  <Truck rdf:ID="Truck_A1">
+    <Object_has_GPS_bearing rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >34</Object_has_GPS_bearing>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >51.23</Object_has_GPS_x>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >0.012</Object_has_GPS_x>
+  </Truck>
+  <Parking rdf:ID="Parking_A">
+    <Parking_has_vulnerability rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Busy route</Parking_has_vulnerability>
+    <Parking_has_morphology rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Parking includes Toilets, separated parkings for cars and for trock and lorry</Parking_has_morphology>
+    <Parking_has_vulnerability rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Busy time of the year</Parking_has_vulnerability>
+    <Parking_has_visability rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >good - light, no obstacles</Parking_has_visability>
+    <Parking_has_risk_level rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Parking_has_risk_level>
+    <Parking_has_vulnerability rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Remote area</Parking_has_vulnerability>
+    <Parking_has_fence rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >net</Parking_has_fence>
+    <Parking_has_season>
+      <Winter rdf:ID="Winter_7">
+        <Season_has_characteristics rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >snowy</Season_has_characteristics>
+        <Season_has_characteristics rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >trees without leaves</Season_has_characteristics>
+        <Season_has_characteristics rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >ice on lakes, rivers</Season_has_characteristics>
+        <Season_has_characteristics rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >rainy</Season_has_characteristics>
+        <Season_has_characteristics rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >windy</Season_has_characteristics>
+      </Winter>
+    </Parking_has_season>
+    <Parking_has_historic_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Parking_has_historic_data>
+    <Parking_has_time_and_date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2012-10-22T10:56:12</Parking_has_time_and_date>
+    <Parking_has_vulnerability rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Busy time of the day</Parking_has_vulnerability>
+  </Parking>
+  <swrl:Imp rdf:ID="Visible_objects">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2>
+              <swrl:Variable rdf:ID="y"/>
+            </swrl:argument2>
+            <swrl:argument1>
+              <swrl:Variable rdf:ID="x"/>
+            </swrl:argument1>
+            <swrl:propertyPredicate rdf:resource="#Vehicle_has_visible_objects"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:first>
+                          <swrl:IndividualPropertyAtom>
+                            <swrl:propertyPredicate rdf:resource="#Vehicle_has_close_objects"/>
+                            <swrl:argument2 rdf:resource="#y"/>
+                            <swrl:argument1 rdf:resource="#x"/>
+                          </swrl:IndividualPropertyAtom>
+                        </rdf:first>
+                        <rdf:rest>
+                          <swrl:AtomList>
+                            <rdf:rest>
+                              <swrl:AtomList>
+                                <rdf:rest>
+                                  <swrl:AtomList>
+                                    <rdf:rest>
+                                      <swrl:AtomList>
+                                        <rdf:first>
+                                          <swrl:BuiltinAtom>
+                                            <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThanOrEqual"/>
+                                            <swrl:arguments>
+                                              <rdf:List>
+                                                <rdf:first>
+                                                  <swrl:Variable rdf:ID="c"/>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                  <rdf:List>
+                                                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    <rdf:first>
+                                                      <swrl:Variable rdf:ID="a"/>
+                                                    </rdf:first>
+                                                  </rdf:List>
+                                                </rdf:rest>
+                                              </rdf:List>
+                                            </swrl:arguments>
+                                          </swrl:BuiltinAtom>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                          <swrl:AtomList>
+                                            <rdf:first>
+                                              <swrl:BuiltinAtom>
+                                                <swrl:arguments>
+                                                  <rdf:List>
+                                                    <rdf:rest>
+                                                      <rdf:List>
+                                                        <rdf:first>
+                                                          <swrl:Variable rdf:ID="b"/>
+                                                        </rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                      </rdf:List>
+                                                    </rdf:rest>
+                                                    <rdf:first rdf:resource="#c"/>
+                                                  </rdf:List>
+                                                </swrl:arguments>
+                                                <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThan"/>
+                                              </swrl:BuiltinAtom>
+                                            </rdf:first>
+                                            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                          </swrl:AtomList>
+                                        </rdf:rest>
+                                      </swrl:AtomList>
+                                    </rdf:rest>
+                                    <rdf:first>
+                                      <swrl:DatavaluedPropertyAtom>
+                                        <swrl:argument2 rdf:resource="#c"/>
+                                        <swrl:propertyPredicate rdf:resource="#Object_has_angle"/>
+                                        <swrl:argument1 rdf:resource="#y"/>
+                                      </swrl:DatavaluedPropertyAtom>
+                                    </rdf:first>
+                                  </swrl:AtomList>
+                                </rdf:rest>
+                                <rdf:first>
+                                  <swrl:DatavaluedPropertyAtom>
+                                    <swrl:argument1>
+                                      <swrl:Variable rdf:ID="z"/>
+                                    </swrl:argument1>
+                                    <swrl:argument2 rdf:resource="#b"/>
+                                    <swrl:propertyPredicate rdf:resource="#Camera_angle_min"/>
+                                  </swrl:DatavaluedPropertyAtom>
+                                </rdf:first>
+                              </swrl:AtomList>
+                            </rdf:rest>
+                            <rdf:first>
+                              <swrl:DatavaluedPropertyAtom>
+                                <swrl:argument1 rdf:resource="#z"/>
+                                <swrl:argument2 rdf:resource="#a"/>
+                                <swrl:propertyPredicate rdf:resource="#Camera_angle_max"/>
+                              </swrl:DatavaluedPropertyAtom>
+                            </rdf:first>
+                          </swrl:AtomList>
+                        </rdf:rest>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                    <rdf:first>
+                      <swrl:IndividualPropertyAtom>
+                        <swrl:argument2 rdf:resource="#z"/>
+                        <swrl:argument1 rdf:resource="#x"/>
+                        <swrl:propertyPredicate rdf:resource="#Vehicle_has_cameras"/>
+                      </swrl:IndividualPropertyAtom>
+                    </rdf:first>
+                  </swrl:AtomList>
+                </rdf:rest>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:argument1 rdf:resource="#z"/>
+                    <swrl:classPredicate rdf:resource="#Camera"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:ClassAtom>
+                <swrl:classPredicate rdf:resource="#Object"/>
+                <swrl:argument1 rdf:resource="#y"/>
+              </swrl:ClassAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:classPredicate rdf:resource="#Vehicle_with_cameras"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+  </swrl:Imp>
+  <Parking rdf:ID="Parking_Reading">
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_R3">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Trees are defined as a lawn with the majority of area covered by trees</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945476864317889,51.43793952238221</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9450807643789605,51.43855910859924</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457710545753439,51.43804027047786</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9454212641197335,51.43863486144085</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="Archeology_building">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Building in close proximity to the parking lot.</Object_description>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.94545</Object_has_GPS_x>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.439156</Object_has_GPS_y>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9454959164290877,51.43885247056356</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94545,51.439157</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945619,51.439176</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945702,51.438865</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R6">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457837993508989,51.43870652915472</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459557249975881,51.43872687686688</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457676495289891,51.43872918696705</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94593536442517,51.43876796740439</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <General_parking_area rdf:ID="General_parking_area_Reading">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945976001776464,51.43877879117593</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94556523212594,51.43869904767174</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9463569511615311,51.43815475021816</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459018016130205,51.4380643680892</Object_has_GPS_coordinates>
+      </General_parking_area>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R5">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9458752766386036,51.43865293580562</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457481406182222,51.43862663172852</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459129361035801,51.43858071574411</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457999654351801,51.43855662326205</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_R2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456400771111095,51.4385856757926</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945976001776464,51.43877879117593</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9463569511615311,51.43815475021816</Object_has_GPS_coordinates>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Trees are defined as a lawn with the majority of area covered by trees</Object_description>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_fence rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >no fence</Parking_has_fence>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_R4">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Trees are defined as a lawn with the majority of area covered by trees</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9453958811364083,51.43774119856554</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457750026365019,51.43745012847052</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9463467028632411,51.43798657539831</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9465251290822507,51.43789700326871</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9475919582945114,51.43881891083402</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9474578534568767,51.43887639569959</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure rdf:resource="#Car_parking_zone_R1"/>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >-0.94</Object_has_GPS_x>
+    <Parking_has_infrastructure rdf:resource="#Car_parking_zone_R2"/>
+    <Parking_has_infrastructure>
+      <Road rdf:ID="Road_R2">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Road in the close distance, undirectly leading to the parking lot.</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9473811988518932,51.43889925182558</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9474417732012297,51.43886455815294</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9463702339391389,51.43811072616096</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9464207920085999,51.4380695985272</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945978869432097,51.43794601776835</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459496129723921,51.4380036219687</Object_has_GPS_coordinates>
+      </Road>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Sidewalk rdf:ID="Sidewalk_R2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9460284845974532,51.43809691541377</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9457050547732404,51.43861265766133</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Internal road for cars and sidewalk for people</Object_has_function>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Sidewalk includes the internal road for car and sidewalk itself</Object_description>
+      </Sidewalk>
+    </Parking_has_infrastructure>
+    <Parking_has_visability rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+    >good-no obstacles</Parking_has_visability>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >51.43</Object_has_GPS_coordinates>
+    <Parking_has_desciption rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Parking_has_desciption>
+    <Parking_has_infrastructure>
+      <Road rdf:ID="Road_R1">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Road directly leading to the parking lot</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945978869432097,51.43794601776835</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9458783501801149,51.43792536222465</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9450302286295853,51.4394500110788</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9451059959124131,51.43948378590068</Object_has_GPS_coordinates>
+      </Road>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="JJ_Thomson_building">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.943771,51.438935</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944645,51.438718</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944511,51.438965</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.943964,51.438688</Object_has_GPS_coordinates>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Building in close proximity to the parking lot</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94486,51.439181</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944331,51.438933</Object_has_GPS_coordinates>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.438934</Object_has_GPS_y>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945176,51.438997</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944937,51.439055</Object_has_GPS_coordinates>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.943771</Object_has_GPS_x>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9448077569293134,51.43925950221744</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944484,51.438681</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9449989367658251,51.43934025253167</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.944025,51.438863</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94409,51.438716</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_risk_level rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Medium</Parking_has_risk_level>
+    <Parking_has_infrastructure>
+      <Sidewalk rdf:ID="Sidewalk_R1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459174838086826,51.43865352433867</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9462321467056911,51.43814662500472</Object_has_GPS_coordinates>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Sidewalk includes the internal road for car and sidewalk itself</Object_description>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Internal road for cars and sidewalk for people</Object_has_function>
+      </Sidewalk>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_R4">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9460752906785841,51.43809676533955</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9462025307841959,51.43812679872183</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9460271471841131,51.43817762364584</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9461571064833951,51.43820671813199</Object_has_GPS_coordinates>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Parking area for cars</Object_has_function>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Entrance rdf:ID="Entrance_Reading">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456499192851053,51.43852305464018</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456780767483863,51.43847366987471</Object_has_GPS_coordinates>
+      </Entrance>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_R1">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Trees are defined as a lawn with the majority of area covered by trees.</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456625316756573,51.43870903597483</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.94556523212594,51.43869904767174</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456400771111095,51.4385856757926</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >51.43</Object_has_GPS_y>
+    <Parking_has_infrastructure rdf:resource="#Car_parking_zone_R3"/>
+    <Parking_has_morphology rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Parking has one entrance, 4 rows of car parking zones, devided by sidewalks. Parking is surrounded by trees from one side directly and from two sides from the distance. Parking has no toilets, restaurance or any other service areas. </Parking_has_morphology>
+    <Parking_has_infrastructure>
+      <Sidewalk rdf:ID="Sidewalk_R4">
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Internal road for cars and sidewalk for people</Object_has_function>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9456852992012721,51.43849827251452</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459808036334361,51.43856174185078</Object_has_GPS_coordinates>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Sidewalk includes the internal road for car and sidewalk itself</Object_description>
+      </Sidewalk>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Sidewalk rdf:ID="Sidewalk_R3">
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Sidewalk includes the internal road for car and sidewalk itself</Object_description>
+        <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Internal road for cars and sidewalk for people</Object_has_function>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9459661420444532,51.43817751099703</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.9460284845974532,51.43809691541377</Object_has_GPS_coordinates>
+      </Sidewalk>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="Wager_building">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.946278,51.43946</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945841,51.438938</Object_has_GPS_coordinates>
+        <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >-0.946472</Object_has_GPS_x>
+        <Object_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Building in close proximity to the parking lot</Object_description>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.945777,51.439062</Object_has_GPS_coordinates>
+        <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+        >51.43908</Object_has_GPS_y>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.946112,51.439425</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.946241,51.439167</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >-0.946472,51.439081</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+  </Parking>
+  <Infrastructure rdf:ID="Infrastructure_4"/>
+  <Parking rdf:ID="Parking_UTP">
+    <Parking_has_infrastructure>
+      <General_parking_area rdf:ID="General_parking_area_UTP">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.125857,53.144723 </Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129804,53.145153 </Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.131220,53.143321</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.127732,53.142462</Object_has_GPS_coordinates>
+      </General_parking_area>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.129785,53.144239</Object_has_GPS_coordinates>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.129004,53.143454</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_UTP_1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130041,53.144323</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130117,53.144348</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129671,53.144826</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129713,53.144881</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_UTP_2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128350,53.144037</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.126871,53.143644</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.127665,53.144923</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.125961,53.144708</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.128484,53.143363</Object_has_GPS_coordinates>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.128704,53.143832</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_UTP_1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.127130,53.143337</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128411,53.143823</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128129,53.143877</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.126947,53.143557</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_1">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129626,53.144267</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128830,53.144047</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129057,53.144992</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128265,53.144776</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_5">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129570,53.143102</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130201,53.143276</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130327,53.143115</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129673,53.142960</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_6">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128476,53.142878</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128578,53.142729</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129135,53.143070</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129270,53.142909</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.131175,53.144579</Object_has_GPS_coordinates>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_4">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130143,53.143530</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129317,53.143298</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130039,53.143652</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129217,53.143427</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >18.128916</Object_has_GPS_x>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.131140,53.144598</Object_has_GPS_coordinates>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.130090,53.144333</Object_has_GPS_coordinates>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >53.143517</Object_has_GPS_y>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129878,53.143872</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129034,53.143646</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129767,53.144003</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128947,53.143777</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.128811,53.143862</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_UTP_5">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128275,53.143540</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128564,53.143134</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128338,53.143085</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128018,53.143407</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Other_building rdf:ID="UTP_building_2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130473,53.144260</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129656,53.144024</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130374,53.144379</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129565,53.144155</Object_has_GPS_coordinates>
+      </Other_building>
+    </Parking_has_building>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_UTP_4">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128939,53.143216</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128554,53.143714</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128333,53.143579</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128655,53.143147</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.131467,53.144999</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_UTP_3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129195,53.143197</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129115,53.143179</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128756,53.143797</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.128661,53.143776</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.131508,53.144977</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Car_parking_zone rdf:ID="Car_parking_zone_UTP_2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129778,53.144229</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130003,53.144298</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129534,53.144938</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129244,53.144959</Object_has_GPS_coordinates>
+      </Car_parking_zone>
+    </Parking_has_infrastructure>
+  </Parking>
+  <swrl:Imp rdf:ID="Close_objects">
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</swrla:isRuleEnabled>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:propertyPredicate rdf:resource="#Vehicle_has_close_objects"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:DatavaluedPropertyAtom>
+                    <swrl:propertyPredicate rdf:resource="#Object_has_distance"/>
+                    <swrl:argument2 rdf:resource="#z"/>
+                    <swrl:argument1 rdf:resource="#y"/>
+                  </swrl:DatavaluedPropertyAtom>
+                </rdf:first>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                        <rdf:first>
+                          <swrl:BuiltinAtom>
+                            <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThanOrEqual"/>
+                            <swrl:arguments>
+                              <rdf:List>
+                                <rdf:first rdf:resource="#z"/>
+                                <rdf:rest>
+                                  <rdf:List>
+                                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    <rdf:first rdf:resource="#a"/>
+                                  </rdf:List>
+                                </rdf:rest>
+                              </rdf:List>
+                            </swrl:arguments>
+                          </swrl:BuiltinAtom>
+                        </rdf:first>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                    <rdf:first>
+                      <swrl:DatavaluedPropertyAtom>
+                        <swrl:argument1 rdf:resource="#x"/>
+                        <swrl:argument2 rdf:resource="#a"/>
+                        <swrl:propertyPredicate rdf:resource="#Distance_parameter"/>
+                      </swrl:DatavaluedPropertyAtom>
+                    </rdf:first>
+                  </swrl:AtomList>
+                </rdf:rest>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:ClassAtom>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:classPredicate rdf:resource="#Object"/>
+              </swrl:ClassAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:classPredicate rdf:resource="#Vehicle_with_cameras"/>
+            <swrl:argument1 rdf:resource="#x"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+  </swrl:Imp>
+  <Man rdf:ID="Man_A1">
+    <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Man is standing</Object_has_function>
+  </Man>
+  <Entrance rdf:ID="Entrance_A"/>
+  <Parking rdf:ID="Parking_PS">
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.130443,53.146640</Object_has_GPS_coordinates>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.130497,53.147014</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Petrol_refuelling_area rdf:ID="Petrol_refuelling_area_PS">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130428,53.146910</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130677,53.146981</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130527,53.146783</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130776,53.146845</Object_has_GPS_coordinates>
+      </Petrol_refuelling_area>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >18.130492,53.146591</Object_has_GPS_coordinates>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_PS_3">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130708,53.146658</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130957,53.146764</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130758,53.146478</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.131086,53.146576</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_building>
+      <Petrol_station rdf:ID="Petrol_station_PS">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130232,53.147181</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130489,53.147252</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130332,53.147059</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130592,53.147123</Object_has_GPS_coordinates>
+      </Petrol_station>
+    </Parking_has_building>
+    <Parking_has_infrastructure>
+      <General_parking_area rdf:ID="General_parking_area_PS">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.129895,53.147364</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130439,53.147497</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130640,53.146400</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.131239,53.146619</Object_has_GPS_coordinates>
+      </General_parking_area>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Trees rdf:ID="Trees_PS_2">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130739,53.147128</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130919,53.147149</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130801,53.147062</Object_has_GPS_coordinates>
+      </Trees>
+    </Parking_has_infrastructure>
+    <Parking_has_infrastructure>
+      <Car_wash_area rdf:ID="Car_wash_area_PS">
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130183,53.147360</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130351,53.147403</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130213,53.147321</Object_has_GPS_coordinates>
+        <Object_has_GPS_coordinates rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >18.130370,53.147360</Object_has_GPS_coordinates>
+      </Car_wash_area>
+    </Parking_has_infrastructure>
+    <Object_has_GPS_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >18.130426</Object_has_GPS_x>
+    <Object_has_GPS_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >53.147026</Object_has_GPS_y>
+  </Parking>
+  <Object rdf:ID="Object_1"/>
+  <Camera rdf:ID="Camera_3">
+    <Camera_has_direction rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >0</Camera_has_direction>
+    <Camera_angle_max rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >180.0</Camera_angle_max>
+    <Camera_has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >thermal</Camera_has_type>
+    <Camera_angle_min rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >90.0</Camera_angle_min>
+    <Camera_has_angle_y rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >60.0</Camera_has_angle_y>
+    <Camera_has_angle_x rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >90.0</Camera_has_angle_x>
+  </Camera>
+  <Bus rdf:ID="Bus_A1">
+    <Object_has_function rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></Object_has_function>
+  </Bus>
+  <owl:DataRange/>
+  <swrl:Imp rdf:ID="Distant_objects">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:ClassAtom>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:classPredicate rdf:resource="#Object"/>
+              </swrl:ClassAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:DatavaluedPropertyAtom>
+                    <swrl:propertyPredicate rdf:resource="#Object_has_distance"/>
+                    <swrl:argument2 rdf:resource="#z"/>
+                    <swrl:argument1 rdf:resource="#y"/>
+                  </swrl:DatavaluedPropertyAtom>
+                </rdf:first>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:first>
+                      <swrl:DatavaluedPropertyAtom>
+                        <swrl:argument2 rdf:resource="#a"/>
+                        <swrl:argument1 rdf:resource="#x"/>
+                        <swrl:propertyPredicate rdf:resource="#Distance_parameter"/>
+                      </swrl:DatavaluedPropertyAtom>
+                    </rdf:first>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                        <rdf:first>
+                          <swrl:BuiltinAtom>
+                            <swrl:arguments>
+                              <rdf:List>
+                                <rdf:first rdf:resource="#z"/>
+                                <rdf:rest>
+                                  <rdf:List>
+                                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    <rdf:first rdf:resource="#a"/>
+                                  </rdf:List>
+                                </rdf:rest>
+                              </rdf:List>
+                            </swrl:arguments>
+                            <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThan"/>
+                          </swrl:BuiltinAtom>
+                        </rdf:first>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                  </swrl:AtomList>
+                </rdf:rest>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:classPredicate rdf:resource="#Vehicle_with_cameras"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</swrla:isRuleEnabled>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:propertyPredicate rdf:resource="#Vehicle_has_distant_objects"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->
