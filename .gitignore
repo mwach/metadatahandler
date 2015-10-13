@@ -3,3 +3,5 @@
 **/target/**
 **/.settings/**
 **/*.log
+*.class
+hs_err_pid*
