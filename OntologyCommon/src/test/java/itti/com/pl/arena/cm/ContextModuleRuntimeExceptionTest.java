@@ -1,7 +1,7 @@
 package itti.com.pl.arena.cm;
 
-import itti.com.pl.ontology.common.exception.ContextModuleException;
-import itti.com.pl.ontology.common.exception.ContextModuleRuntimeException;
+import itti.com.pl.ontology.common.exception.OntologyException;
+import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,29 +16,29 @@ public class ContextModuleRuntimeExceptionTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void testContextModuleRuntimeExceptionStringNull() throws ContextModuleException {
+    public void testContextModuleRuntimeExceptionStringNull() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
-        expectedException.expectMessage(ContextModuleRuntimeException.class.getSimpleName());
+        expectedException.expect(OntologyRuntimeException.class);
+        expectedException.expectMessage(OntologyRuntimeException.class.getSimpleName());
 
         // correctly constructed exception, null message and params
         throw new TestContextModuleRuntimeException(null, (Object[]) null);
     }
 
     @Test
-    public void testContextModuleRuntimeExceptionStringNullParams() throws ContextModuleException {
+    public void testContextModuleRuntimeExceptionStringNullParams() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
-        expectedException.expectMessage(ContextModuleRuntimeException.class.getSimpleName());
+        expectedException.expect(OntologyRuntimeException.class);
+        expectedException.expectMessage(OntologyRuntimeException.class.getSimpleName());
 
         // correctly constructed exception, null message, not params
         throw new TestContextModuleRuntimeException(null, EXCP_PARAM_1, EXCP_PARAM_2);
     }
 
     @Test
-    public void testContextModuleRuntimeExceptionStringEmptyParams() throws ContextModuleException {
+    public void testContextModuleRuntimeExceptionStringEmptyParams() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage("");
 
         // correctly constructed exception, empty message, not params
@@ -46,19 +46,19 @@ public class ContextModuleRuntimeExceptionTest {
     }
 
     @Test
-    public void testContextModuleExceptionStringNullThrowableEmptyParams() throws ContextModuleException {
+    public void testContextModuleExceptionStringNullThrowableEmptyParams() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
-        expectedException.expectMessage(ContextModuleRuntimeException.class.getSimpleName());
+        expectedException.expect(OntologyRuntimeException.class);
+        expectedException.expectMessage(OntologyRuntimeException.class.getSimpleName());
 
         // correctly constructed exception, empty message, not params
         throw new TestContextModuleRuntimeException(null, (Throwable) null, EXCP_PARAM_1, EXCP_PARAM_2);
     }
 
     @Test
-    public void testContextModuleExceptionStringThrowableEmptyParams() throws ContextModuleException {
+    public void testContextModuleExceptionStringThrowableEmptyParams() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage("");
 
         // correctly constructed exception, empty message, not params
@@ -66,9 +66,9 @@ public class ContextModuleRuntimeExceptionTest {
     }
 
     @Test
-    public void testContextModuleExceptionStringThrowableValidParams() throws ContextModuleException {
+    public void testContextModuleExceptionStringThrowableValidParams() throws OntologyException {
 
-        expectedException.expect(ContextModuleRuntimeException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage("");
 
         // correctly constructed exception, empty message, not throw, params
@@ -76,11 +76,11 @@ public class ContextModuleRuntimeExceptionTest {
     }
 
     @Test
-    public void testContextModuleRuntimeExceptionStringThrowableValidExcp() throws ContextModuleException {
+    public void testContextModuleRuntimeExceptionStringThrowableValidExcp() throws OntologyException {
 
         String msg = "values %s %s";
 
-        expectedException.expect(ContextModuleRuntimeException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(msg, EXCP_PARAM_1, EXCP_PARAM_2));
 
         // correctly constructed exception, empty message, not throw, params
@@ -88,18 +88,18 @@ public class ContextModuleRuntimeExceptionTest {
     }
 
     @Test
-    public void testContextModuleRuntimeExceptionStringThrowableValidExcpNotFull() throws ContextModuleException {
+    public void testContextModuleRuntimeExceptionStringThrowableValidExcpNotFull() throws OntologyException {
 
         String msg = "values %s";
 
-        expectedException.expect(ContextModuleRuntimeException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(msg, EXCP_PARAM_1));
 
         // correctly constructed exception, empty message, not throw, params
         throw new TestContextModuleRuntimeException(msg, new RuntimeException(), EXCP_PARAM_1, EXCP_PARAM_2);
     }
 
-    private static class TestContextModuleRuntimeException extends ContextModuleRuntimeException {
+    private static class TestContextModuleRuntimeException extends OntologyRuntimeException {
 
         /**
 		 * 

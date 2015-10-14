@@ -1,6 +1,9 @@
 package itti.com.pl.ontology.server.ontology;
 
 import java.util.List;
+import java.util.Map;
+
+import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 
 /**
  * Interface defining Arena-specific ontology operations
@@ -10,7 +13,6 @@ import java.util.List;
  */
 public interface Ontology {
 
-
     /**
      * Returns list of instances of given ontology class
      * 
@@ -18,7 +20,16 @@ public interface Ontology {
      *            name of the class
      * @return list of instances names. If there are no instances, empty list will be returned
      */
-    public List<String> getInstances(String className) throws OntologyException;
+    public List<String> getInstances(String className);
+
+    /**
+     * Returns list of direct (first level) instances of given ontology class
+     * 
+     * @param className
+     *            name of the class
+     * @return list of instances names. If there are no instances, empty list will be returned
+     */
+    public List<String> getDirectInstances(String className);
 
     /**
      * Returns list of non-direct (second and further levels) instances of given ontology class
@@ -27,7 +38,7 @@ public interface Ontology {
      *            name of the class
      * @return list of instances names. If there are no instances, empty list will be returned
      */
-    public List<String> getNonDirectInstances(String className) throws OntologyException;
+    public List<String> getNonDirectInstances(String className);
 
     /**
      * Returns parent class of given instance
@@ -35,10 +46,39 @@ public interface Ontology {
      * @param instanceName
      *            name of the instance
      * @return parent class name.
-     * @exception OntologyExceptiont
-     *                could not find object
      */
-    public String getInstanceClass(String instanceName) throws OntologyException;
+    public String getInstanceClass(String instanceName);
+
+    /**
+     * creates simple instance in the ontology model
+     * 
+     * @param className
+     *            name of the ontology class
+     * @param instanceName
+     *            name of the instance
+     * @param properties
+     *            optional list of instance properties
+     * @return reference to the newly created instance
+     */
+    public OWLIndividual createSimpleInstance(String className, String instanceName, Map<String, String[]> properties);
+
+    /**
+     * Checks, if instance with given name exists in the ontology
+     * 
+     * @param instanceName
+     *            name of the instance
+     * @return true if instance with given name was found in the ontology, false otherwise
+     */
+    public boolean hasInstance(String instanceName);
+
+
+    /**
+     * Creates a new class in the ontology model
+     * 
+     * @param className
+     *            name of the class
+     */
+    public void createOwlClass(String className);
 
     /**
      * Removes instance identified by its name from ontology
@@ -46,7 +86,7 @@ public interface Ontology {
      * @param instanceName
      *            name of the instance to remove
      */
-    public void remove(String instanceName) throws OntologyException;
+    public void remove(String instanceName);
 
     /**
      * Adds a new rule to the ontology
@@ -55,9 +95,8 @@ public interface Ontology {
      *            name of the rule
      * @param ruleContent
      *            content of the rule
-     * @throws OntologyException
      */
-    public void addSwrlRule(String ruleName, String ruleContent) throws OntologyException;
+    public void addSwrlRule(String ruleName, String ruleContent);
 
     /**
      * Returns rule identified by its name from the ontology
@@ -65,30 +104,28 @@ public interface Ontology {
      * @param ruleName
      *            name of the rule
      * @return rule definition
-     * @throws OntologyException
      */
-    public String getSwrlRule(String ruleName) throws OntologyException;
+    public String getSwrlRule(String ruleName);
 
     /**
      * Removes rule identified by its name from the ontology
      * 
      * @param ruleName
      *            name of the rule
-     * @throws OntologyException
      */
-    public void removeSwrlRule(String ruleName) throws OntologyException;
+    public void removeSwrlRule(String ruleName);
 
     /**
      * Runs SWRL engine on existing model
      */
-    public void runSwrlEngine() throws OntologyException;
+    public void runSwrlEngine();
 
     /**
      * Returns list of SWRL rules defined in the ontology
      * 
      * @return list of SWRL rules. If there are no rules, empty list will be returned
      */
-    public List<String> getSwrlRules() throws OntologyException;
+    public List<String> getSwrlRules();
 
     /**
      * Saves current ontology model to file
@@ -96,7 +133,7 @@ public interface Ontology {
      * @param fileName
      *            location of the file, where ontology should be saved
      */
-    public void saveOntology(String fileName) throws OntologyException;
+    public void saveOntology(String fileName);
 
     /**
      * Loads ontology model from the file
@@ -104,19 +141,17 @@ public interface Ontology {
      * @param fileName
      *            location of the file containing ontology
      */
-    public void loadOntology(String fileName) throws OntologyException;
+    public void loadOntology(String fileName);
 
     /**
      * Returns a list of all ontologies from the repository
      * @return list of strings representing ontology names
-     * @throws OntologyException
      */
-    public List<String> getListOfOntologies() throws OntologyException;
+    public List<String> getListOfOntologies();
 
     /**
      * Returns name of the currently loaded ontology
      * @return name of the ontology
-     * @throws OntologyException
      */
-    public String getCurrentOntology() throws OntologyException;
+    public String getCurrentOntology();
 }

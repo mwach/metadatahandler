@@ -6,19 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.server.exception.ErrorMessages;
-import itti.com.pl.ontology.server.ontology.OntologyException;
 import itti.com.pl.ontology.server.ontology.OntologyManager;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-@Ignore
 public class OntologyManagerTest {
 
     public static final String ONTOLOGY_REPOSITORY = "src/test/resources";
@@ -31,14 +29,13 @@ public class OntologyManagerTest {
     private static OntologyManager ontologyManager;
 
     @BeforeClass
-    public static void beforeClass() throws OntologyException {
+    public static void beforeClass() throws OntologyRuntimeException {
 
         // to speed up tests, load ontology and then reuse it among tests
         ontologyManager = new OntologyManager();
-        ontologyManager.setOntologyLocation(ONTOLOGY_LOCATION);
         ontologyManager.setOntologyRepository(ONTOLOGY_REPOSITORY);
         ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
-        ontologyManager.init();
+        ontologyManager.loadOntology(ONTOLOGY_LOCATION);
     }
 
     @AfterClass
@@ -47,20 +44,20 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testInitInvalidLocation() throws OntologyException {
+    public void testInitInvalidLocation() throws OntologyRuntimeException {
         // check exception, when no location was provided
-        expectedException.expect(OntologyException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(), "null"));
         OntologyManager om = new OntologyManager();
-        om.init();
+        om.loadOntology("");
     }
 
     @Test
-    public void testCreateOwlClass() throws OntologyException {
+    public void testCreateOwlClass() throws OntologyRuntimeException {
         String className = "classsss";
         String instanceName = className + "inst";
         // verify class was added
-        Assert.assertTrue(ontologyManager.createOwlClass(className));
+        ontologyManager.createOwlClass(className);
         // now add some basic instance to newly create class
         ontologyManager.createSimpleInstance(className, instanceName, null);
 
@@ -71,7 +68,7 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testAddInstanceWithProperties() throws OntologyException {
+    public void testAddInstanceWithProperties() throws OntologyRuntimeException {
 
         // select existing class having at least one known property
         String className = "SomeClass";
@@ -95,25 +92,25 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testRemoveInstance() throws OntologyException {
+    public void testRemoveInstance() throws OntologyRuntimeException {
         // create a new instance in ontology
         String instanceName = "dummyBuilding_" + System.currentTimeMillis();
         ontologyManager.createSimpleInstance("ParentClass", instanceName, null);
         // verify, instance was added to ontology
-        assertNotNull(ontologyManager.getInstance(instanceName));
+        assertTrue(ontologyManager.hasInstance(instanceName));
         // remove it
         ontologyManager.remove(instanceName);
         // verify, instance was removed from ontology
-        assertNull(ontologyManager.getInstance(instanceName));
+        assertFalse(ontologyManager.hasInstance(instanceName));
     }
 
     @Test
-    public void testRemoveNonExistingInstance() throws OntologyException {
+    public void testRemoveNonExistingInstance() throws OntologyRuntimeException {
 
         // try to delete an non-existing instance
         String instanceName = "dummyBuilding_tt_" + System.currentTimeMillis();
 
-        expectedException.expect(OntologyException.class);
+        expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(), instanceName));
         ontologyManager.remove(instanceName);
     }

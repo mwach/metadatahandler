@@ -6,7 +6,7 @@ package itti.com.pl.ontology.common.exception;
  * @author mawa
  * 
  */
-public abstract class ContextModuleException extends Exception {
+public abstract class OntologyException extends Exception {
 
     /**
      * Class UID
@@ -23,8 +23,8 @@ public abstract class ContextModuleException extends Exception {
      * @param args
      *            list of message parameters
      */
-    public ContextModuleException(String message, Throwable throwable, Object... args) {
-        super(message == null ? ContextModuleException.class.getSimpleName() : String.format(message, args), throwable);
+    public OntologyException(String message, Throwable throwable, Object... args) {
+        super(message == null ? OntologyException.class.getSimpleName() : String.format(message, args), throwable);
     }
 
     /**
@@ -35,7 +35,7 @@ public abstract class ContextModuleException extends Exception {
      * @param args
      *            list of message parameters
      */
-    public ContextModuleException(String message, Object... args) {
-        super(message == null ? ContextModuleException.class.getSimpleName() : String.format(message, args));
+    public OntologyException(String message, Object... args) {
+        super(message == null ? OntologyException.class.getSimpleName() : String.format(message, args));
     }
 }

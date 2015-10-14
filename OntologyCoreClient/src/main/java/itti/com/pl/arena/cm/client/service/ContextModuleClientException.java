@@ -1,6 +1,6 @@
 package itti.com.pl.arena.cm.client.service;
 
-import itti.com.pl.ontology.common.exception.ContextModuleException;
+import itti.com.pl.ontology.common.exception.OntologyException;
 
 /**
  * Client-side exception
@@ -8,7 +8,7 @@ import itti.com.pl.ontology.common.exception.ContextModuleException;
  * @author cm-admin
  * 
  */
-public class ContextModuleClientException extends ContextModuleException {
+public class ContextModuleClientException extends OntologyException {
 
     /**
 	 * 

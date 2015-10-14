@@ -68,4 +68,13 @@ public enum ErrorMessages {
     public String getMessage() {
         return message;
     }
+
+    /**
+     * Returns message
+     * 
+     * @return message
+     */
+    public String getMessage(Object...args) {
+        return String.format(message, args);
+    }
 }

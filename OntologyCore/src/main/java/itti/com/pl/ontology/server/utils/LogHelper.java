@@ -1,4 +1,4 @@
-package itti.com.pl.ontology.common.helper;
+package itti.com.pl.ontology.server.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

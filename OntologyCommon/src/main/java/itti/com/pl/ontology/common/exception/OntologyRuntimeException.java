@@ -6,7 +6,7 @@ package itti.com.pl.ontology.common.exception;
  * @author cm-admin
  * 
  */
-public class ContextModuleRuntimeException extends RuntimeException {
+public class OntologyRuntimeException extends RuntimeException {
 
     /**
      * Class UID
@@ -23,8 +23,8 @@ public class ContextModuleRuntimeException extends RuntimeException {
      * @param args
      *            list of message parameters
      */
-    public ContextModuleRuntimeException(String message, RuntimeException throwable, Object... args) {
-        super(message == null ? ContextModuleRuntimeException.class.getSimpleName() : String.format(message, args), throwable);
+    public OntologyRuntimeException(String message, RuntimeException throwable, Object... args) {
+        super(message == null ? OntologyRuntimeException.class.getSimpleName() : String.format(message, args), throwable);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ContextModuleRuntimeException extends RuntimeException {
      * @param args
      *            list of message parameters
      */
-    public ContextModuleRuntimeException(String message, Object... args) {
-        super(message == null ? ContextModuleRuntimeException.class.getSimpleName() : String.format(message, args));
+    public OntologyRuntimeException(String message, Object... args) {
+        super(message == null ? OntologyRuntimeException.class.getSimpleName() : String.format(message, args));
     }
 }
