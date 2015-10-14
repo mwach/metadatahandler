@@ -1,11 +1,12 @@
 package itti.com.pl.ontology.common.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OntologyClass {
 
 	private String name;
-	private List<OntologyProperty<?>> properties;
+	private List<OntologyProperty> properties = new ArrayList<>();
 
 	public String getName() {
 		return name;
@@ -13,10 +14,10 @@ public class OntologyClass {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<OntologyProperty<?>> getProperties() {
+	public List<OntologyProperty> getProperties() {
 		return properties;
 	}
-	public void setProperties(List<OntologyProperty<?>> properties) {
+	public void setProperties(List<OntologyProperty> properties) {
 		this.properties = properties;
 	}
 	

@@ -1,5 +1,7 @@
 package itti.com.pl.ontology.server.ontology;
 
+import itti.com.pl.ontology.common.bean.OntologyClass;
+
 import java.util.List;
 import java.util.Map;
 
@@ -75,10 +77,10 @@ public interface Ontology {
     /**
      * Creates a new class in the ontology model
      * 
-     * @param className
-     *            name of the class
+     * @param ontologyClass
+     *            class object
      */
-    public void createOwlClass(String className);
+    public void createClass(OntologyClass ontologyClass);
 
     /**
      * Removes instance identified by its name from ontology

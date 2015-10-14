@@ -1,9 +1,9 @@
 package itti.com.pl.ontology.common.bean;
 
-public class OntologyProperty<T> {
+public class OntologyProperty {
 
 	private String name;
-	private T type;
+	private Class<?> type;
 
 	public String getName() {
 		return name;
@@ -11,10 +11,10 @@ public class OntologyProperty<T> {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public T getType() {
+	public Class<?> getType() {
 		return type;
 	}
-	public void setType(T type) {
+	public void setType(Class<?> type) {
 		this.type = type;
 	}
 

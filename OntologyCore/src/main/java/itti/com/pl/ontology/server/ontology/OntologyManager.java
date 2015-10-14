@@ -1,5 +1,7 @@
 package itti.com.pl.ontology.server.ontology;
 
+import itti.com.pl.ontology.common.bean.OntologyClass;
+import itti.com.pl.ontology.common.bean.OntologyProperty;
 import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.server.exception.ErrorMessages;
 import itti.com.pl.ontology.server.utils.LogHelper;
@@ -425,14 +427,23 @@ public class OntologyManager implements Ontology{
     }
 
     @Override
-    public void createOwlClass(String className) {
+    public void createClass(OntologyClass ontologyClass) {
 
-        LogHelper.debug(OntologyManager.class, "createOwlClass", "Creating class '%s'", className);
+        LogHelper.debug(OntologyManager.class, "createOwlClass", "Creating class '%s'", ontologyClass.getName());
 
         // check, if class existed in the ontology
-        if (getModel().getOWLIndividual(className) == null) {
+        if (getModel().getOWLIndividual(ontologyClass.getName()) == null) {
             // if not, try to create it
-            OWLNamedClass individual = getModel().createOWLNamedClass(className);
+            OWLNamedClass individual = getModel().createOWLNamedClass(ontologyNamespace + ontologyClass.getName());
+            for (OntologyProperty ontologyProperty : ontologyClass.getProperties()) {
+				RDFProperty property = getModel().createRDFProperty(ontologyProperty.getName());
+				if(ontologyProperty.getType() == Integer.class){
+					property.setRange(getModel().getXSDint());
+				}else{
+					property.setRange(getModel().getXSDstring());
+				}
+				property.setDomain(individual);
+			}
         }else{
         	throw new OntologyRuntimeException("ALREady exist");
         }
