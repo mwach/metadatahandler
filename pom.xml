@@ -63,9 +63,8 @@
 
 	</build>
 	<modules>
-
+		<module>OntologyCoreClient</module>
+		<module>OntologyCore</module>
 		<module>OntologyCommon</module>
-		<module>OntologyClient</module>
-		<module>OntologyServer</module>
 	</modules>
 </project>
