@@ -17,8 +17,8 @@ public class OntologyClass {
 	public List<OntologyProperty> getProperties() {
 		return properties;
 	}
-	public void setProperties(List<OntologyProperty> properties) {
-		this.properties = properties;
+	public void add(OntologyProperty property) {
+		this.properties.add(property);
 	}
 	
 	

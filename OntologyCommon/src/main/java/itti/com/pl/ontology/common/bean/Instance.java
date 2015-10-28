@@ -12,6 +12,13 @@ public class Instance {
 	private String name;
 	private List<InstanceProperty<?>> properties;
 
+	public Instance(){}
+	
+	public Instance(OntologyClass baseClass, String name){
+		this.baseClass = baseClass;
+		this.name = name;
+	}
+
 	public OntologyClass getBaseClass() {
 		return baseClass;
 	}
@@ -27,7 +34,7 @@ public class Instance {
 	public List<InstanceProperty<?>> getProperties() {
 		return properties;
 	}
-	public void setProperties(List<InstanceProperty<?>> properties) {
-		this.properties = properties;
+	public void addProperty(InstanceProperty<?> property) {
+		this.properties.add(property);
 	}
 }

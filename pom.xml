@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -5,21 +6,21 @@
 	<artifactId>OntologyModule</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OntologyModule Webapp</name>
+	<name>OntologyModule</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencies>
 
-<dependency>
-	<groupId>org.apache.commons</groupId>
-	<artifactId>commons-lang3</artifactId>
-	<version>3.4</version>
-</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -55,16 +56,16 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>
 
 	</build>
 	<modules>
-		<module>OntologyCoreClient</module>
 		<module>OntologyCore</module>
 		<module>OntologyCommon</module>
+		<module>OntologyServer</module>
 	</modules>
 </project>

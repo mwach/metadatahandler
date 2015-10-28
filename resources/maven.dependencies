@@ -1,8 +1,0 @@
-#mkdir in catalina_home for plugins
-
-#GOTO protege installation directory
-mvn install:install-file -Dfile=protege.jar -DgroupId=edu.stanford.smi.protege -DartifactId=protege -Dversion=3.4.8 -Dpackaging=jar
-mvn install:install-file -Dfile=./plugins/edu.stanford.smi.protegex.owl/protege-owl.jar -DgroupId=edu.stanford.smi.protege -DartifactId=protege-owl -Dversion=3.4.8 -Dpackaging=jar
-mvn install:install-file -Dfile=./plugins/edu.stanford.smi.protegex.owl/swrl-jess-bridge.jar -DgroupId=edu.stanford.smi.protege -DartifactId=swrl-jess-bridge -Dversion=3.4.8 -Dpackaging=jar
-mvn install:install-file -Dfile=jess.jar -DgroupId=jessrules.com -DartifactId=jess -Dversion=7.1 -Dpackaging=jar
-mvn install:install-file -Dfile=./plugins/edu.stanford.smi.protegex.owl/orphanNodesAlg.jar -DgroupId=edu.stanford.smi.protege -DartifactId=orphanNodesAlg -Dversion=3.4.8 -Dpackaging=jar

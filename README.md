@@ -1,5 +1,4 @@
 OntologyModule
 =============
-documentation:
-https://drive.google.com/folderview?id=0BwLdFtNJLV26cld0MldjNGZqNjA&usp=sharing
-
+Installation:
+- run the resources/preinstall.sh script in order to install non-mvn-repo libraries

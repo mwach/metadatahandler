@@ -23,8 +23,8 @@ public abstract class OntologyException extends Exception {
      * @param args
      *            list of message parameters
      */
-    public OntologyException(String message, Throwable throwable, Object... args) {
-        super(message == null ? OntologyException.class.getSimpleName() : String.format(message, args), throwable);
+    public OntologyException(String message, Throwable throwable) {
+        super(message, throwable);
     }
 
     /**
@@ -35,7 +35,7 @@ public abstract class OntologyException extends Exception {
      * @param args
      *            list of message parameters
      */
-    public OntologyException(String message, Object... args) {
-        super(message == null ? OntologyException.class.getSimpleName() : String.format(message, args));
+    public OntologyException(String message) {
+        super(message);
     }
 }

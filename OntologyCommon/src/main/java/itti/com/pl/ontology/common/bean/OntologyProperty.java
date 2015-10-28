@@ -5,6 +5,13 @@ public class OntologyProperty {
 	private String name;
 	private Class<?> type;
 
+	public OntologyProperty(){}
+
+	public OntologyProperty(String name, Class<?> type){
+		this.name = name;
+		this.type = type;
+	}
+
 	public String getName() {
 		return name;
 	}
