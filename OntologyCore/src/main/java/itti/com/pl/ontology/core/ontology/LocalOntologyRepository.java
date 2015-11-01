@@ -1,7 +1,6 @@
 package itti.com.pl.ontology.core.ontology;
 
 import itti.com.pl.ontology.common.exception.OntologyException;
-import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import java.io.File;
@@ -84,10 +83,10 @@ public class LocalOntologyRepository implements OntologyRepository {
 			LOGGER.info("Model successfully saved to file: {}", fileName);
 
 		} catch (Exception exc) {
+			outputOntologyFile.delete();
 			LOGGER.error("Could not save ontology", exc);
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_CANNOT_SAVE.getMessage(fileName,
-							exc.getLocalizedMessage()), exc);
+			throw new OntologyException(
+					ErrorMessages.ONTOLOGY_CANNOT_SAVE.getMessage(fileName), exc);
 		}
 
 	}
@@ -131,8 +130,8 @@ public class LocalOntologyRepository implements OntologyRepository {
 					.createJenaOWLModelFromInputStream(ontologyInputStream);
 		} catch (Exception exc) {
 			LOGGER.error("Cannot load ontlogy using given location.", exc);
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(ontologyLocation), exc);
+			throw new OntologyException(
+					ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(fileName), exc);
 		}
 
 		LOGGER.info("Ontology successfully loaded");
@@ -170,7 +169,7 @@ public class LocalOntologyRepository implements OntologyRepository {
 	}
 
 	private void verifyFileName(String fileName) throws OntologyException {
-		if(StringUtils.isEmpty(getRepositoryLocation())){
+		if(StringUtils.isEmpty(fileName)){
 			throw new OntologyException(
 					ErrorMessages.ONTOLOGY_EMPTY_FILE_NAME_PROVIDED.getMessage());			
 		}

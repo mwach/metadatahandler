@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import itti.com.pl.ontology.common.exception.OntologyException;
+import itti.com.pl.ontology.core.ontology.LocalOntologyRepository;
 import itti.com.pl.ontology.core.ontology.Ontology;
 import itti.com.pl.ontology.core.ontology.OntologyManager;
 import itti.com.pl.ontology.server.ws.MetadataHandlerWS;
@@ -151,6 +153,12 @@ public class Application extends SpringBootServletInitializer {
 
 	@Bean
 	public Ontology getOntology() {
-		return new OntologyManager();
+		try {
+			return new LocalOntologyRepository().loadOntology("");
+		} catch (OntologyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

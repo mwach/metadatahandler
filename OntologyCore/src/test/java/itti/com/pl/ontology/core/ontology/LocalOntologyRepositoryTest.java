@@ -13,13 +13,14 @@ import org.junit.rules.ExpectedException;
 
 public class LocalOntologyRepositoryTest {
 
+	private static final String REPO_LOCATION = "src/test/resources";
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
 	public void setRepositoryCalled() throws OntologyException{
 		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation("src/test/resources");
+		lor.setRepositoryLocation(REPO_LOCATION);
 		List<String> ontologies = lor.getListOfOntologies();
 		assertEquals(1, ontologies.size());
 		String ontologyFileName = ontologies.get(0);
@@ -45,4 +46,58 @@ public class LocalOntologyRepositoryTest {
 		LocalOntologyRepository lor = new LocalOntologyRepository();
 		lor.loadOntology(null);
 	}
+
+	@Test
+	public void setFileNameNotProvided() throws OntologyException{
+		expectedException.expect(OntologyException.class);
+		expectedException.expectMessage(ErrorMessages.ONTOLOGY_EMPTY_FILE_NAME_PROVIDED.getMessage());
+		LocalOntologyRepository lor = new LocalOntologyRepository();
+		lor.setRepositoryLocation("some repo");
+		lor.loadOntology(null);
+	}
+
+	@Test
+	public void loadOntologyFailed() throws OntologyException{
+		
+		String fileName = "dummyLoad";
+		expectedException.expect(OntologyException.class);
+		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(fileName));
+		LocalOntologyRepository lor = new LocalOntologyRepository();
+		lor.setRepositoryLocation(REPO_LOCATION);
+		lor.loadOntology(fileName);
+	}
+
+	@Test
+	public void getListOfOntologiesFailed() throws OntologyException{
+		
+		String invalidRepo = "invalidRepo";
+		expectedException.expect(OntologyException.class);
+		expectedException.expectMessage(ErrorMessages.ONTOLOGY_REPO_CANNOT_ACCESS.getMessage(invalidRepo));
+		LocalOntologyRepository lor = new LocalOntologyRepository();
+		lor.setRepositoryLocation(invalidRepo);
+		lor.getListOfOntologies();
+	}
+
+	@Test
+	public void removeOntologyFailed() throws OntologyException{
+		
+		String fileName = "dummyRemove";
+		expectedException.expect(OntologyException.class);
+		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_REMOVE.getMessage(fileName));
+		LocalOntologyRepository lor = new LocalOntologyRepository();
+		lor.setRepositoryLocation(REPO_LOCATION);
+		lor.removeOntology(fileName);
+	}
+
+	@Test
+	public void saveOntologyFailed() throws OntologyException{
+		
+		String fileName = "dummySave";
+		expectedException.expect(OntologyException.class);
+		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_SAVE.getMessage(fileName));
+		LocalOntologyRepository lor = new LocalOntologyRepository();
+		lor.setRepositoryLocation(REPO_LOCATION);
+		lor.saveOntology(null, fileName);
+	}
+
 }
