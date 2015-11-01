@@ -9,9 +9,9 @@ import javax.jws.WebService;
 
 import org.springframework.stereotype.Service;
 
-@WebService(endpointInterface = "itti.com.pl.ontology.server.ws.OntologyWS")
+@WebService(endpointInterface = "itti.com.pl.ontology.server.ws.MetadataHandlerWS")
 @Service
-public class OntologyService implements OntologyWS {
+public class MetadataHandler implements MetadataHandlerWS {
 
 	@Override
 	public boolean setTSINodeType(TSINodeType tsiNodeType) {

@@ -14,12 +14,12 @@ import itti.com.pl.ontology.core.exception.ErrorMessages;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-@Ignore
+import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
+
 public class OntologyManagerTest {
 
     public static final String ONTOLOGY_REPOSITORY = "src/test/resources";
@@ -29,16 +29,20 @@ public class OntologyManagerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
+    private static OntologyRepositoryManager ontologyRepository = null;
     private static OntologyManager ontologyManager;
+    private static JenaOWLModel model = null;
 
     @BeforeClass
     public static void beforeClass() throws OntologyRuntimeException {
 
+    	ontologyRepository = new OntologyRepositoryManager();
+    	ontologyRepository.setOntologyRepository(ONTOLOGY_REPOSITORY);
+    	model = ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
+    	
         // to speed up tests, load ontology and then reuse it among tests
-        ontologyManager = new OntologyManager();
-        ontologyManager.setOntologyRepository(ONTOLOGY_REPOSITORY);
+        ontologyManager = new OntologyManager(model);
         ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
-        ontologyManager.loadOntology(ONTOLOGY_LOCATION);
     }
 
     @AfterClass
@@ -51,8 +55,7 @@ public class OntologyManagerTest {
         // check exception, when no location was provided
         expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(), "null"));
-        OntologyManager om = new OntologyManager();
-        om.loadOntology("");
+        new OntologyRepositoryManager().loadOntology("");
     }
 
     @Test
@@ -84,7 +87,6 @@ public class OntologyManagerTest {
     public void testAddInstanceWithProperties() throws OntologyRuntimeException {
 
         // select existing class having at least one known property
-        String className = "SomeClass";
         String propertyName = "SomeProperty";
         String propertyValue = String.valueOf(123.456);
         Map<String, String[]> properties = new HashMap<>();
@@ -112,7 +114,7 @@ public class OntologyManagerTest {
         // verify, instance was added to ontology
         assertTrue(ontologyManager.hasInstance(instanceName));
         // remove it
-        ontologyManager.remove(instanceName);
+        ontologyManager.removeInstance(instanceName);
         // verify, instance was removed from ontology
         assertFalse(ontologyManager.hasInstance(instanceName));
     }
@@ -125,7 +127,7 @@ public class OntologyManagerTest {
 
         expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(), instanceName));
-        ontologyManager.remove(instanceName);
+        ontologyManager.removeInstance(instanceName);
     }
 
 }

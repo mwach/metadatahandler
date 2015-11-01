@@ -1,5 +1,6 @@
 package itti.com.pl.ontology.common.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class Instance {
 
 	private OntologyClass baseClass;
 	private String name;
-	private List<InstanceProperty<?>> properties;
+	private List<InstanceProperty<?>> properties = new ArrayList<InstanceProperty<?>>();
 
 	public Instance(){}
 	
@@ -32,7 +33,7 @@ public class Instance {
 		this.name = name;
 	}
 	public List<InstanceProperty<?>> getProperties() {
-		return properties;
+		return new ArrayList<>(properties);
 	}
 	public void addProperty(InstanceProperty<?> property) {
 		this.properties.add(property);

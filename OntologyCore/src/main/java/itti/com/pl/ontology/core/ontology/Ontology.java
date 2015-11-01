@@ -68,6 +68,13 @@ public interface Ontology {
      */
     public boolean hasInstance(String instanceName);
 
+    /**
+     * Removes instance identified by its name from ontology
+     * 
+     * @param instanceName
+     *            name of the instance to remove
+     */
+    public void removeInstance(String instanceName);
 
     /**
      * Creates a new class in the ontology model
@@ -78,12 +85,11 @@ public interface Ontology {
     public void createClass(OntologyClass ontologyClass);
 
     /**
-     * Removes instance identified by its name from ontology
+     * Removes an existing class from the ontology model
      * 
-     * @param instanceName
-     *            name of the instance to remove
+     * @param ontologyClass name of the ontology class
      */
-    public void remove(String instanceName);
+    public void removeClass(String ontologyClass);
 
     /**
      * Adds a new rule to the ontology
@@ -113,11 +119,6 @@ public interface Ontology {
     public void removeSwrlRule(String ruleName);
 
     /**
-     * Runs SWRL engine on existing model
-     */
-    public void runSwrlEngine();
-
-    /**
      * Returns list of SWRL rules defined in the ontology
      * 
      * @return list of SWRL rules. If there are no rules, empty list will be returned
@@ -125,30 +126,7 @@ public interface Ontology {
     public List<String> getSwrlRules();
 
     /**
-     * Saves current ontology model to file
-     * 
-     * @param fileName
-     *            location of the file, where ontology should be saved
+     * Runs SWRL engine on existing model
      */
-    public void saveOntology(String fileName);
-
-    /**
-     * Loads ontology model from the file
-     * 
-     * @param fileName
-     *            location of the file containing ontology
-     */
-    public void loadOntology(String fileName);
-
-    /**
-     * Returns a list of all ontologies from the repository
-     * @return list of strings representing ontology names
-     */
-    public List<String> getListOfOntologies();
-
-    /**
-     * Returns name of the currently loaded ontology
-     * @return name of the ontology
-     */
-    public String getCurrentOntology();
+    public void runSwrlEngine();
 }

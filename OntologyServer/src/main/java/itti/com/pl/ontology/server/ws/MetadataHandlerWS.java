@@ -8,7 +8,7 @@ import itti.com.pl.ontology.server.ws.bean.TypeOfObject;
 import javax.jws.WebService;
 
 @WebService
-public interface OntologyWS {
+public interface MetadataHandlerWS {
 
 	/**
 	 * sets the mode in which TSI node operates e.g. DeployableHQ, Vehicle or
