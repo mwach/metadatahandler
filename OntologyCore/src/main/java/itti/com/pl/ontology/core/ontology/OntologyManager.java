@@ -689,4 +689,9 @@ public class OntologyManager implements Ontology {
 							.getLocalizedMessage()), exc);
 		}
 	}
+
+	@Override
+	public JenaOWLModel getUnderlyingModel() {
+		return model;
+	}
 }

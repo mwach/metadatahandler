@@ -8,6 +8,7 @@ import java.util.Map;
 import itti.com.pl.ontology.common.bean.Instance;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 import itti.com.pl.ontology.common.bean.OntologyProperty;
+import itti.com.pl.ontology.common.exception.OntologyException;
 import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
@@ -18,8 +19,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
-
 public class OntologyManagerTest {
 
     public static final String ONTOLOGY_REPOSITORY = "src/test/resources";
@@ -29,20 +28,16 @@ public class OntologyManagerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private static OntologyRepositoryManager ontologyRepository = null;
+    private static LocalOntologyRepository ontologyRepository = null;
     private static OntologyManager ontologyManager;
-    private static JenaOWLModel model = null;
 
     @BeforeClass
-    public static void beforeClass() throws OntologyRuntimeException {
+    public static void beforeClass() throws OntologyRuntimeException, OntologyException {
 
-    	ontologyRepository = new OntologyRepositoryManager();
-    	ontologyRepository.setOntologyRepository(ONTOLOGY_REPOSITORY);
-    	model = ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
-    	
-        // to speed up tests, load ontology and then reuse it among tests
-        ontologyManager = new OntologyManager(model);
-        ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
+    	ontologyRepository = new LocalOntologyRepository();
+    	ontologyRepository.setRepositoryLocation(ONTOLOGY_REPOSITORY);
+    	ontologyManager = (OntologyManager) ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
+    	ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
     }
 
     @AfterClass
@@ -51,11 +46,11 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testInitInvalidLocation() throws OntologyRuntimeException {
+    public void testInitInvalidLocation() throws OntologyRuntimeException, OntologyException {
         // check exception, when no location was provided
         expectedException.expect(OntologyRuntimeException.class);
         expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(), "null"));
-        new OntologyRepositoryManager().loadOntology("");
+        new LocalOntologyRepository().loadOntology("");
     }
 
     @Test

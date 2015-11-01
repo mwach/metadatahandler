@@ -6,7 +6,7 @@ package itti.com.pl.ontology.common.exception;
  * @author mawa
  * 
  */
-public abstract class OntologyException extends Exception {
+public class OntologyException extends Exception {
 
     /**
      * Class UID

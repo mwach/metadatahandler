@@ -5,6 +5,8 @@ import itti.com.pl.ontology.common.bean.OntologyClass;
 
 import java.util.List;
 
+import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
+
 /**
  * Interface defining Arena-specific ontology operations
  * 
@@ -12,6 +14,12 @@ import java.util.List;
  * 
  */
 public interface Ontology {
+
+	/**
+	 * Returns underlying OWL model
+	 * @return {@link JenaOWLModel}
+	 */
+	public JenaOWLModel getUnderlyingModel();
 
     /**
      * Returns list of instances of given ontology class
