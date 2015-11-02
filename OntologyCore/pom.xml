@@ -100,12 +100,13 @@
 			<version>3.4.8</version>
 		</dependency>
 
+<!-- 
 		<dependency>
 			<groupId>jessrules.com</groupId>
 			<artifactId>jess</artifactId>
 			<version>7.1</version>
 		</dependency>
-
+ -->
 		<!-- Logging -->
 
 		<dependency>

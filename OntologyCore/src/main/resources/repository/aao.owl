@@ -1,0 +1,2668 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:service="http://www.daml.org/services/owl-s/1.2/Service.owl#"
+    xmlns:process="http://www.daml.org/services/owl-s/1.2/Process.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns="http://afro.wil.waw.pl/AAO.owl#"
+    xmlns:list="http://www.daml.org/services/owl-s/1.2/generic/ObjectList.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:expr="http://www.daml.org/services/owl-s/1.2/generic/Expression.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:grounding="http://www.daml.org/services/owl-s/1.2/Grounding.owl#"
+    xmlns:profile="http://www.daml.org/services/owl-s/1.2/Profile.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:time="http://www.isi.edu/~pan/damltime/time-entry.owl#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://afro.wil.waw.pl/AAO.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.w3.org/2003/11/swrlb"/>
+    <owl:imports rdf:resource="http://www.w3.org/2003/11/swrl"/>
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/3.3/swrla.owl"/>
+    <owl:imports rdf:resource="http://www.daml.org/services/owl-s/1.2/Profile.owl"/>
+    <owl:imports rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"/>
+    <owl:imports rdf:resource="http://www.daml.org/services/owl-s/1.2/Grounding.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="SupportsEXI">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="EncodingProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="SupportsFI"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="SupportsGZIP"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="SupportsXML"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="Laptop">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Device"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="RadioTerminal"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="PDA"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="MobilePhone"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="LinkPerformance">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="DynamicQoSAttribute"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="JISP_COI_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="COI_Specific_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="DecreaseColourDepth">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="ChangeResolution"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="DecreaseQuality"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="DiscardAttachment"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="AttachmentAdaptation"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Audio"/>
+  <owl:Class rdf:ID="Airspace_Management_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Air_COI_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#RadioTerminal">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Device"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Laptop"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#PDA"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#MobilePhone"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="DeviceStatus"/>
+  <owl:Class rdf:ID="Software_supplies">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Service_classification"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#ChangeResolution">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#AttachmentAdaptation"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#DecreaseColourDepth"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#DecreaseQuality"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#DiscardAttachment"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="GZIPCompression">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="EXIEncoding"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="FIEncoding"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="SOAPAdaptation"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="SA_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="COI_Enabling_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Full">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Limited"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Binary"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Grayscale"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="DisplayProperties"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Service_parameters"/>
+  <owl:Class rdf:ID="NetworkType"/>
+  <owl:Class rdf:about="#SupportsFI">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#SupportsEXI"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SupportsGZIP"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SupportsXML"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="SoftwareDescription"/>
+  <owl:Class rdf:ID="QoSAttribute">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="QoSMetric"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="isMeasuredBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Battelspace_Events_Services">
+    <rdfs:subClassOf rdf:resource="#SA_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#DecreaseQuality">
+    <owl:disjointWith rdf:resource="#DecreaseColourDepth"/>
+    <owl:disjointWith rdf:resource="#ChangeResolution"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#DiscardAttachment"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#AttachmentAdaptation"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="HardwareDescription"/>
+  <owl:Class rdf:ID="User">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasPreferredAction"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="Action"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="uses"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Device"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="isConnectedBy"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="NetworkConnection"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasProhibitedAction"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#Action"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="AdaptationPreferences"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasAdaptationPreferences"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="userName"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Throughput">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="THRValue"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="DynamicQoSMetric"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="PER"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Delay"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="CIMIC_COI_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#COI_Specific_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#NetworkConnection">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#User"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="connects"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Device">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#User"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="usedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="deviceName"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#DisplayProperties"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasDisplayProperties"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="HWProperties"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasHWProperties"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class rdf:ID="MIMETypesProperties"/>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasMIMETypesUnSupported"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasEncodingProperties"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class rdf:about="#EncodingProperties"/>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Infrastructure_IA_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Infrastructure_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#EXIEncoding">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#SOAPAdaptation"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#FIEncoding"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#GZIPCompression"/>
+  </owl:Class>
+  <owl:Class rdf:about="#SupportsGZIP">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#SupportsEXI"/>
+    <owl:disjointWith rdf:resource="#SupportsFI"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SupportsXML"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="COI_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Service_Taxonomy"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Service_Taxonomy">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      Service classification acoording to the NATO C3 Taxonomy CIS 
+      Capabilities 
+    &lt;/p&gt;</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="CPUDescription"/>
+  <owl:Class rdf:about="#COI_Specific_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="SOA_Platform_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Core_Enterprise_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="PreferredResolution">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="PreferredQuality"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#AdaptationPreferences"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="resolutionValue"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Service"/>
+  <owl:Class rdf:ID="Recognised_Medical_Picture_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Logistics_COI_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Audio_based_Communication_Services_voice">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Unified_Communication_and_Collaboration_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#PDA">
+    <owl:disjointWith rdf:resource="#Laptop"/>
+    <owl:disjointWith rdf:resource="#RadioTerminal"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#MobilePhone"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#Device"/>
+  </owl:Class>
+  <owl:Class rdf:about="#AttachmentAdaptation">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Action"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#SOAPAdaptation"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#DynamicQoSMetric">
+    <rdfs:subClassOf rdf:resource="#QoSMetric"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Grayscale">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Limited"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Full"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Binary"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#DisplayProperties"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Resolution"/>
+  <owl:Class rdf:ID="Application_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:about="#SOAPAdaptation">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Action"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#AttachmentAdaptation"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Core_Enterprise_Services">
+    <rdfs:subClassOf rdf:resource="#Service_Taxonomy"/>
+  </owl:Class>
+  <owl:Class rdf:ID="WSDL">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      
+Web Services Description Language (WSDL) 2.0 
+    &lt;/p&gt;</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Standards"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Infrastructure_Services">
+    <rdfs:subClassOf rdf:resource="#Core_Enterprise_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Enterprise_Support_Services">
+    <rdfs:subClassOf rdf:resource="#Core_Enterprise_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#HWProperties">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="DeviceProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#MIMETypesProperties"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#DisplayProperties"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="SOA_Platform_IA_Services">
+    <rdfs:subClassOf rdf:resource="#SOA_Platform_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="OGC_SensorML">
+    <rdfs:subClassOf rdf:resource="#Standards"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      
+Open Geospatial Consortium's OGC® SensorML 
+    &lt;/p&gt;</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="#COI_Enabling_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="UnSupportedApplicationPDF">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UnSupportedImageGIF"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UnSupportedImageJPG"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UnSupportedImagePNG"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UnSupportedImageJPEG"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="UnSupportedImageTIFF"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MIMETypesProperties"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="PreferredColourDepth">
+    <rdfs:subClassOf rdf:resource="#AdaptationPreferences"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="colourDepthValue"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="UserInterface"/>
+  <owl:Class rdf:ID="ContactInformation">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:minCardinality>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="Company_name"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:cardinality>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="companyID"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:minCardinality>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="companyProfile"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="responsiblePerson"/>
+        </owl:onProperty>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:minCardinality>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="phone"/>
+        </owl:onProperty>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:minCardinality>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Unified_Communication_and_Collaboration_Services">
+    <rdfs:subClassOf rdf:resource="#Enterprise_Support_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="XMLEncoding">
+    <rdfs:subClassOf rdf:resource="#SOAPAdaptation"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Authorization_and_Access_Services">
+    <rdfs:subClassOf rdf:resource="#Infrastructure_IA_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Information_Labeling_Services">
+    <rdfs:subClassOf rdf:resource="#SOA_Platform_IA_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#PreferredQuality">
+    <rdfs:subClassOf rdf:resource="#AdaptationPreferences"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="qualityValue"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#PreferredResolution"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Authentication_Services">
+    <rdfs:subClassOf rdf:resource="#Infrastructure_IA_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Hosting_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Tasking_and_Order_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Enabling_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Delay">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="delayValue"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#DynamicQoSMetric"/>
+    <owl:disjointWith rdf:resource="#Throughput"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#PER"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:about="#UnSupportedImagePNG">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MIMETypesProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageGIF"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageJPG"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageJPEG"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageTIFF"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedApplicationPDF"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Action">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="hasPriority"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="isProhibitedBy"/>
+        </owl:onProperty>
+        <owl:someValuesFrom rdf:resource="#User"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="hasActionName"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="PreferredActionsSet"/>
+  <owl:Class rdf:ID="Degraded">
+    <owl:disjointWith>
+      <owl:Class rdf:ID="VeryGood"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="Constrained"/>
+    </owl:disjointWith>
+    <rdfs:subClassOf rdf:resource="#NetworkType"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Limited">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#DisplayProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#Full"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Binary"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#Grayscale"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Logistics_COI_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Specific_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#SupportsXML">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith rdf:resource="#SupportsEXI"/>
+    <owl:disjointWith rdf:resource="#SupportsFI"/>
+    <owl:disjointWith rdf:resource="#SupportsGZIP"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Screen"/>
+  <owl:Class rdf:about="#DisplayProperties">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#MIMETypesProperties"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#HWProperties"/>
+    <rdfs:subClassOf rdf:resource="#DeviceProperties"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Network"/>
+  <owl:Class rdf:ID="HighCPU">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="CPULevel"/>
+    </rdfs:subClassOf>
+    <owl:disjointWith>
+      <owl:Class rdf:ID="LowCPU"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="ConnectionDescription"/>
+  <owl:Class rdf:ID="DeviceDescription"/>
+  <owl:Class rdf:ID="Access_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Recognized_Picture_Services">
+    <rdfs:subClassOf rdf:resource="#SA_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Recognized_Ground_Picture_Services">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Land_COI_Services"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MemoryDescription"/>
+  <owl:Class rdf:ID="Power"/>
+  <owl:Class rdf:ID="Support_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:about="#UnSupportedImageJPG">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageGIF"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedImagePNG"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageTIFF"/>
+    </owl:disjointWith>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageJPEG"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedApplicationPDF"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#MIMETypesProperties"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#Land_COI_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Specific_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MIMETypesProperties">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#EncodingProperties"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#HWProperties"/>
+    <owl:disjointWith rdf:resource="#DisplayProperties"/>
+    <rdfs:subClassOf rdf:resource="#DeviceProperties"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Text_based_Communiation_Services_chat">
+    <rdfs:subClassOf rdf:resource="#Unified_Communication_and_Collaboration_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#UnSupportedImageTIFF">
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageGIF"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedImageJPG"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImagePNG"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageJPEG"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedApplicationPDF"/>
+    <rdfs:subClassOf rdf:resource="#MIMETypesProperties"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Network_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:about="#LowCPU">
+    <owl:disjointWith rdf:resource="#HighCPU"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#CPULevel"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#UnSupportedImageGIF">
+    <rdfs:subClassOf rdf:resource="#MIMETypesProperties"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImageJPG"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImagePNG"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImageTIFF"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#UnSupportedImageJPEG"/>
+    </owl:disjointWith>
+    <owl:disjointWith rdf:resource="#UnSupportedApplicationPDF"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Resource_Request_Services">
+    <rdfs:subClassOf rdf:resource="#Tasking_and_Order_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ServiceCallContext"/>
+  <owl:Class rdf:about="#FIEncoding">
+    <owl:disjointWith rdf:resource="#EXIEncoding"/>
+    <owl:disjointWith rdf:resource="#GZIPCompression"/>
+    <rdfs:subClassOf rdf:resource="#SOAPAdaptation"/>
+  </owl:Class>
+  <owl:Class rdf:about="#UnSupportedImageJPEG">
+    <owl:disjointWith rdf:resource="#UnSupportedImageGIF"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImageJPG"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImagePNG"/>
+    <owl:disjointWith rdf:resource="#UnSupportedImageTIFF"/>
+    <owl:disjointWith rdf:resource="#UnSupportedApplicationPDF"/>
+    <rdfs:subClassOf rdf:resource="#MIMETypesProperties"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Binary">
+    <owl:disjointWith rdf:resource="#Limited"/>
+    <owl:disjointWith rdf:resource="#Full"/>
+    <owl:disjointWith rdf:resource="#Grayscale"/>
+    <rdfs:subClassOf rdf:resource="#DisplayProperties"/>
+  </owl:Class>
+  <owl:Class rdf:ID="National_Law_Enforcement_Services">
+    <rdfs:subClassOf rdf:resource="#CIMIC_COI_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#CPULevel">
+    <rdfs:subClassOf rdf:resource="#HWProperties"/>
+  </owl:Class>
+  <owl:Class rdf:about="#EncodingProperties">
+    <rdfs:subClassOf rdf:resource="#DeviceProperties"/>
+    <owl:disjointWith rdf:resource="#MIMETypesProperties"/>
+    <owl:disjointWith rdf:resource="#HWProperties"/>
+    <owl:disjointWith rdf:resource="#DisplayProperties"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Air_COI_Services">
+    <rdfs:subClassOf rdf:resource="#COI_Specific_Services"/>
+  </owl:Class>
+  <owl:Class rdf:about="#DynamicQoSAttribute">
+    <rdfs:subClassOf rdf:resource="#QoSAttribute"/>
+  </owl:Class>
+  <owl:Class rdf:about="#DiscardAttachment">
+    <owl:disjointWith rdf:resource="#DecreaseColourDepth"/>
+    <owl:disjointWith rdf:resource="#ChangeResolution"/>
+    <owl:disjointWith rdf:resource="#DecreaseQuality"/>
+    <rdfs:subClassOf rdf:resource="#AttachmentAdaptation"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Security_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Surveillance_order">
+    <rdfs:subClassOf rdf:resource="#Service_parameters"/>
+  </owl:Class>
+  <owl:Class rdf:about="#MobilePhone">
+    <rdfs:subClassOf rdf:resource="#Device"/>
+    <owl:disjointWith rdf:resource="#Laptop"/>
+    <owl:disjointWith rdf:resource="#RadioTerminal"/>
+    <owl:disjointWith rdf:resource="#PDA"/>
+  </owl:Class>
+  <owl:Class rdf:about="#PER">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="PERValue"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#DynamicQoSMetric"/>
+    <owl:disjointWith rdf:resource="#Throughput"/>
+    <owl:disjointWith rdf:resource="#Delay"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Material_supplies">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:about="#VeryGood">
+    <rdfs:subClassOf rdf:resource="#NetworkType"/>
+    <owl:disjointWith rdf:resource="#Degraded"/>
+    <owl:disjointWith>
+      <owl:Class rdf:about="#Constrained"/>
+    </owl:disjointWith>
+  </owl:Class>
+  <owl:Class rdf:ID="JISR_Sensor_Services">
+    <rdfs:subClassOf rdf:resource="#JISP_COI_Services"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ProhibitedActionsSet"/>
+  <owl:Class rdf:about="#Constrained">
+    <owl:disjointWith rdf:resource="#Degraded"/>
+    <owl:disjointWith rdf:resource="#VeryGood"/>
+    <rdfs:subClassOf rdf:resource="#NetworkType"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Bandwith_services">
+    <rdfs:subClassOf rdf:resource="#Service_classification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Operations_Order_Services">
+    <rdfs:subClassOf rdf:resource="#Tasking_and_Order_Services"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="#hasMIMETypesUnSupported">
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:ID="hasDeviceProperties"/>
+    </rdfs:subPropertyOf>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:range rdf:resource="#MIMETypesProperties"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasContactInformation">
+    <rdfs:range rdf:resource="#ContactInformation"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#DeviceDescription"/>
+          <owl:Class rdf:about="#Network"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasDisplayProperties">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="#hasDeviceProperties"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="#DisplayProperties"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="software">
+    <rdfs:range rdf:resource="#SoftwareDescription"/>
+    <rdfs:domain rdf:resource="#Device"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Service_uses_Standards">
+    <rdfs:domain>
+      <rdf:Description rdf:about="http://www.daml.org/services/owl-s/1.2/Service.owl#Service">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:DatatypeProperty rdf:ID="Service_ID"/>
+            </owl:onProperty>
+            <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:cardinality>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:cardinality>
+            <owl:onProperty rdf:resource="http://www.daml.org/services/owl-s/1.2/Profile.owl#serviceClassification"/>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.daml.org/services/owl-s/1.2/Profile.owl#serviceCategory"/>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+            <owl:onProperty>
+              <owl:DatatypeProperty rdf:ID="Service_complexity"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+            <owl:onProperty>
+              <owl:DatatypeProperty rdf:ID="Service_Subscriber_Consumer"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+            <owl:onProperty>
+              <owl:DatatypeProperty rdf:ID="List_of_operations"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:DatatypeProperty rdf:ID="Requirements_and_deployment"/>
+            </owl:onProperty>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+          <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >1</owl:minCardinality>
+            <owl:onProperty rdf:resource="#Service_uses_Standards"/>
+          </owl:Restriction>
+        </rdfs:subClassOf>
+      </rdf:Description>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="#Standards"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#connects">
+    <rdfs:range rdf:resource="#User"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#isConnectedBy"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#NetworkConnection"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="inverse_of_connects_4">
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="#isConnectedBy"/>
+    </rdfs:subPropertyOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#isProhibitedBy">
+    <rdfs:range rdf:resource="#User"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#hasProhibitedAction"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#Action"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasEncodingProperties">
+    <rdfs:range rdf:resource="#EncodingProperties"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="#hasDeviceProperties"/>
+    </rdfs:subPropertyOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasNetworkType">
+    <rdfs:range rdf:resource="#NetworkType"/>
+    <rdfs:domain rdf:resource="#NetworkConnection"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasService">
+    <rdfs:domain rdf:resource="#Device"/>
+    <rdfs:range rdf:resource="#Service"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="conncection">
+    <rdfs:domain rdf:resource="#HardwareDescription"/>
+    <rdfs:range rdf:resource="#ConnectionDescription"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasHWProperties">
+    <rdfs:range rdf:resource="#HWProperties"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="#hasDeviceProperties"/>
+    </rdfs:subPropertyOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasAudio">
+    <rdfs:domain rdf:resource="#UserInterface"/>
+    <rdfs:range rdf:resource="#Audio"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#isConnectedBy">
+    <owl:inverseOf rdf:resource="#connects"/>
+    <rdfs:range rdf:resource="#NetworkConnection"/>
+    <rdfs:domain rdf:resource="#User"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="measures">
+    <rdfs:range rdf:resource="#QoSAttribute"/>
+    <rdfs:domain rdf:resource="#QoSMetric"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#isMeasuredBy"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#usedBy">
+    <rdfs:range rdf:resource="#User"/>
+    <rdfs:domain rdf:resource="#Device"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#uses"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasResolution">
+    <rdfs:range rdf:resource="#Resolution"/>
+    <rdfs:domain rdf:resource="#UserInterface"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="powerDetails">
+    <rdfs:range rdf:resource="#Power"/>
+    <rdfs:domain rdf:resource="#DeviceStatus"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Service_uses_core_service">
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+          <owl:Class rdf:about="#Service_Taxonomy"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#isMeasuredBy">
+    <owl:inverseOf rdf:resource="#measures"/>
+    <rdfs:domain rdf:resource="#QoSAttribute"/>
+    <rdfs:range rdf:resource="#QoSMetric"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#uses">
+    <rdfs:domain rdf:resource="#User"/>
+    <owl:inverseOf rdf:resource="#usedBy"/>
+    <rdfs:range rdf:resource="#Device"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasDeviceProperties">
+    <rdfs:range rdf:resource="#DeviceProperties"/>
+    <rdfs:domain rdf:resource="#Device"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="CPU">
+    <rdfs:domain rdf:resource="#HardwareDescription"/>
+    <rdfs:range rdf:resource="#CPUDescription"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasProhibitedAction">
+    <owl:inverseOf rdf:resource="#isProhibitedBy"/>
+    <rdfs:range rdf:resource="#Action"/>
+    <rdfs:domain rdf:resource="#User"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="status">
+    <rdfs:domain rdf:resource="#Device"/>
+    <rdfs:range rdf:resource="#DeviceStatus"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasAdaptationPreferences">
+    <rdfs:range rdf:resource="#AdaptationPreferences"/>
+    <rdfs:domain rdf:resource="#User"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasScreen">
+    <rdfs:range rdf:resource="#Screen"/>
+    <rdfs:domain rdf:resource="#UserInterface"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasPreferredAction">
+    <rdfs:domain rdf:resource="#User"/>
+    <rdfs:range rdf:resource="#Action"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasUserInterface">
+    <rdfs:domain rdf:resource="#HardwareDescription"/>
+    <rdfs:range rdf:resource="#UserInterface"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Service_uses_functional_service">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <rdf:Description rdf:about="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+          <owl:Class rdf:about="#Service_Taxonomy"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hardware">
+    <rdfs:domain rdf:resource="#Device"/>
+    <rdfs:range rdf:resource="#HardwareDescription"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="memory">
+    <rdfs:range rdf:resource="#MemoryDescription"/>
+    <rdfs:domain rdf:resource="#HardwareDescription"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Service_works_on_device">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range rdf:resource="#Device"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="screenWidth">
+    <rdfs:domain rdf:resource="#Screen"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#hasPriority">
+    <rdfs:domain rdf:resource="#Action"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#userName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#User"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resolutionGraphic">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resolution"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="deviceModel">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DeviceDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#hasActionName">
+    <rdfs:domain rdf:resource="#Action"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="email">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUSpeed">
+    <rdfs:domain rdf:resource="#CPUDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="method">
+    <rdfs:domain rdf:resource="#Power"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="location">
+    <rdfs:domain rdf:resource="#DeviceStatus"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUNumber">
+    <rdfs:domain rdf:resource="#CPUDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Priority_service_user">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resolutionHeight">
+    <rdfs:domain rdf:resource="#Resolution"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#companyID">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Type_of_node">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Dismounted</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Deployable HQ</rdf:first>
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >TSI custom</rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </rdf:rest>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Mobile</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Surveillance_Order_Accepted">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:domain rdf:resource="#Surveillance_order"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="conncectionType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ConnectionDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="audioOutput">
+    <rdfs:domain rdf:resource="#Audio"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#responsiblePerson">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkType">
+    <rdfs:domain rdf:resource="#Network"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >client-server</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >peer-to-peer</rdf:first>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >multiierArchitecture</rdf:first>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#Requirements_and_deployment">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="OSVendorName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#colourDepthValue">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="vendorName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DeviceDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkFunctionalType">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >processControlNetworks</rdf:first>
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:parseType="Resource">
+                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >wirelessCommunityNetwork</rdf:first>
+                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                  </rdf:rest>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >SOHONetwork</rdf:first>
+                </rdf:rest>
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >valueAddedNetwork</rdf:first>
+              </rdf:rest>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >serverFarms</rdf:first>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >storageAreaNetwork</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="#Network"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Service_platform_services_classification">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      Classification according to 
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      TRM - the Technical Reference Model
+    &lt;/p&gt;</rdfs:comment>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Data Management</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >International Operations</rdf:first>
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:parseType="Resource">
+                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Location and directory</rdf:first>
+                    <rdf:rest rdf:parseType="Resource">
+                      <rdf:rest rdf:parseType="Resource">
+                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >System and Network Management</rdf:first>
+                        <rdf:rest rdf:parseType="Resource">
+                          <rdf:rest rdf:parseType="Resource">
+                            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >Software Engineering</rdf:first>
+                            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                          </rdf:rest>
+                          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >Security</rdf:first>
+                        </rdf:rest>
+                      </rdf:rest>
+                      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                      >Transaction Processing</rdf:first>
+                    </rdf:rest>
+                  </rdf:rest>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >User Interface</rdf:first>
+                </rdf:rest>
+              </rdf:rest>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Data Interchange</rdf:first>
+            </rdf:rest>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Graphics and Image</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#PERValue">
+    <rdfs:domain rdf:resource="#PER"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Service_degraded_levels">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="qos">
+    <rdfs:domain rdf:resource="#ConnectionDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resolutionWidth">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resolution"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="remainingPowerLevel">
+    <rdfs:domain rdf:resource="#Power"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="softwareType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SoftwareDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="unit">
+    <rdfs:domain rdf:resource="#MemoryDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="deviceDescription"/>
+  <owl:DatatypeProperty rdf:ID="resolutionUnit">
+    <rdfs:domain rdf:resource="#Resolution"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="screenColor">
+    <rdfs:domain rdf:resource="#Screen"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#companyProfile">
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="deviceID">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Device"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="memoryUsageType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#MemoryDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="screenHeight">
+    <rdfs:domain rdf:resource="#Screen"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="conncectionSpeed">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ConnectionDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#resolutionValue">
+    <rdfs:domain rdf:resource="#PreferredResolution"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Service_long_description">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkAddress">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Network"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#Service_complexity">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Elementary services</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Composite services</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Process services</rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:rest>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Service_business_process_classification">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >Service Development and Management</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >Resource Development and Management</rdf:first>
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Supply Chain Development and Management</rdf:first>
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:parseType="Resource">
+                    <rdf:rest rdf:parseType="Resource">
+                      <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                      >Supplier, Partner Relationships Management</rdf:first>
+                      <rdf:rest rdf:parseType="Resource">
+                        <rdf:rest rdf:parseType="Resource">
+                          <rdf:rest rdf:parseType="Resource">
+                            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >Financial and Asset Management</rdf:first>
+                            <rdf:rest rdf:parseType="Resource">
+                              <rdf:rest rdf:parseType="Resource">
+                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                >Stakeholder and External Relations Management</rdf:first>
+                                <rdf:rest rdf:parseType="Resource">
+                                  <rdf:rest rdf:parseType="Resource">
+                                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                    >Human Resources Management</rdf:first>
+                                    <rdf:rest rdf:parseType="Resource">
+                                      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                      <rdf:first rdf:datatype=
+                                      "http://www.w3.org/2001/XMLSchema#string"
+                                      >Resource Management and Operations</rdf:first>
+                                    </rdf:rest>
+                                  </rdf:rest>
+                                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                  >Knowledge and Research Management</rdf:first>
+                                </rdf:rest>
+                              </rdf:rest>
+                              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                              >Enterprise Effectivness Management</rdf:first>
+                            </rdf:rest>
+                          </rdf:rest>
+                          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                          >Enerprise Risk Management</rdf:first>
+                        </rdf:rest>
+                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >Strategic and Enterprise Planning</rdf:first>
+                      </rdf:rest>
+                    </rdf:rest>
+                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >Service Management and Operations</rdf:first>
+                  </rdf:rest>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >Customer Relationshipos Management</rdf:first>
+                </rdf:rest>
+              </rdf:rest>
+            </rdf:rest>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >Marketing and Offer Management</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      Service business process classification according to 
+    &lt;/p&gt;
+    &lt;p style="margin-top: 0"&gt;
+      The Business Process Framework eTOM. It is a model for the 
+      telecommunications industry, delivered by the Telemanagement Forum which 
+      describes business processes required by a service provider and defines 
+      key elements and interaction between them.
+    &lt;/p&gt;</rdfs:comment>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUUsageStatus">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DeviceStatus"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkName">
+    <rdfs:domain rdf:resource="#Network"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="freeMemory">
+    <rdfs:domain rdf:resource="#MemoryDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#Company_name">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUName">
+    <rdfs:domain rdf:resource="#CPUDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#List_of_operations">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="audioInput">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Audio"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#delayValue">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Delay"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#THRValue">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Throughput"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resolutionBpp">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Resolution"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="screenUnit">
+    <rdfs:domain rdf:resource="#Screen"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="deviceType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DeviceDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="OSName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SoftwareDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkRange">
+    <rdfs:domain rdf:resource="#Network"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >LAN</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >PAN</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >WAN</rdf:first>
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >MAN</rdf:first>
+              </rdf:rest>
+            </rdf:rest>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="totalMemory">
+    <rdfs:domain rdf:resource="#MemoryDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUType">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#CPUDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Service_user">
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="softwareID">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#SoftwareDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#deviceName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DeviceDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkID">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Network"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#Service_ID">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Status_comment">
+    <rdfs:domain rdf:resource="#Surveillance_order"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkTopology">
+    <rdfs:domain rdf:resource="#Network"/>
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:rest rdf:parseType="Resource">
+                  <rdf:rest rdf:parseType="Resource">
+                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >treeNetwork</rdf:first>
+                  </rdf:rest>
+                  <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                  >hybridNetwork</rdf:first>
+                </rdf:rest>
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >meshNetwork</rdf:first>
+              </rdf:rest>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >ringNetwork</rdf:first>
+            </rdf:rest>
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >starNetwork</rdf:first>
+          </rdf:rest>
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >busNetwork</rdf:first>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="OSVersion">
+    <rdfs:domain rdf:resource="#SoftwareDescription"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="CPUUsage">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#CPUDescription"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#Service_Subscriber_Consumer">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="http://www.daml.org/services/owl-s/1.2/Service.owl#Service"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkDescription">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Network"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#qualityValue">
+    <rdfs:domain rdf:resource="#PreferredQuality"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="networkCapacity">
+    <rdfs:domain rdf:resource="#Network"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#phone">
+    <rdfs:domain rdf:resource="#ContactInformation"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <DiscardAttachment rdf:ID="DiscardPNG"/>
+  <Device rdf:ID="Device_1">
+    <deviceName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></deviceName>
+  </Device>
+  <swrl:Imp rdf:ID="Rule-9">
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument2>
+                  <swrl:Variable rdf:ID="z"/>
+                </swrl:argument2>
+                <swrl:argument1>
+                  <swrl:Variable rdf:ID="y"/>
+                </swrl:argument1>
+                <swrl:propertyPredicate rdf:resource="#hasEncodingProperties"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#SupportsFI"/>
+                    <swrl:argument1 rdf:resource="#z"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument1>
+              <swrl:Variable rdf:ID="x"/>
+            </swrl:argument1>
+            <swrl:argument2 rdf:resource="#y"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+            <swrl:argument2>
+              <FIEncoding rdf:ID="FIencodeAction">
+                <hasActionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >FIencode</hasActionName>
+              </FIEncoding>
+            </swrl:argument2>
+            <swrl:argument1 rdf:resource="#x"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-10">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:BuiltinAtom>
+            <swrl:arguments>
+              <rdf:List>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first rdf:resource="#x"/>
+              </rdf:List>
+            </swrl:arguments>
+            <swrl:builtin rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select"/>
+          </swrl:BuiltinAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1>
+                  <User rdf:ID="User2">
+                    <hasPreferredAction>
+                      <GZIPCompression rdf:ID="GZIPcompressAction">
+                        <hasActionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >GZIPcompress</hasActionName>
+                      </GZIPCompression>
+                    </hasPreferredAction>
+                    <hasPreferredAction>
+                      <DecreaseQuality rdf:ID="DecreaseQualityAction">
+                        <isProhibitedBy>
+                          <User rdf:ID="User3">
+                            <hasPreferredAction>
+                              <ChangeResolution rdf:ID="ChangeResolutionAction">
+                                <isProhibitedBy>
+                                  <User rdf:ID="User1">
+                                    <userName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                    >User1</userName>
+                                    <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                    <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+                                    <hasProhibitedAction rdf:resource="#ChangeResolutionAction"/>
+                                    <isConnectedBy>
+                                      <NetworkConnection rdf:ID="Network_1">
+                                        <hasNetworkType>
+                                          <VeryGood rdf:ID="VeryGood_3"/>
+                                        </hasNetworkType>
+                                        <connects rdf:resource="#User1"/>
+                                      </NetworkConnection>
+                                    </isConnectedBy>
+                                    <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                    <hasAdaptationPreferences>
+                                      <PreferredQuality rdf:ID="PreferredQuality_8">
+                                        <qualityValue rdf:datatype=
+                                        "http://www.w3.org/2001/XMLSchema#int"
+                                        >70</qualityValue>
+                                      </PreferredQuality>
+                                    </hasAdaptationPreferences>
+                                    <hasPreferredAction rdf:resource="#FIencodeAction"/>
+                                    <uses>
+                                      <PDA rdf:ID="Dev3">
+                                        <deviceName rdf:datatype=
+                                        "http://www.w3.org/2001/XMLSchema#string"
+                                        >HTC_HD2</deviceName>
+                                        <hasDisplayProperties>
+                                          <Full rdf:ID="Full_23"/>
+                                        </hasDisplayProperties>
+                                        <usedBy rdf:resource="#User1"/>
+                                        <usedBy>
+                                          <User rdf:ID="User7">
+                                            <hasProhibitedAction>
+                                              <DecreaseColourDepth rdf:ID="DecreaseColourDepthAction">
+                                                <hasActionName
+                                                 rdf:datatype=
+                                                "http://www.w3.org/2001/XMLSchema#string"
+                                                >DecreaseColourDepth</hasActionName>
+                                                <isProhibitedBy rdf:resource="#User2"/>
+                                                <isProhibitedBy>
+                                                  <User rdf:ID="User4">
+                                                    <uses>
+                                                      <PDA rdf:ID="Dev4">
+                                                        <deviceName
+                                                         rdf:datatype=
+                                                        "http://www.w3.org/2001/XMLSchema#string"
+                                                        >HTC Hero</deviceName>
+                                                        <hasHWProperties>
+                                                          <LowCPU rdf:ID="LowCPU_28"/>
+                                                        </hasHWProperties>
+                                                        <hasEncodingProperties>
+                                                          <SupportsGZIP rdf:ID="SupportsGZIP_30"/>
+                                                        </hasEncodingProperties>
+                                                        <hasEncodingProperties>
+                                                          <SupportsEXI rdf:ID="SupportsEXI_31"/>
+                                                        </hasEncodingProperties>
+                                                        <usedBy rdf:resource="#User4"/>
+                                                        <usedBy rdf:resource="#User3"/>
+                                                        <hasDisplayProperties>
+                                                          <Full rdf:ID="Full_29"/>
+                                                        </hasDisplayProperties>
+                                                      </PDA>
+                                                    </uses>
+                                                    <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                                    <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                                    <userName
+                                                     rdf:datatype=
+                                                    "http://www.w3.org/2001/XMLSchema#string"
+                                                    >User4</userName>
+                                                    <hasAdaptationPreferences>
+                                                      <PreferredResolution rdf:ID="PreferredResolution_11">
+                                                        <resolutionValue
+                                                         rdf:datatype=
+                                                        "http://www.w3.org/2001/XMLSchema#string"
+                                                        >70</resolutionValue>
+                                                      </PreferredResolution>
+                                                    </hasAdaptationPreferences>
+                                                    <hasProhibitedAction rdf:resource="#ChangeResolutionAction"/>
+                                                    <hasPreferredAction>
+                                                      <EXIEncoding rdf:ID="EXIencodeAction">
+                                                        <hasActionName
+                                                         rdf:datatype=
+                                                        "http://www.w3.org/2001/XMLSchema#string"
+                                                        >EXIencode</hasActionName>
+                                                      </EXIEncoding>
+                                                    </hasPreferredAction>
+                                                    <hasProhibitedAction rdf:resource="#DecreaseColourDepthAction"/>
+                                                    <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+                                                  </User>
+                                                </isProhibitedBy>
+                                                <isProhibitedBy>
+                                                  <User rdf:ID="User6">
+                                                    <hasProhibitedAction rdf:resource="#DecreaseColourDepthAction"/>
+                                                    <hasProhibitedAction rdf:resource="#DecreaseQualityAction"/>
+                                                    <hasAdaptationPreferences>
+                                                      <PreferredQuality rdf:ID="PreferredQuality_13">
+                                                        <qualityValue
+                                                         rdf:datatype=
+                                                        "http://www.w3.org/2001/XMLSchema#int"
+                                                        >70</qualityValue>
+                                                      </PreferredQuality>
+                                                    </hasAdaptationPreferences>
+                                                    <uses>
+                                                      <MobilePhone rdf:ID="Dev2">
+                                                        <hasDisplayProperties>
+                                                          <Limited rdf:ID="Limited_18"/>
+                                                        </hasDisplayProperties>
+                                                        <hasHWProperties>
+                                                          <LowCPU rdf:ID="LowCPU_17"/>
+                                                        </hasHWProperties>
+                                                        <deviceName
+                                                         rdf:datatype=
+                                                        "http://www.w3.org/2001/XMLSchema#string"
+                                                        >NokiaE51</deviceName>
+                                                        <usedBy rdf:resource="#User2"/>
+                                                        <usedBy rdf:resource="#User6"/>
+                                                        <hasEncodingProperties>
+                                                          <SupportsGZIP rdf:ID="SupportsGZIP_19"/>
+                                                        </hasEncodingProperties>
+                                                      </MobilePhone>
+                                                    </uses>
+                                                    <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+                                                    <hasPreferredAction rdf:resource="#DecreaseColourDepthAction"/>
+                                                    <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                                    <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                                  </User>
+                                                </isProhibitedBy>
+                                                <isProhibitedBy rdf:resource="#User7"/>
+                                              </DecreaseColourDepth>
+                                            </hasProhibitedAction>
+                                            <hasProhibitedAction rdf:resource="#DecreaseQualityAction"/>
+                                            <hasAdaptationPreferences>
+                                              <PreferredQuality rdf:ID="PreferredQuality_15">
+                                                <qualityValue
+                                                 rdf:datatype=
+                                                "http://www.w3.org/2001/XMLSchema#int"
+                                                >70</qualityValue>
+                                              </PreferredQuality>
+                                            </hasAdaptationPreferences>
+                                            <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+                                            <hasProhibitedAction rdf:resource="#ChangeResolutionAction"/>
+                                            <hasPreferredAction rdf:resource="#FIencodeAction"/>
+                                            <uses rdf:resource="#Dev3"/>
+                                            <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                            <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                          </User>
+                                        </usedBy>
+                                        <hasHWProperties>
+                                          <LowCPU rdf:ID="LowCPU_22"/>
+                                        </hasHWProperties>
+                                        <hasEncodingProperties>
+                                          <SupportsFI rdf:ID="SupportsFI_25"/>
+                                        </hasEncodingProperties>
+                                        <hasEncodingProperties>
+                                          <SupportsGZIP rdf:ID="SupportsGZIP_24"/>
+                                        </hasEncodingProperties>
+                                      </PDA>
+                                    </uses>
+                                  </User>
+                                </isProhibitedBy>
+                                <isProhibitedBy rdf:resource="#User4"/>
+                                <isProhibitedBy>
+                                  <User rdf:ID="User5">
+                                    <userName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                    >User5</userName>
+                                    <uses>
+                                      <Laptop rdf:ID="Dev5">
+                                        <usedBy rdf:resource="#User5"/>
+                                        <usedBy>
+                                          <User rdf:ID="User8">
+                                            <hasAdaptationPreferences>
+                                              <PreferredQuality rdf:ID="PreferredQuality_17">
+                                                <qualityValue
+                                                 rdf:datatype=
+                                                "http://www.w3.org/2001/XMLSchema#int"
+                                                >70</qualityValue>
+                                              </PreferredQuality>
+                                            </hasAdaptationPreferences>
+                                            <hasProhibitedAction>
+                                              <DiscardAttachment rdf:ID="DiscardJPEG">
+                                                <isProhibitedBy rdf:resource="#User8"/>
+                                              </DiscardAttachment>
+                                            </hasProhibitedAction>
+                                            <uses rdf:resource="#Dev5"/>
+                                            <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                            <hasPreferredAction rdf:resource="#FIencodeAction"/>
+                                            <hasPreferredAction rdf:resource="#EXIencodeAction"/>
+                                            <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                          </User>
+                                        </usedBy>
+                                        <deviceName rdf:datatype=
+                                        "http://www.w3.org/2001/XMLSchema#string"
+                                        >LenovoX300</deviceName>
+                                        <hasDisplayProperties>
+                                          <Full rdf:ID="Full_20"/>
+                                        </hasDisplayProperties>
+                                        <hasHWProperties>
+                                          <HighCPU rdf:ID="HighCPU_34"/>
+                                        </hasHWProperties>
+                                        <hasEncodingProperties>
+                                          <SupportsGZIP rdf:ID="SupportsGZIP_36"/>
+                                        </hasEncodingProperties>
+                                        <hasEncodingProperties>
+                                          <SupportsFI rdf:ID="SupportsFI_38"/>
+                                        </hasEncodingProperties>
+                                        <hasEncodingProperties>
+                                          <SupportsEXI rdf:ID="SupportsEXI_37"/>
+                                        </hasEncodingProperties>
+                                      </Laptop>
+                                    </uses>
+                                    <hasPreferredAction rdf:resource="#FIencodeAction"/>
+                                    <hasProhibitedAction rdf:resource="#ChangeResolutionAction"/>
+                                    <hasAdaptationPreferences>
+                                      <PreferredQuality rdf:ID="PreferredQuality_12">
+                                        <qualityValue rdf:datatype=
+                                        "http://www.w3.org/2001/XMLSchema#int"
+                                        >70</qualityValue>
+                                      </PreferredQuality>
+                                    </hasAdaptationPreferences>
+                                    <hasPreferredAction rdf:resource="#EXIencodeAction"/>
+                                    <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                                    <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                                    <hasProhibitedAction rdf:resource="#DecreaseQualityAction"/>
+                                  </User>
+                                </isProhibitedBy>
+                                <isProhibitedBy rdf:resource="#User7"/>
+                                <hasActionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                                >ChangeResolution</hasActionName>
+                              </ChangeResolution>
+                            </hasPreferredAction>
+                            <hasProhibitedAction rdf:resource="#DecreaseQualityAction"/>
+                            <hasPreferredAction rdf:resource="#EXIencodeAction"/>
+                            <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+                            <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+                            <isConnectedBy>
+                              <NetworkConnection rdf:ID="Network_5">
+                                <hasNetworkType>
+                                  <Constrained rdf:ID="Constrained_6"/>
+                                </hasNetworkType>
+                                <connects rdf:resource="#User3"/>
+                              </NetworkConnection>
+                            </isConnectedBy>
+                            <hasAdaptationPreferences>
+                              <PreferredQuality rdf:ID="PreferredQuality_10">
+                                <qualityValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                                >70</qualityValue>
+                              </PreferredQuality>
+                            </hasAdaptationPreferences>
+                            <userName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                            >User3</userName>
+                            <uses rdf:resource="#Dev4"/>
+                          </User>
+                        </isProhibitedBy>
+                        <isProhibitedBy rdf:resource="#User5"/>
+                        <isProhibitedBy rdf:resource="#User6"/>
+                        <isProhibitedBy rdf:resource="#User7"/>
+                        <hasActionName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                        >DecreaseQuality</hasActionName>
+                      </DecreaseQuality>
+                    </hasPreferredAction>
+                    <hasPreferredAction rdf:resource="#DecreaseColourDepthAction"/>
+                    <uses rdf:resource="#Dev2"/>
+                    <userName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                    >User2</userName>
+                    <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+                    <isConnectedBy>
+                      <NetworkConnection rdf:ID="Network_2">
+                        <connects rdf:resource="#User2"/>
+                        <hasNetworkType>
+                          <Degraded rdf:ID="Degraded_4"/>
+                        </hasNetworkType>
+                      </NetworkConnection>
+                    </isConnectedBy>
+                    <hasAdaptationPreferences>
+                      <PreferredQuality rdf:ID="PreferredQuality_9">
+                        <qualityValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                        >70</qualityValue>
+                      </PreferredQuality>
+                    </hasAdaptationPreferences>
+                    <hasProhibitedAction rdf:resource="#DecreaseColourDepthAction"/>
+                  </User>
+                </swrl:argument1>
+                <swrl:argument2 rdf:resource="#x"/>
+                <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#SOAPAdaptation"/>
+                    <swrl:argument1 rdf:resource="#x"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:classPredicate rdf:resource="#User"/>
+            <swrl:argument1 rdf:resource="#User2"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+  </swrl:Imp>
+  <Grayscale rdf:ID="Grayscale_2"/>
+  <swrl:Imp rdf:ID="Rule-4">
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#DecreaseColourDepthAction"/>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:argument2 rdf:resource="#z"/>
+                <swrl:propertyPredicate rdf:resource="#hasDisplayProperties"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:argument1 rdf:resource="#z"/>
+                    <swrl:classPredicate rdf:resource="#Grayscale"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+      </swrl:AtomList>
+    </swrl:body>
+  </swrl:Imp>
+  <DiscardAttachment rdf:ID="DiscardPDF"/>
+  <swrl:Imp rdf:ID="Rule-3">
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:argument1 rdf:resource="#z"/>
+                    <swrl:classPredicate rdf:resource="#Binary"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasDisplayProperties"/>
+                <swrl:argument2 rdf:resource="#z"/>
+                <swrl:argument1 rdf:resource="#y"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument2 rdf:resource="#y"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#DecreaseColourDepthAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-2">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasHWProperties"/>
+                <swrl:argument2 rdf:resource="#z"/>
+                <swrl:argument1 rdf:resource="#y"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#LowCPU"/>
+                    <swrl:argument1 rdf:resource="#z"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#y"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#ChangeResolutionAction"/>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-1">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#DiscardJPEG"/>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#UnSupportedImageJPEG"/>
+                    <swrl:argument1 rdf:resource="#z"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasMIMETypesUnSupported"/>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:argument2 rdf:resource="#z"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-8">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="#EXIencodeAction"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:argument2 rdf:resource="#z"/>
+                <swrl:propertyPredicate rdf:resource="#hasEncodingProperties"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#SupportsEXI"/>
+                    <swrl:argument1 rdf:resource="#z"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-7">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#GZIPcompressAction"/>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasEncodingProperties"/>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:argument2 rdf:resource="#z"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:argument1 rdf:resource="#z"/>
+                    <swrl:classPredicate rdf:resource="#SupportsGZIP"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+  </swrl:Imp>
+  <swrl:Imp rdf:ID="Rule-6">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:classPredicate rdf:resource="#User"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#DecreaseQualityAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+  </swrl:Imp>
+  <profile:ServiceCategory rdf:ID="ServiceCategory_34"/>
+  <swrl:Imp rdf:ID="Rule-5">
+    <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >false</swrla:isRuleEnabled>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:ClassAtom>
+                    <swrl:classPredicate rdf:resource="#Limited"/>
+                    <swrl:argument1 rdf:resource="#z"/>
+                  </swrl:ClassAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasDisplayProperties"/>
+                <swrl:argument1 rdf:resource="#y"/>
+                <swrl:argument2 rdf:resource="#z"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="#y"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:propertyPredicate rdf:resource="#uses"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:propertyPredicate rdf:resource="#hasPreferredAction"/>
+            <swrl:argument1 rdf:resource="#x"/>
+            <swrl:argument2 rdf:resource="#DecreaseColourDepthAction"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+  <UnSupportedImageJPEG rdf:ID="supportsJPEG_6"/>
+  <Full rdf:ID="Full_35"/>
+  <DiscardAttachment rdf:ID="DiscardGIF"/>
+  <DiscardAttachment rdf:ID="DiscardJPG"/>
+  <XMLEncoding rdf:ID="XMLEncodingNoAction"/>
+  <DiscardAttachment rdf:ID="DiscardTIFF"/>
+  <profile:Profile rdf:ID="Configure_and_control_profile">
+    <profile:hasOutput>
+      <process:Output rdf:ID="Output_1">
+        <process:parameterType rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+        >SOAP XML</process:parameterType>
+      </process:Output>
+    </profile:hasOutput>
+    <profile:serviceName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >TACTICS Configure and Control Track Sensor</profile:serviceName>
+    <profile:serviceCategory>
+      <profile:ServiceCategory rdf:ID="ServiceCategory_1">
+        <profile:taxonomy rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >http://afro.wil.waw.pl/AAO.owl#JISR_Sensor_Services</profile:taxonomy>
+        <profile:categoryName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >JISR_Sensor_Services</profile:categoryName>
+      </profile:ServiceCategory>
+    </profile:serviceCategory>
+    <profile:contactInformation>
+      <ContactInformation rdf:ID="ContactInformation_1"/>
+    </profile:contactInformation>
+    <profile:serviceClassification rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+    >http://afro.wil.waw.pl/AAO.owl#Application_services</profile:serviceClassification>
+    <profile:serviceProduct rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+    ></profile:serviceProduct>
+    <profile:hasInput>
+      <process:Input rdf:ID="Input_4">
+        <process:parameterType rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+        >SOAP XML</process:parameterType>
+      </process:Input>
+    </profile:hasInput>
+    <profile:textDescription rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >TACTICS Configure and Control Track Sensor</profile:textDescription>
+    <service:presentedBy>
+      <service:Service rdf:ID="Configure_and_control_track_sensor-A">
+        <Service_user rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >J6 staff</Service_user>
+        <Service_Subscriber_Consumer rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        ></Service_Subscriber_Consumer>
+        <Priority_service_user rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >J6 staff</Priority_service_user>
+        <Service_uses_Standards>
+          <WSDL rdf:ID="WSDL_1"/>
+        </Service_uses_Standards>
+        <Service_business_process_classification rdf:datatype=
+        "http://www.w3.org/2001/XMLSchema#string">Resource Management and Operations</Service_business_process_classification>
+        <Service_long_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >This service provides means to retrieve sensor capabilities, plan sensor usage and exercise command &amp; control with regard to a "track-based" sensor. To that end, we a track-based sensor is understood to be a sensor which is able to deliver the position and movement details of one or more entities (hereinafter referred to as a track) in a given area of surveillance </Service_long_description>
+        <Service_complexity rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Elementary services</Service_complexity>
+        <Service_degraded_levels rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Asynchronous. Since this service is tolerant of network delays an asynchronous request/response pattern might be used, if the response to a request cannot be received in time (a timeout occurs)</Service_degraded_levels>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Set Heartbeat Rate</List_of_operations>
+        <Requirements_and_deployment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Typically, the service is expected to be deployed once per sensor system. In line with the above-mentioned issue of multiple concurrent control of a single sector, it is also expected to usually have no more than one consumer per service instance, e. g. at the headquarters currently controlling the sensor or with the team or squad supervising the sensor in the field. </Requirements_and_deployment>
+        <Service_Subscriber_Consumer rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >C4I system</Service_Subscriber_Consumer>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Add Surveillance Order</List_of_operations>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Mobile</Type_of_node>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Stop Surveillance</List_of_operations>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Deployable HQ</Type_of_node>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Set Timing</List_of_operations>
+        <Service_works_on_device>
+          <Laptop rdf:ID="Laptop_1"/>
+        </Service_works_on_device>
+        <Service_uses_Standards>
+          <OGC_SensorML rdf:ID="OGC_SensorML_1"/>
+        </Service_uses_Standards>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Start Surveillance</List_of_operations>
+        <Service_platform_services_classification rdf:datatype=
+        "http://www.w3.org/2001/XMLSchema#string">System and Network Management</Service_platform_services_classification>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Get Sensor Status</List_of_operations>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Dismounted</Type_of_node>
+        <service:presents rdf:resource="#Configure_and_control_profile"/>
+      </service:Service>
+    </service:presentedBy>
+    <service:presentedBy>
+      <service:Service rdf:ID="Configure_and_control_track_sensor-S">
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Stop Surveillance</List_of_operations>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Start Surveillance</List_of_operations>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Mobile</Type_of_node>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Set Timing</List_of_operations>
+        <Service_complexity rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Elementary services</Service_complexity>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Dismounted</Type_of_node>
+        <Service_works_on_device rdf:resource="#Laptop_1"/>
+        <Service_user rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >J6 staff</Service_user>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Set Heartbeat Rate</List_of_operations>
+        <Service_degraded_levels rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Synchronous. This version of the service is initiated, if a fast network is used and the response to a request is expected to be in time</Service_degraded_levels>
+        <Service_uses_Standards rdf:resource="#WSDL_1"/>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Add Surveillance Order</List_of_operations>
+        <Service_Subscriber_Consumer rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        ></Service_Subscriber_Consumer>
+        <Service_Subscriber_Consumer rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >C4I system</Service_Subscriber_Consumer>
+        <Service_uses_Standards rdf:resource="#OGC_SensorML_1"/>
+        <Type_of_node rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Deployable HQ</Type_of_node>
+        <Requirements_and_deployment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Typically, the service is expected to be deployed once per sensor system. In line with the above-mentioned issue of multiple concurrent control of a single sector, it is also expected to usually have no more than one consumer per service instance, e. g. at the headquarters currently controlling the sensor or with the team or squad supervising the sensor in the field. </Requirements_and_deployment>
+        <Service_business_process_classification rdf:datatype=
+        "http://www.w3.org/2001/XMLSchema#string">Resource Management and Operations</Service_business_process_classification>
+        <Priority_service_user rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >J6 staff</Priority_service_user>
+        <Service_platform_services_classification rdf:datatype=
+        "http://www.w3.org/2001/XMLSchema#string">System and Network Management</Service_platform_services_classification>
+        <List_of_operations rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Get Sensor Status</List_of_operations>
+        <Service_long_description rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >This service provides means to retrieve sensor capabilities, plan sensor usage and exercise command &amp; control with regard to a "track-based" sensor. To that end, we a track-based sensor is understood to be a sensor which is able to deliver the position and movement details of one or more entities (hereinafter referred to as a track) in a given area of surveillance </Service_long_description>
+        <service:presents rdf:resource="#Configure_and_control_profile"/>
+      </service:Service>
+    </service:presentedBy>
+  </profile:Profile>
+  <RadioTerminal rdf:ID="Dev1">
+    <hasEncodingProperties>
+      <SupportsGZIP rdf:ID="SupportsGZIP_21"/>
+    </hasEncodingProperties>
+    <hasDisplayProperties>
+      <Grayscale rdf:ID="Grayscale_42"/>
+    </hasDisplayProperties>
+    <usedBy>
+      <User rdf:ID="User9">
+        <hasPreferredAction rdf:resource="#DiscardJPEG"/>
+        <hasPreferredAction rdf:resource="#ChangeResolutionAction"/>
+        <hasPreferredAction rdf:resource="#DecreaseColourDepthAction"/>
+        <hasPreferredAction rdf:resource="#DecreaseQualityAction"/>
+        <hasPreferredAction rdf:resource="#GZIPcompressAction"/>
+        <uses rdf:resource="#Dev1"/>
+        <hasAdaptationPreferences>
+          <PreferredQuality rdf:ID="PreferredQuality_19">
+            <qualityValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >70</qualityValue>
+          </PreferredQuality>
+        </hasAdaptationPreferences>
+      </User>
+    </usedBy>
+    <deviceName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Terminal1</deviceName>
+    <hasHWProperties>
+      <LowCPU rdf:ID="LowCPU_41"/>
+    </hasHWProperties>
+    <hasMIMETypesUnSupported>
+      <UnSupportedImageJPEG rdf:ID="supportsJPEG_5"/>
+    </hasMIMETypesUnSupported>
+  </RadioTerminal>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.6, Build 613)  http://protege.stanford.edu -->

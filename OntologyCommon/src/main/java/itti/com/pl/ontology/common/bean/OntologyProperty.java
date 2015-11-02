@@ -24,6 +24,4 @@ public class OntologyProperty {
 	public void setType(Class<?> type) {
 		this.type = type;
 	}
-
-	
 }

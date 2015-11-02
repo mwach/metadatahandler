@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import itti.com.pl.ontology.common.bean.Instance;
+import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 import itti.com.pl.ontology.common.bean.OntologyProperty;
 import itti.com.pl.ontology.common.exception.OntologyException;
@@ -49,7 +50,7 @@ public class OntologyManagerTest {
     public void testInitInvalidLocation() throws OntologyRuntimeException, OntologyException {
         // check exception, when no location was provided
         expectedException.expect(OntologyRuntimeException.class);
-        expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(), "null"));
+        expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_EMPTY_FILE_NAME_PROVIDED.getMessage()));
         new LocalOntologyRepository().loadOntology("");
     }
 
@@ -81,24 +82,23 @@ public class OntologyManagerTest {
     @Test
     public void testAddInstanceWithProperties() throws OntologyRuntimeException {
 
-        // select existing class having at least one known property
-        String propertyName = "SomeProperty";
-        String propertyValue = String.valueOf(123.456);
-        Map<String, String[]> properties = new HashMap<>();
-        properties.put(propertyName, new String[] { propertyValue });
+    	OntologyClass newClass = new OntologyClass();
+    	newClass.setName("testAddInstanceWithProperties");
+    	newClass.add(new OntologyProperty("testAddInstanceWithPropertiesProperty", Integer.class));
+    	ontologyManager.createClass(newClass);
 
-        // try to add instance of parking
-        String instanceName = "classs";
-        // now add some basic instance to newly create class
-//        ontologyManager.createSimpleInstance(className, instanceName, properties);
+    	Instance instance = new Instance(newClass, "instance");
+    	instance.addProperty(new InstanceProperty<Integer>("property", Integer.class, 23));
+    	// try to add instance
+        ontologyManager.createInstance(newClass, instance);
 
         // verify, instance was correctly added
-        Map<String, String[]> ontologyProperties = ontologyManager.getInstanceProperties(instanceName);
+        Map<String, String[]> ontologyProperties = ontologyManager.getInstanceProperties(instance.getName());
         // verify, instance was added to given class
         // two properties should be returned - added in this test and ontology-related one (rdf:type)
         Assert.assertEquals(2, ontologyProperties.size());
         // verify value of added property
-        Assert.assertEquals(propertyValue, ontologyProperties.get("http://www.owl-ontologies.com/Ontology1350654591.owl#" + propertyName)[0]);
+        Assert.assertEquals(instance.getProperties().get(0).getValues().get(0), ontologyProperties.get("http://www.owl-ontologies.com/Ontology1350654591.owl#" + instance.getProperties().get(0).getName())[0]);
     }
 
     @Test
