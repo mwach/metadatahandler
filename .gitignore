@@ -5,4 +5,5 @@
 **/*.log
 *.class
 **/logs/**
+OntologyCore/protege.properties
 hs_err_pid*

@@ -2,18 +2,37 @@ package itti.com.pl.ontology.core.ontology;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import itti.com.pl.ontology.common.exception.OntologyException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 public class LocalOntologyRepositoryTest {
 
-	private static final String REPO_LOCATION = "src/test/resources";
+	private static final String REPO_LOCATION = "src/test/resources/tmp";
+	private static final String TEST_ONTOLOGY = "dummy.owl";
+
+	@BeforeClass
+	public static void beforeClass() throws IOException{
+		new File(REPO_LOCATION).mkdir();
+		new File(REPO_LOCATION, TEST_ONTOLOGY).createNewFile();
+	}
+	
+	@AfterClass
+	public static void afterClass() throws IOException{
+		new File(REPO_LOCATION, TEST_ONTOLOGY).delete();
+		new File(REPO_LOCATION).delete();
+	}
+	
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
