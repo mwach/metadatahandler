@@ -47,21 +47,12 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testInitInvalidLocation() throws OntologyRuntimeException, OntologyException {
-        // check exception, when no location was provided
-        expectedException.expect(OntologyRuntimeException.class);
-        expectedException.expectMessage(String.format(ErrorMessages.ONTOLOGY_EMPTY_FILE_NAME_PROVIDED.getMessage()));
-        new LocalOntologyRepository().loadOntology("");
-    }
-
-    @Test
     public void testCreateClass() throws OntologyRuntimeException {
 
     	String className = "dummyClass";
     	String instanceName = "dummyInstance";
 
-    	OntologyClass ontologyClass = new OntologyClass();
-    	ontologyClass.setName(className);
+    	OntologyClass ontologyClass = new OntologyClass(className);
     	OntologyProperty property = new OntologyProperty("dummyProperty", Integer.class);
     	ontologyClass.add(property);
 
@@ -82,29 +73,38 @@ public class OntologyManagerTest {
     @Test
     public void testAddInstanceWithProperties() throws OntologyRuntimeException {
 
-    	OntologyClass newClass = new OntologyClass();
-    	newClass.setName("testAddInstanceWithProperties");
+    	OntologyClass newClass = new OntologyClass("testAddInstanceWithProperties");
     	newClass.add(new OntologyProperty("testAddInstanceWithPropertiesProperty", Integer.class));
     	ontologyManager.createClass(newClass);
 
     	Instance instance = new Instance(newClass, "instance");
-    	instance.addProperty(new InstanceProperty<Integer>("property", Integer.class, 23));
+    	instance.addProperty(new InstanceProperty<Integer>("testAddInstanceWithPropertiesProperty", Integer.class, 23));
     	// try to add instance
         ontologyManager.createInstance(newClass, instance);
 
+        try {
+        	LocalOntologyRepository repo = new LocalOntologyRepository();
+        	repo.setRepositoryLocation("src/test/resources");
+			repo.saveOntology(ontologyManager, "test.owl");
+		} catch (OntologyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         // verify, instance was correctly added
-        Map<String, String[]> ontologyProperties = ontologyManager.getInstanceProperties(instance.getName());
+        Instance responseInstance = ontologyManager.getInstance(instance.getName());
         // verify, instance was added to given class
         // two properties should be returned - added in this test and ontology-related one (rdf:type)
-        Assert.assertEquals(2, ontologyProperties.size());
-        // verify value of added property
-        Assert.assertEquals(instance.getProperties().get(0).getValues().get(0), ontologyProperties.get("http://www.owl-ontologies.com/Ontology1350654591.owl#" + instance.getProperties().get(0).getName())[0]);
+        Assert.assertEquals(instance, responseInstance);
     }
 
     @Test
     public void testRemoveInstance() throws OntologyRuntimeException {
         // create a new instance in ontology
-        String instanceName = "dummyBuilding_" + System.currentTimeMillis();
+    	String className = "dummyClass_" + System.currentTimeMillis();
+        String instanceName = "inst_" + className;
+        OntologyClass baseClass = new OntologyClass(className);
+        ontologyManager.createClass(baseClass);
+        ontologyManager.createInstance(baseClass, new Instance(baseClass, instanceName));
 //        ontologyManager.createSimpleInstance("ParentClass", instanceName, null);
         // verify, instance was added to ontology
         assertTrue(ontologyManager.hasInstance(instanceName));

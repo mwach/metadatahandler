@@ -7,11 +7,10 @@ import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,9 +21,12 @@ import edu.stanford.smi.protege.model.DefaultInstance;
 import edu.stanford.smi.protege.model.Instance;
 import edu.stanford.smi.protege.model.SimpleInstance;
 import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
+import edu.stanford.smi.protegex.owl.model.OWLDatatypeProperty;
 import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
 import edu.stanford.smi.protegex.owl.model.RDFProperty;
+import edu.stanford.smi.protegex.owl.model.RDFResource;
+import edu.stanford.smi.protegex.owl.model.impl.DefaultOWLNamedClass;
 import edu.stanford.smi.protegex.owl.model.impl.DefaultRDFSLiteral;
 import edu.stanford.smi.protegex.owl.model.query.QueryResults;
 import edu.stanford.smi.protegex.owl.swrl.SWRLRuleEngine;
@@ -234,7 +236,7 @@ public class OntologyManager implements Ontology {
 		// create individual, or get the existing one
 		OWLIndividual individual = null;
 		if (getInstances(baseClass.getName()).contains(instance.getName())) {
-			individual = getInstance(instance.getName());
+			individual = getOwlInstance(instance.getName());
 		} else {
 			individual = createInstanceOnly(baseClass.getName(),
 					instance.getName());
@@ -255,7 +257,7 @@ public class OntologyManager implements Ontology {
 	 * @return ontology object with given name
 	 * @throws OntologyException
 	 */
-	private OWLIndividual getInstance(String instanceName) {
+	private OWLIndividual getOwlInstance(String instanceName) {
 
 		LOGGER.debug("Searching for instance '{}'", instanceName);
 		return getModel().getOWLIndividual(instanceName);
@@ -339,13 +341,10 @@ public class OntologyManager implements Ontology {
 	 * @return list of non-empty properties
 	 * @throws OntologyException
 	 */
-	public Map<String, String[]> getInstanceProperties(String instanceName)
+	public itti.com.pl.ontology.common.bean.Instance getInstance(String instanceName)
 			throws OntologyException {
 
 		LOGGER.debug("Collecting properties for instance '{}'", instanceName);
-
-		Map<String, String[]> properties = new HashMap<>();
-
 		OWLIndividual individual = getModel().getOWLIndividual(instanceName);
 		if (individual == null) {
 			LOGGER
@@ -356,34 +355,72 @@ public class OntologyManager implements Ontology {
 							.getMessage(instanceName));
 		}
 
+		itti.com.pl.ontology.common.bean.Instance instance = new itti.com.pl.ontology.common.bean.Instance();
+		instance.setName(instanceName);
+		String className = individual.getRDFType().getLocalName();
+		OntologyClass ontologyClass = getOntologyClass(className);
+		instance.setBaseClass(ontologyClass);
+
 		@SuppressWarnings("unchecked")
 		Collection<RDFProperty> instanceProperties = individual
 				.getRDFProperties();
 
 		for (RDFProperty rdfProperty : instanceProperties) {
-			String propertyName = rdfProperty.getName();
+			String propertyPrefix = rdfProperty.getNamespacePrefix();
+			String propertyName = rdfProperty.getLocalName();
 
 			// check, if property is ignored
-			if (ignoredProperties.contains(propertyName)) {
+			if (ignoredProperties.contains(String.format("%s:%s", propertyPrefix, propertyName))) {
 				continue;
 			}
+			Class<?> propertyClass = ontologyClass.getPropertyType(propertyName);
 			@SuppressWarnings("rawtypes")
 			Collection propertyValues = individual
 					.getPropertyValues(rdfProperty);
-			String[] values = new String[propertyValues.size()];
-			int propertyNo = 0;
+			List values = new ArrayList<>();
 			for (Object propertyValue : propertyValues) {
-				if (propertyValue instanceof Instance) {
-					values[propertyNo++] = ((Instance) propertyValue).getName();
-				} else {
-					values[propertyNo++] = String.valueOf(propertyValue);
-				}
+				values.add(parseValue(propertyClass, propertyValue));
 			}
-			LOGGER.debug("Collected {} values for property '{}'", values.length,
+			LOGGER.debug("Collected {} values for property '{}'", values,
 					propertyName);
-			properties.put(propertyName, values);
+			instance.addProperty(new InstanceProperty(propertyName, propertyClass, values));
 		}
-		return properties;
+		return instance;
+	}
+
+	private Object parseValue(Class<?> propertyClass, Object propertyValue) {
+		if(propertyClass.isInstance(propertyValue)){
+			return propertyClass.cast(propertyValue);
+		}
+		return null;
+	}
+
+	private OntologyClass getOntologyClass(String className) {
+		OntologyClass ontologyClass = new OntologyClass(className);
+		DefaultOWLNamedClass owlClass = (DefaultOWLNamedClass) getModel().getOWLNamedClass(className);
+		@SuppressWarnings("unchecked")
+		Collection<RDFProperty> classProperties = owlClass.getUnionDomainProperties();
+
+		for (RDFProperty rdfProperty : classProperties) {
+			RDFResource range = rdfProperty.getRange();
+			if(range != null){
+				ontologyClass.add(new OntologyProperty(rdfProperty.getLocalName(), getClassFromRange(range)));
+			}else{
+				
+			}
+		}
+		return ontologyClass;
+	}
+
+	private Class<?> getClassFromRange(RDFResource range) {
+		String rangeName = range.getLocalName();
+		try {
+			rangeName = rangeName.substring(0, 1).toUpperCase() + rangeName.substring(1);
+			return Class.forName("java.lang." + rangeName);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/*
@@ -412,7 +449,7 @@ public class OntologyManager implements Ontology {
 	@Override
 	public void removeInstance(String instanceName) throws OntologyException {
 		if (StringUtils.isNotEmpty(instanceName)) {
-			Instance instance = getInstance(instanceName);
+			Instance instance = getOwlInstance(instanceName);
 			if (instance == null) {
 				throw new OntologyRuntimeException(
 						ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND
@@ -437,12 +474,14 @@ public class OntologyManager implements Ontology {
 					ontologyNamespace + ontologyClass.getName());
 			for (OntologyProperty ontologyProperty : ontologyClass
 					.getProperties()) {
-				RDFProperty property = getModel().createRDFProperty(
-						ontologyProperty.getName());
-				if (ontologyProperty.getType() == Integer.class) {
-					property.setRange(getModel().getXSDint());
-				} else {
-					property.setRange(getModel().getXSDstring());
+				RDFProperty property = null;
+				if(isDatatype(ontologyProperty.getType())){
+					property = getModel().createOWLDatatypeProperty(
+							ontologyProperty.getName());
+					property.setRange(getDatatypeRange(ontologyProperty.getType()));
+				} else{
+					property = getModel().createOWLObjectProperty(
+							ontologyProperty.getName());					
 				}
 				property.setDomain(individual);
 			}
@@ -451,6 +490,24 @@ public class OntologyManager implements Ontology {
 					ErrorMessages.ONTOLOGY_CLASS_ALREADY_EXIST
 							.getMessage(ontologyClass));
 		}
+	}
+
+	private RDFResource getDatatypeRange(Class<?> type) {
+		String simple = type.getSimpleName();
+		String methodName = "getXSD" + simple.toLowerCase();
+		try {
+			Method method = getModel().getClass().getMethod(methodName);
+			RDFResource resp = (RDFResource) method.invoke(getModel());
+			return resp;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getModel().getXSDstring();
+	}
+
+	private boolean isDatatype(Class<?> type) {
+		return type.getPackage() == Package.getPackage("java.lang") || 
+				type.getPackage() == Package.getPackage("java.util");
 	}
 
 	@Override
