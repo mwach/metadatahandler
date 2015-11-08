@@ -8,3 +8,4 @@
 OntologyCore/protege.properties
 hs_err_pid*
 **/test.owl
+**/doc/**

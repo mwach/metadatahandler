@@ -20,8 +20,6 @@ public class OntologyException extends Exception {
      *            message
      * @param throwable
      *            exception
-     * @param args
-     *            list of message parameters
      */
     public OntologyException(String message, Throwable throwable) {
         super(message, throwable);
@@ -32,8 +30,6 @@ public class OntologyException extends Exception {
      * 
      * @param message
      *            message
-     * @param args
-     *            list of message parameters
      */
     public OntologyException(String message) {
         super(message);

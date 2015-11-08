@@ -20,8 +20,6 @@ public class OntologyRuntimeException extends RuntimeException {
      *            message
      * @param throwable
      *            throwable
-     * @param args
-     *            list of message parameters
      */
     public OntologyRuntimeException(String message, Throwable throwable) {
         super(message, throwable);
@@ -32,8 +30,6 @@ public class OntologyRuntimeException extends RuntimeException {
      * 
      * @param message
      *            message
-     * @param args
-     *            list of message parameters
      */
     public OntologyRuntimeException(String message) {
         super(message);

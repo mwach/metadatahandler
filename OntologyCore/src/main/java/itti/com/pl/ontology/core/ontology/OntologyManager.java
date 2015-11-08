@@ -341,6 +341,7 @@ public class OntologyManager implements Ontology {
 	 * @return list of non-empty properties
 	 * @throws OntologyException
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public itti.com.pl.ontology.common.bean.Instance getInstance(String instanceName)
 			throws OntologyException {
 
@@ -361,7 +362,6 @@ public class OntologyManager implements Ontology {
 		OntologyClass ontologyClass = getOntologyClass(className);
 		instance.setBaseClass(ontologyClass);
 
-		@SuppressWarnings("unchecked")
 		Collection<RDFProperty> instanceProperties = individual
 				.getRDFProperties();
 
@@ -374,7 +374,6 @@ public class OntologyManager implements Ontology {
 				continue;
 			}
 			OntologyType propertyClass = ontologyClass.getPropertyType(propertyName);
-			@SuppressWarnings("rawtypes")
 			Collection propertyValues = individual
 					.getPropertyValues(rdfProperty);
 			LOGGER.debug("Collected {} values for property '{}'", propertyValues,

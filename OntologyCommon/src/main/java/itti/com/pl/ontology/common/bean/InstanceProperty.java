@@ -14,8 +14,6 @@ public class InstanceProperty<T> {
 	private OntologyType type;
 	private List<T> values = new ArrayList<>();
 
-	public InstanceProperty(){}
-
 	public InstanceProperty(String name, OntologyType type, T value){
 		this.name = name;
 		this.type = type;
