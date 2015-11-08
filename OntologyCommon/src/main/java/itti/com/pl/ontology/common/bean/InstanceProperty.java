@@ -1,6 +1,7 @@
 package itti.com.pl.ontology.common.bean;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -10,18 +11,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class InstanceProperty<T> {
 
 	private String name;
-	private Class<T> type;
+	private OntologyType type;
 	private List<T> values = new ArrayList<>();
 
 	public InstanceProperty(){}
 
-	public InstanceProperty(String name, Class<T> type, T value){
+	public InstanceProperty(String name, OntologyType type, T value){
 		this.name = name;
 		this.type = type;
 		this.values.add(value);
 	}
 
-	public InstanceProperty(String name, Class<T> type, List<T> values){
+	public InstanceProperty(String name, OntologyType type, Collection<T> values){
 		this.name = name;
 		this.type = type;
 		this.values.addAll(values);
@@ -36,7 +37,7 @@ public class InstanceProperty<T> {
 	public List<T> getValues() {
 		return values;
 	}
-	public Class<T> getType() {
+	public OntologyType getType() {
 		return type;
 	}
 

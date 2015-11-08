@@ -2,19 +2,16 @@ package itti.com.pl.ontology.core.ontology;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import itti.com.pl.ontology.common.bean.Instance;
 import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 import itti.com.pl.ontology.common.bean.OntologyProperty;
+import itti.com.pl.ontology.common.bean.OntologyType;
 import itti.com.pl.ontology.common.exception.OntologyException;
 import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,7 +50,7 @@ public class OntologyManagerTest {
     	String instanceName = "dummyInstance";
 
     	OntologyClass ontologyClass = new OntologyClass(className);
-    	OntologyProperty property = new OntologyProperty("dummyProperty", Integer.class);
+    	OntologyProperty property = new OntologyProperty("dummyProperty", OntologyType.Int);
     	ontologyClass.add(property);
 
     	Instance instance = new Instance(ontologyClass, instanceName);
@@ -66,19 +63,19 @@ public class OntologyManagerTest {
 
 //        List<String> instances = ontologyManager.getInstances(className);
         // verify, instance was added to given class
-//        Assert.assertEquals(1, instances.size());
-//        Assert.assertEquals(instanceName, instances.get(0));
+//        assertEquals(1, instances.size());
+//        assertEquals(instanceName, instances.get(0));
     }
 
     @Test
     public void testAddInstanceWithProperties() throws OntologyRuntimeException {
 
     	OntologyClass newClass = new OntologyClass("testAddInstanceWithProperties");
-    	newClass.add(new OntologyProperty("testAddInstanceWithPropertiesProperty", Integer.class));
+    	newClass.add(new OntologyProperty("testAddInstanceWithPropertiesProperty", OntologyType.Int));
     	ontologyManager.createClass(newClass);
 
     	Instance instance = new Instance(newClass, "instance");
-    	instance.addProperty(new InstanceProperty<Integer>("testAddInstanceWithPropertiesProperty", Integer.class, 23));
+    	instance.addProperty(new InstanceProperty<Integer>("testAddInstanceWithPropertiesProperty", OntologyType.Int, 23));
     	// try to add instance
         ontologyManager.createInstance(newClass, instance);
 
@@ -94,7 +91,7 @@ public class OntologyManagerTest {
         Instance responseInstance = ontologyManager.getInstance(instance.getName());
         // verify, instance was added to given class
         // two properties should be returned - added in this test and ontology-related one (rdf:type)
-        Assert.assertEquals(instance, responseInstance);
+        assertEquals(instance, responseInstance);
     }
 
     @Test

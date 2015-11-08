@@ -28,7 +28,7 @@ public class OntologyClass {
 	public void add(OntologyProperty property) {
 		this.properties.add(property);
 	}
-	public Class<?> getPropertyType(String propertyName) {
+	public OntologyType getPropertyType(String propertyName) {
 		for (OntologyProperty ontologyProperty : properties) {
 			if(StringUtils.equals(ontologyProperty.getName(), propertyName)){
 				return ontologyProperty.getType();

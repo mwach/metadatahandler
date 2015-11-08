@@ -3,6 +3,7 @@ package itti.com.pl.ontology.core.ontology;
 import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 import itti.com.pl.ontology.common.bean.OntologyProperty;
+import itti.com.pl.ontology.common.bean.OntologyType;
 import itti.com.pl.ontology.common.exception.OntologyRuntimeException;
 import itti.com.pl.ontology.core.exception.ErrorMessages;
 
@@ -21,7 +22,6 @@ import edu.stanford.smi.protege.model.DefaultInstance;
 import edu.stanford.smi.protege.model.Instance;
 import edu.stanford.smi.protege.model.SimpleInstance;
 import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
-import edu.stanford.smi.protegex.owl.model.OWLDatatypeProperty;
 import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
 import edu.stanford.smi.protegex.owl.model.RDFProperty;
@@ -373,26 +373,15 @@ public class OntologyManager implements Ontology {
 			if (ignoredProperties.contains(String.format("%s:%s", propertyPrefix, propertyName))) {
 				continue;
 			}
-			Class<?> propertyClass = ontologyClass.getPropertyType(propertyName);
+			OntologyType propertyClass = ontologyClass.getPropertyType(propertyName);
 			@SuppressWarnings("rawtypes")
 			Collection propertyValues = individual
 					.getPropertyValues(rdfProperty);
-			List values = new ArrayList<>();
-			for (Object propertyValue : propertyValues) {
-				values.add(parseValue(propertyClass, propertyValue));
-			}
-			LOGGER.debug("Collected {} values for property '{}'", values,
+			LOGGER.debug("Collected {} values for property '{}'", propertyValues,
 					propertyName);
-			instance.addProperty(new InstanceProperty(propertyName, propertyClass, values));
+			instance.addProperty(new InstanceProperty(propertyName, propertyClass, propertyValues));
 		}
 		return instance;
-	}
-
-	private Object parseValue(Class<?> propertyClass, Object propertyValue) {
-		if(propertyClass.isInstance(propertyValue)){
-			return propertyClass.cast(propertyValue);
-		}
-		return null;
 	}
 
 	private OntologyClass getOntologyClass(String className) {
@@ -404,7 +393,7 @@ public class OntologyManager implements Ontology {
 		for (RDFProperty rdfProperty : classProperties) {
 			RDFResource range = rdfProperty.getRange();
 			if(range != null){
-				ontologyClass.add(new OntologyProperty(rdfProperty.getLocalName(), getClassFromRange(range)));
+				ontologyClass.add(new OntologyProperty(rdfProperty.getLocalName(), OntologyType.getType(range.getLocalName())));
 			}else{
 				
 			}
@@ -412,16 +401,6 @@ public class OntologyManager implements Ontology {
 		return ontologyClass;
 	}
 
-	private Class<?> getClassFromRange(RDFResource range) {
-		String rangeName = range.getLocalName();
-		try {
-			rangeName = rangeName.substring(0, 1).toUpperCase() + rangeName.substring(1);
-			return Class.forName("java.lang." + rangeName);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -475,14 +454,9 @@ public class OntologyManager implements Ontology {
 			for (OntologyProperty ontologyProperty : ontologyClass
 					.getProperties()) {
 				RDFProperty property = null;
-				if(isDatatype(ontologyProperty.getType())){
 					property = getModel().createOWLDatatypeProperty(
 							ontologyProperty.getName());
 					property.setRange(getDatatypeRange(ontologyProperty.getType()));
-				} else{
-					property = getModel().createOWLObjectProperty(
-							ontologyProperty.getName());					
-				}
 				property.setDomain(individual);
 			}
 		} else {
@@ -492,9 +466,9 @@ public class OntologyManager implements Ontology {
 		}
 	}
 
-	private RDFResource getDatatypeRange(Class<?> type) {
-		String simple = type.getSimpleName();
-		String methodName = "getXSD" + simple.toLowerCase();
+	private RDFResource getDatatypeRange(OntologyType type) {
+		String typeName = type.name().toLowerCase();
+		String methodName = "getXSD" + typeName;
 		try {
 			Method method = getModel().getClass().getMethod(methodName);
 			RDFResource resp = (RDFResource) method.invoke(getModel());
@@ -503,11 +477,6 @@ public class OntologyManager implements Ontology {
 			e.printStackTrace();
 		}
 		return getModel().getXSDstring();
-	}
-
-	private boolean isDatatype(Class<?> type) {
-		return type.getPackage() == Package.getPackage("java.lang") || 
-				type.getPackage() == Package.getPackage("java.util");
 	}
 
 	@Override

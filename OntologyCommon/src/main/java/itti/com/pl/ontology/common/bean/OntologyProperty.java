@@ -7,11 +7,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class OntologyProperty {
 
 	private String name;
-	private Class<?> type;
+	private OntologyType type;
 
 	public OntologyProperty(){}
 
-	public OntologyProperty(String name, Class<?> type){
+	public OntologyProperty(String name, OntologyType type){
 		this.name = name;
 		this.type = type;
 	}
@@ -22,10 +22,11 @@ public class OntologyProperty {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Class<?> getType() {
+	public OntologyType getType() {
 		return type;
 	}
-	public void setType(Class<?> type) {
+
+	public void setType(OntologyType type) {
 		this.type = type;
 	}
 
