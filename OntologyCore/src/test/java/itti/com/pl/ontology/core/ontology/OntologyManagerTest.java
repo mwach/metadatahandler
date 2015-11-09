@@ -2,6 +2,10 @@ package itti.com.pl.ontology.core.ontology;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import itti.com.pl.ontology.common.bean.Instance;
 import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
@@ -40,53 +44,76 @@ public class OntologyManagerTest {
 
     @AfterClass
     public static void afterClass() {
-        ontologyManager.shutdown();
+
+        try {
+        	LocalOntologyRepository repo = new LocalOntologyRepository();
+        	repo.setRepositoryLocation("/tmp");
+			repo.saveOntology(ontologyManager, "test.owl");
+		} catch (OntologyException e) {
+			e.printStackTrace();
+		}
+
+    	ontologyManager.shutdown();
     }
 
     @Test
     public void testCreateClass() throws OntologyRuntimeException {
 
-    	String className = "dummyClass";
-    	String instanceName = "dummyInstance";
+    	String className = "testCreateClass";
 
     	OntologyClass ontologyClass = new OntologyClass(className);
-    	OntologyProperty property = new OntologyProperty("dummyProperty", OntologyType.Int);
-    	ontologyClass.add(property);
+    	ontologyClass.add(new OntologyProperty("dummyPropertyInt", OntologyType.Int));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyBoolean", OntologyType.Boolean));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyDate", OntologyType.Date));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyDateTime", OntologyType.DateTime));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyTime", OntologyType.Time));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyFloat", OntologyType.Float));
+    	ontologyClass.add(new OntologyProperty("dummyPropertyString", OntologyType.String));
+    	ontologyManager.createClass(ontologyClass);
 
-    	Instance instance = new Instance(ontologyClass, instanceName);
-    	
-        ontologyManager.createClass(ontologyClass);
-        ontologyManager.createInstance(ontologyClass, instance);
-        
-        // now add some basic instance to newly create class
-//        ontologyManager.createSimpleInstance(className, instanceName, null);
+        OntologyClass response = ontologyManager.getOntologyClass(className);
+        assertEquals(ontologyClass, response);
 
-//        List<String> instances = ontologyManager.getInstances(className);
-        // verify, instance was added to given class
-//        assertEquals(1, instances.size());
-//        assertEquals(instanceName, instances.get(0));
+        ontologyManager.removeClass(className);
+        Exception exception = null;
+        try{
+        	ontologyManager.getOntologyClass(className);
+        }catch(RuntimeException exc){
+        	exception = exc;
+        }
+        assertEquals(exception.getClass(), OntologyRuntimeException.class);
+        assertEquals(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className), exception.getMessage());
+
     }
 
     @Test
-    public void testAddInstanceWithProperties() throws OntologyRuntimeException {
+    public void testAddInstance() throws OntologyRuntimeException, ParseException {
 
-    	OntologyClass newClass = new OntologyClass("testAddInstanceWithProperties");
-    	newClass.add(new OntologyProperty("testAddInstanceWithPropertiesProperty", OntologyType.Int));
-    	ontologyManager.createClass(newClass);
+    	OntologyClass ontologyClass = new OntologyClass("taiwp");
+    	ontologyClass.add(new OntologyProperty("taiwpInt", OntologyType.Int));
+    	ontologyClass.add(new OntologyProperty("taiwpBoolean", OntologyType.Boolean));
+    	ontologyClass.add(new OntologyProperty("taiwpDate", OntologyType.Date));
+    	ontologyClass.add(new OntologyProperty("taiwpDateTime", OntologyType.DateTime));
+    	ontologyClass.add(new OntologyProperty("taiwpTime", OntologyType.Time));
+    	ontologyClass.add(new OntologyProperty("taiwpFloat", OntologyType.Float));
+    	ontologyClass.add(new OntologyProperty("taiwpString", OntologyType.String));
 
-    	Instance instance = new Instance(newClass, "instance");
-    	instance.addProperty(new InstanceProperty<Integer>("testAddInstanceWithPropertiesProperty", OntologyType.Int, 23));
+    	ontologyManager.createClass(ontologyClass);
+
+    	Instance instance = new Instance(ontologyClass, "taiwpInstance");
+    	instance.addProperty(new InstanceProperty<Integer>("taiwpInt", 23));
+    	instance.addProperty(new InstanceProperty<Boolean>("taiwpBoolean", false));
+    	SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
+    	SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    	instance.addProperty(new InstanceProperty<Date>("taiwpDate", sdfDate.parse(sdfDate.format(new Date()))));
+    	instance.addProperty(new InstanceProperty<Date>("taiwpDateTime", sdfDateTime.parse(sdfDateTime.format(new Date()))));
+    	instance.addProperty(new InstanceProperty<Date>("taiwpTime", sdfTime.parse(sdfTime.format(new Date()))));
+    	instance.addProperty(new InstanceProperty<Float>("taiwpFloat", 3.14F));
+    	instance.addProperty(new InstanceProperty<String>("taiwpString", "dummy"));
     	// try to add instance
-        ontologyManager.createInstance(newClass, instance);
+        ontologyManager.createInstance(instance);
 
-        try {
-        	LocalOntologyRepository repo = new LocalOntologyRepository();
-        	repo.setRepositoryLocation("src/test/resources");
-			repo.saveOntology(ontologyManager, "test.owl");
-		} catch (OntologyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
         // verify, instance was correctly added
         Instance responseInstance = ontologyManager.getInstance(instance.getName());
         // verify, instance was added to given class
@@ -101,7 +128,7 @@ public class OntologyManagerTest {
         String instanceName = "inst_" + className;
         OntologyClass baseClass = new OntologyClass(className);
         ontologyManager.createClass(baseClass);
-        ontologyManager.createInstance(baseClass, new Instance(baseClass, instanceName));
+        ontologyManager.createInstance(new Instance(baseClass, instanceName));
 //        ontologyManager.createSimpleInstance("ParentClass", instanceName, null);
         // verify, instance was added to ontology
         assertTrue(ontologyManager.hasInstance(instanceName));

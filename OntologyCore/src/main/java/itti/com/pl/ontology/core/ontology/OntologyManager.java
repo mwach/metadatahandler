@@ -9,8 +9,11 @@ import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -228,17 +231,17 @@ public class OntologyManager implements Ontology {
 	 * .lang.String, java.lang.String, java.util.Map)
 	 */
 	@Override
-	public void createInstance(OntologyClass baseClass,
+	public void createInstance(
 			itti.com.pl.ontology.common.bean.Instance instance) {
 
-		LOGGER.debug("Creating instance '{}' for class '{}'", baseClass, instance);
+		LOGGER.debug("Creating instance '{}' for class '{}'", instance, instance.getBaseClass());
 
 		// create individual, or get the existing one
 		OWLIndividual individual = null;
-		if (getInstances(baseClass.getName()).contains(instance.getName())) {
+		if (getInstances(instance.getBaseClass().getName()).contains(instance.getName())) {
 			individual = getOwlInstance(instance.getName());
 		} else {
-			individual = createInstanceOnly(baseClass.getName(),
+			individual = createInstanceOnly(instance.getBaseClass().getName(),
 					instance.getName());
 		}
 
@@ -296,6 +299,7 @@ public class OntologyManager implements Ontology {
 
 		// get the property
 		RDFProperty rdfProperty = getModel().getRDFProperty(property.getName());
+		OntologyType type = OntologyType.getType(rdfProperty.getRange().getLocalName());
 
 		removePropertyValues(individual, rdfProperty);
 
@@ -306,31 +310,33 @@ public class OntologyManager implements Ontology {
 					value.toString());
 			if (valueInd != null) {
 				addPropertyValue(individual, rdfProperty, valueInd);
-				// not an instance - try numbers first
-				// try to add value as a string
-			} else if (StringUtils.isNumeric(value.toString())) {
-				Integer valueInt = Integer.parseInt(value.toString());
-				addPropertyValue(individual, rdfProperty, valueInt);
-				// try to add value as a string
-			} else if (isFloat(value.toString())) {
-				Float valueFloat = Float.parseFloat(value.toString());
-				addPropertyValue(individual, rdfProperty, valueFloat);
-			} else {
+			} else{ 
+				value = formatValue(value, type);
 				addPropertyValue(individual, rdfProperty, value);
 			}
 		}
 	}
 
-	private boolean isFloat(String value) {
-
-		boolean isFloat = false;
-		try {
-			Float.parseFloat(value);
-			isFloat = true;
-		} catch (RuntimeException exc) {
-
+	private Object formatValue(Object value, OntologyType type) {
+		if(type == OntologyType.Date){
+			return new SimpleDateFormat("yyyy-MM-dd").format(((Date)value));
+		} else if(type == OntologyType.DateTime){
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(((Date)value));
+		} else if(type == OntologyType.Time){
+			return new SimpleDateFormat("HH:mm:ss").format(((Date)value));
 		}
-		return isFloat;
+		return value;
+	}
+
+	private Object unformatValue(Object value, OntologyType type) throws ParseException {
+		if(type == OntologyType.Date){
+			return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
+		} else if(type == OntologyType.DateTime){
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value.toString());
+		} else if(type == OntologyType.Time){
+			return new SimpleDateFormat("HH:mm:ss").parse(value.toString());
+		}
+		return value;
 	}
 
 	/**
@@ -376,16 +382,32 @@ public class OntologyManager implements Ontology {
 			OntologyType propertyClass = ontologyClass.getPropertyType(propertyName);
 			Collection propertyValues = individual
 					.getPropertyValues(rdfProperty);
+			Collection propertyValues2 = new ArrayList<>();
+			for (Object object : propertyValues) {
+				try {
+					propertyValues2.add(unformatValue(object, propertyClass));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			LOGGER.debug("Collected {} values for property '{}'", propertyValues,
 					propertyName);
-			instance.addProperty(new InstanceProperty(propertyName, propertyClass, propertyValues));
+			instance.addProperty(new InstanceProperty(propertyName, propertyValues2));
 		}
 		return instance;
 	}
 
-	private OntologyClass getOntologyClass(String className) {
-		OntologyClass ontologyClass = new OntologyClass(className);
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.core.ontology.Ontology#getOntologyClass(java.lang.String)
+	 */
+	@Override
+	public OntologyClass getOntologyClass(String className) {
 		DefaultOWLNamedClass owlClass = (DefaultOWLNamedClass) getModel().getOWLNamedClass(className);
+		if(owlClass == null){
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
+		}
+		OntologyClass ontologyClass = new OntologyClass(className);
 		@SuppressWarnings("unchecked")
 		Collection<RDFProperty> classProperties = owlClass.getUnionDomainProperties();
 
@@ -466,8 +488,7 @@ public class OntologyManager implements Ontology {
 	}
 
 	private RDFResource getDatatypeRange(OntologyType type) {
-		String typeName = type.name().toLowerCase();
-		String methodName = "getXSD" + typeName;
+		String methodName = "getXSD" + type.getRdfType();
 		try {
 			Method method = getModel().getClass().getMethod(methodName);
 			RDFResource resp = (RDFResource) method.invoke(getModel());
@@ -479,7 +500,13 @@ public class OntologyManager implements Ontology {
 	}
 
 	@Override
-	public void removeClass(String ontologyClass) {
+	public void removeClass(String className) {
+		OWLNamedClass classToDelete = getModel().getOWLNamedClass(className);
+		if(classToDelete == null){
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
+		}
+
+		getModel().deleteCls(classToDelete);
 	}
 
 	/**

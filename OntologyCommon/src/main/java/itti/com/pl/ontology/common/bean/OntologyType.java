@@ -4,17 +4,27 @@ import org.apache.commons.lang3.StringUtils;
 
 public enum OntologyType {
 
-	Boolean,
-	Float,
-	Int,
-	String,
-	Date,
-	DateTime,
-	Time;
+	Boolean("boolean"),
+	Float("float"),
+	Int("int"),
+	String("string"),
+	Date("date"),
+	DateTime("dateTime"),
+	Time("time");
+
+	String rdfType = null;
+
+	public String getRdfType(){
+		return rdfType;
+	}
+	
+	private OntologyType(String rdfType){
+		this.rdfType = rdfType;
+	}
 
 	public static OntologyType getType(String name) {
 		for (OntologyType type : OntologyType.values()) {
-			if(StringUtils.equalsIgnoreCase(type.name(), name)){
+			if(StringUtils.equalsIgnoreCase(type.getRdfType(), name)){
 				return type;
 			}
 		}
