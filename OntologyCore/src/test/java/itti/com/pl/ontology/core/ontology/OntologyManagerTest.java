@@ -45,6 +45,11 @@ public class OntologyManagerTest {
     @AfterClass
     public static void afterClass() {
 
+    	saveOntology();
+    	ontologyManager.shutdown();
+    }
+
+    private static void saveOntology() {
         try {
         	LocalOntologyRepository repo = new LocalOntologyRepository();
         	repo.setRepositoryLocation("/tmp");
@@ -52,11 +57,9 @@ public class OntologyManagerTest {
 		} catch (OntologyException e) {
 			e.printStackTrace();
 		}
+	}
 
-    	ontologyManager.shutdown();
-    }
-
-    @Test
+	@Test
     public void testCreateClass() throws OntologyRuntimeException {
 
     	String className = "testCreateClass";
@@ -149,4 +152,29 @@ public class OntologyManagerTest {
         ontologyManager.removeInstance(instanceName);
     }
 
+    @Test
+    public void testAddSubclass() throws OntologyRuntimeException {
+
+    	OntologyClass parent = new OntologyClass("addSubclassParentClass");
+    	ontologyManager.createClass(parent);
+
+    	OntologyClass child = new OntologyClass("addSubclassChildClass");
+    	child.setParentClass(parent.getName());
+    	ontologyManager.createClass(child);
+
+    	String parentInstance = "instanceParentClass";
+    	String childInstance = "instanceChildClass";
+    	ontologyManager.createInstance(new Instance(parent, parentInstance));
+    	ontologyManager.createInstance(new Instance(child, childInstance));
+
+    	saveOntology();
+    	assertEquals(parent.getName(), ontologyManager.getInstanceClass(parentInstance));
+    	assertEquals(child.getName(), ontologyManager.getInstanceClass(childInstance));
+
+    	assertEquals(1, ontologyManager.getNonDirectInstances(parent.getName()).size());
+    	assertEquals(1, ontologyManager.getDirectInstances(parent.getName()).size());
+    	assertEquals(childInstance, ontologyManager.getNonDirectInstances(parent.getName()).get(0));
+    	assertEquals(parentInstance, ontologyManager.getDirectInstances(parent.getName()).get(0));
+    	assertEquals(parent.getName(), ontologyManager.getOntologyClass(child.getName()).getParent());
+    }
 }

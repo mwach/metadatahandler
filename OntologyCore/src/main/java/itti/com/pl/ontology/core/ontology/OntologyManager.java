@@ -29,7 +29,6 @@ import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
 import edu.stanford.smi.protegex.owl.model.RDFProperty;
 import edu.stanford.smi.protegex.owl.model.RDFResource;
-import edu.stanford.smi.protegex.owl.model.impl.DefaultOWLNamedClass;
 import edu.stanford.smi.protegex.owl.model.impl.DefaultRDFSLiteral;
 import edu.stanford.smi.protegex.owl.model.query.QueryResults;
 import edu.stanford.smi.protegex.owl.swrl.SWRLRuleEngine;
@@ -375,27 +374,29 @@ public class OntologyManager implements Ontology {
 			String propertyPrefix = rdfProperty.getNamespacePrefix();
 			String propertyName = rdfProperty.getLocalName();
 
-			// check, if property is ignored
-			if (ignoredProperties.contains(String.format("%s:%s", propertyPrefix, propertyName))) {
+			if(isPropertyIgnored(propertyPrefix, propertyName)){
 				continue;
 			}
 			OntologyType propertyClass = ontologyClass.getPropertyType(propertyName);
-			Collection propertyValues = individual
+			Collection rawPropertyValues = individual
 					.getPropertyValues(rdfProperty);
-			Collection propertyValues2 = new ArrayList<>();
-			for (Object object : propertyValues) {
+			Collection formattedProperties = new ArrayList<>();
+			for (Object object : rawPropertyValues) {
 				try {
-					propertyValues2.add(unformatValue(object, propertyClass));
+					formattedProperties.add(unformatValue(object, propertyClass));
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOGGER.warn("Could not parse value {}. Exception: {}", object, e.getLocalizedMessage());
 				}
 			}
-			LOGGER.debug("Collected {} values for property '{}'", propertyValues,
+			LOGGER.debug("Collected {} values for property '{}'", rawPropertyValues,
 					propertyName);
-			instance.addProperty(new InstanceProperty(propertyName, propertyValues2));
+			instance.addProperty(new InstanceProperty(propertyName, formattedProperties));
 		}
 		return instance;
+	}
+
+	private boolean isPropertyIgnored(String propertyPrefix, String propertyName) {
+		return ignoredProperties.contains(String.format("%s:%s", propertyPrefix, propertyName));
 	}
 
 	/* (non-Javadoc)
@@ -403,11 +404,14 @@ public class OntologyManager implements Ontology {
 	 */
 	@Override
 	public OntologyClass getOntologyClass(String className) {
-		DefaultOWLNamedClass owlClass = (DefaultOWLNamedClass) getModel().getOWLNamedClass(className);
+		OWLNamedClass owlClass = getModel().getOWLNamedClass(className);
 		if(owlClass == null){
 			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
 		}
 		OntologyClass ontologyClass = new OntologyClass(className);
+
+		ontologyClass.setParentClass(getParentClassName(owlClass));
+
 		@SuppressWarnings("unchecked")
 		Collection<RDFProperty> classProperties = owlClass.getUnionDomainProperties();
 
@@ -422,6 +426,18 @@ public class OntologyManager implements Ontology {
 		return ontologyClass;
 	}
 
+
+	private String getParentClassName(OWLNamedClass owlClass) {
+		if(owlClass.hasNamedSuperclass()){
+			for (Object parentClassObj : owlClass.getNamedSuperclasses()) {
+				OWLNamedClass parentClass = (OWLNamedClass)parentClassObj;
+				if(parentClass.getNamespace().equals(getOntologyNamespace())){
+					return parentClass.getLocalName();					
+				}
+			}
+		}
+		return null;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -467,10 +483,18 @@ public class OntologyManager implements Ontology {
 
 		LOGGER.debug("Creating class '{}'", ontologyClass.getName());
 
+		// check for parent class
+		OWLNamedClass parent = null;
+		if(ontologyClass.getParent() != null){
+			parent = getModel().getOWLNamedClass(ontologyClass.getParent());
+		}
 		// check, if class existed in the ontology
 		if (getModel().getOWLIndividual(ontologyClass.getName()) == null) {
+
 			// if not, try to create it
-			OWLNamedClass individual = getModel().createOWLNamedClass(
+			OWLNamedClass individual = (parent != null) ? 
+					getModel().createOWLNamedSubclass(ontologyNamespace + ontologyClass.getName(), parent) :
+					getModel().createOWLNamedClass(
 					ontologyNamespace + ontologyClass.getName());
 			for (OntologyProperty ontologyProperty : ontologyClass
 					.getProperties()) {
