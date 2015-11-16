@@ -60,12 +60,10 @@ public interface Ontology {
     /**
      * creates simple instance in the ontology model
      * 
-     * @param baseClass
-     *            ontology class
      * @param instance
      *            instance
      */
-    public void createInstance(OntologyClass baseClass, Instance instance);
+    public void createInstance(Instance instance);
 
     /**
      * Checks, if instance with given name exists in the ontology
@@ -91,6 +89,13 @@ public interface Ontology {
      *            class object
      */
     public void createClass(OntologyClass ontologyClass);
+
+    /**
+     * Returns an ontology class
+     * @param className name of the class
+     * @return {@link OntologyClass}
+     */
+	public OntologyClass getOntologyClass(String className);
 
     /**
      * Removes an existing class from the ontology model
@@ -137,4 +142,5 @@ public interface Ontology {
      * Runs SWRL engine on existing model
      */
     public void runSwrlEngine();
+
 }
