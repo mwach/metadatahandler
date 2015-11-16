@@ -30,13 +30,12 @@ public class OntologyManagerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private static LocalOntologyRepository ontologyRepository = null;
     private static OntologyManager ontologyManager;
 
     @BeforeClass
     public static void beforeClass() throws OntologyRuntimeException, OntologyException {
 
-    	ontologyRepository = new LocalOntologyRepository();
+    	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository();
     	ontologyRepository.setRepositoryLocation(ONTOLOGY_REPOSITORY);
     	ontologyManager = (OntologyManager) ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
     	ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
