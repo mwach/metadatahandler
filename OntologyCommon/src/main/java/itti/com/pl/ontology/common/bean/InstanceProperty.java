@@ -11,18 +11,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class InstanceProperty<T> {
 
 	private String name;
-	private OntologyType type;
 	private List<T> values = new ArrayList<>();
 
-	public InstanceProperty(String name, OntologyType type, T value){
+	public InstanceProperty(String name, T value){
 		this.name = name;
-		this.type = type;
 		this.values.add(value);
 	}
 
-	public InstanceProperty(String name, OntologyType type, Collection<T> values){
+	public InstanceProperty(String name, Collection<T> values){
 		this.name = name;
-		this.type = type;
 		this.values.addAll(values);
 	}
 
@@ -34,9 +31,6 @@ public class InstanceProperty<T> {
 	}
 	public List<T> getValues() {
 		return values;
-	}
-	public OntologyType getType() {
-		return type;
 	}
 
 	@Override

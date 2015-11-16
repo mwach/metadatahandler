@@ -11,6 +11,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class OntologyClass {
 
 	private String name;
+	private String parent;
+
 	private List<OntologyProperty> properties = new ArrayList<>();
 
 	public OntologyClass(String className) {
@@ -50,6 +52,12 @@ public class OntologyClass {
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	public void setParentClass(String parent) {
+		this.parent = parent;
+	}
+	public String getParent(){
+		return parent;
 	}
 
 }
