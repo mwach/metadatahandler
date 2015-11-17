@@ -6,7 +6,7 @@
 		<version>0.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>core</artifactId>
-	<name>OntologyCore</name>
+	<name>core</name>
 
 	<dependencies>
 		<dependency>

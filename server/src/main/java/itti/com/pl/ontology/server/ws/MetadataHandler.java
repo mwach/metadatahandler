@@ -1,3 +1,4 @@
+
 package itti.com.pl.ontology.server.ws;
 
 import itti.com.pl.ontology.server.ws.bean.DependenciesList;
@@ -7,10 +8,7 @@ import itti.com.pl.ontology.server.ws.bean.TypeOfObject;
 
 import javax.jws.WebService;
 
-import org.springframework.stereotype.Service;
-
 @WebService(endpointInterface = "itti.com.pl.ontology.server.ws.MetadataHandlerWS")
-@Service
 public class MetadataHandler implements MetadataHandlerWS {
 
 	@Override
