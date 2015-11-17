@@ -1,9 +1,6 @@
 
 package itti.com.pl.ontology.server.ws;
 
-import itti.com.pl.ontology.common.exception.OntologyException;
-import itti.com.pl.ontology.core.ontology.LocalOntologyRepository;
-import itti.com.pl.ontology.core.ontology.Ontology;
 import itti.com.pl.ontology.core.ontology.OntologyManager;
 import itti.com.pl.ontology.server.ws.bean.DependenciesList;
 import itti.com.pl.ontology.server.ws.bean.MetadataObject;
@@ -14,6 +11,8 @@ import javax.jws.WebService;
 
 @WebService(endpointInterface = "itti.com.pl.ontology.server.ws.MetadataHandlerWS")
 public class MetadataHandler implements MetadataHandlerWS {
+
+	private OntologyManager manager = null;
 
 	@Override
 	public boolean setTSINodeType(TSINodeType tsiNodeType) {
@@ -59,19 +58,8 @@ public class MetadataHandler implements MetadataHandlerWS {
 		return null;
 	}
 
-	Ontology ontology = null;
-	public void loadOnlology(String string) {
-
-    	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository("/tmp");
-    	OntologyManager ontologyManager = null;
-		try {
-			ontologyManager = (OntologyManager) ontologyRepository.loadOntology("aao.owl");
-		} catch (OntologyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	ontologyManager.setOntologyNamespace("");
-
+	public void setOntology(OntologyManager manager) {
+		this.manager = manager;
 	}
 
 }
