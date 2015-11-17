@@ -9,16 +9,16 @@
 	</parent>
 	<artifactId>server</artifactId>
 	<name>server</name>
-	<url>http://www.itti.com.pl/en/</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<packaging>jar</packaging>
 	<dependencies>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
+			<groupId>itti.com.pl.ontology</groupId>
+			<artifactId>core</artifactId>
+			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -56,29 +56,43 @@
 		</dependency>
 	</dependencies>
 	<build>
-
 		<plugins>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
+				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>itti.com.pl.ontology.server.config.Application</mainClass>
+							<classpathPrefix>dependency-jars/</classpathPrefix>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<server>TomcatServer</server>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.5.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/dependency-jars/
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-
 		</plugins>
+
 	</build>
-	<packaging>war</packaging>
 </project>

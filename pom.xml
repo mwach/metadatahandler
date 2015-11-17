@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.4-SNAPSHOT</version>
 	<name>metdatahandler</name>
-	<url>http://maven.apache.org</url>
+	<url>http://www.itti.com.pl/en/</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

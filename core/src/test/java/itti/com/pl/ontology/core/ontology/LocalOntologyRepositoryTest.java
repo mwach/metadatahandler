@@ -38,8 +38,7 @@ public class LocalOntologyRepositoryTest {
 
 	@Test
 	public void setRepositoryCalled() throws OntologyException{
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation(REPO_LOCATION);
+		LocalOntologyRepository lor = new LocalOntologyRepository(REPO_LOCATION);
 		List<String> ontologies = lor.getListOfOntologies();
 		assertEquals(1, ontologies.size());
 		String ontologyFileName = ontologies.get(0);
@@ -62,7 +61,7 @@ public class LocalOntologyRepositoryTest {
 	public void setRepositoryNotCalled() throws OntologyException{
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_REPO_UNDEFINED.getMessage());
-		LocalOntologyRepository lor = new LocalOntologyRepository();
+		LocalOntologyRepository lor = new LocalOntologyRepository(null);
 		lor.loadOntology(null);
 	}
 
@@ -70,8 +69,7 @@ public class LocalOntologyRepositoryTest {
 	public void setFileNameNotProvided() throws OntologyException{
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_EMPTY_FILE_NAME_PROVIDED.getMessage());
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation("some repo");
+		LocalOntologyRepository lor = new LocalOntologyRepository("some repo");
 		lor.loadOntology(null);
 	}
 
@@ -81,8 +79,7 @@ public class LocalOntologyRepositoryTest {
 		String fileName = "dummyLoad";
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_LOAD.getMessage(fileName));
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation(REPO_LOCATION);
+		LocalOntologyRepository lor = new LocalOntologyRepository(REPO_LOCATION);
 		lor.loadOntology(fileName);
 	}
 
@@ -92,8 +89,7 @@ public class LocalOntologyRepositoryTest {
 		String invalidRepo = "invalidRepo";
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_REPO_CANNOT_ACCESS.getMessage(invalidRepo));
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation(invalidRepo);
+		LocalOntologyRepository lor = new LocalOntologyRepository(invalidRepo);
 		lor.getListOfOntologies();
 	}
 
@@ -103,8 +99,7 @@ public class LocalOntologyRepositoryTest {
 		String fileName = "dummyRemove";
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_REMOVE.getMessage(fileName));
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation(REPO_LOCATION);
+		LocalOntologyRepository lor = new LocalOntologyRepository(REPO_LOCATION);
 		lor.removeOntology(fileName);
 	}
 
@@ -114,8 +109,7 @@ public class LocalOntologyRepositoryTest {
 		String fileName = "dummySave";
 		expectedException.expect(OntologyException.class);
 		expectedException.expectMessage(ErrorMessages.ONTOLOGY_CANNOT_SAVE.getMessage(fileName));
-		LocalOntologyRepository lor = new LocalOntologyRepository();
-		lor.setRepositoryLocation(REPO_LOCATION);
+		LocalOntologyRepository lor = new LocalOntologyRepository(REPO_LOCATION);
 		lor.saveOntology(null, fileName);
 	}
 

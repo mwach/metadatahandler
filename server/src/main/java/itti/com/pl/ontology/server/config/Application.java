@@ -30,6 +30,7 @@ public class Application {
 
 		System.out.println("Starting Server");
 		MetadataHandler implementor = new MetadataHandler();
+		implementor.loadOnlology("/tmp/aao.owl");
 		String address = "http://localhost:9000/metadataHandler";
 		Endpoint.publish(address, implementor);
 	}

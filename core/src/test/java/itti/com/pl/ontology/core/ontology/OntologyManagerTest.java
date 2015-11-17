@@ -35,8 +35,7 @@ public class OntologyManagerTest {
     @BeforeClass
     public static void beforeClass() throws OntologyRuntimeException, OntologyException {
 
-    	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository();
-    	ontologyRepository.setRepositoryLocation(ONTOLOGY_REPOSITORY);
+    	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository(ONTOLOGY_REPOSITORY);
     	ontologyManager = (OntologyManager) ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
     	ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
     }
@@ -50,8 +49,7 @@ public class OntologyManagerTest {
 
     private static void saveOntology() {
         try {
-        	LocalOntologyRepository repo = new LocalOntologyRepository();
-        	repo.setRepositoryLocation("/tmp");
+        	LocalOntologyRepository repo = new LocalOntologyRepository("/tmp");
 			repo.saveOntology(ontologyManager, "test.owl");
 		} catch (OntologyException e) {
 			e.printStackTrace();

@@ -41,7 +41,8 @@ public class LocalOntologyRepository implements OntologyRepository {
 	 * @param repositoryLocation
 	 *            location of the ontology repository
 	 */
-	public void setRepositoryLocation(String repositoryLocation) {
+	public LocalOntologyRepository(String repositoryLocation) {
+		super();
 		this.repositoryLocation = repositoryLocation;
 	}
 

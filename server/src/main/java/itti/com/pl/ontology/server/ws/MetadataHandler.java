@@ -1,6 +1,10 @@
 
 package itti.com.pl.ontology.server.ws;
 
+import itti.com.pl.ontology.common.exception.OntologyException;
+import itti.com.pl.ontology.core.ontology.LocalOntologyRepository;
+import itti.com.pl.ontology.core.ontology.Ontology;
+import itti.com.pl.ontology.core.ontology.OntologyManager;
 import itti.com.pl.ontology.server.ws.bean.DependenciesList;
 import itti.com.pl.ontology.server.ws.bean.MetadataObject;
 import itti.com.pl.ontology.server.ws.bean.TSINodeType;
@@ -53,6 +57,21 @@ public class MetadataHandler implements MetadataHandlerWS {
 	public DependenciesList getDependencies(String objectId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	Ontology ontology = null;
+	public void loadOnlology(String string) {
+
+    	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository("/tmp");
+    	OntologyManager ontologyManager = null;
+		try {
+			ontologyManager = (OntologyManager) ontologyRepository.loadOntology("aao.owl");
+		} catch (OntologyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	ontologyManager.setOntologyNamespace("");
+
 	}
 
 }
