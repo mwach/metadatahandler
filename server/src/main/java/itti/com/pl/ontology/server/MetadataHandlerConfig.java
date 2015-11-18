@@ -33,6 +33,11 @@ import org.apache.cxf.wsdl11.WSDLManagerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Main class for the Metadata Handler
+ * @author marcin
+ *
+ */
 public class MetadataHandlerConfig {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandler.class);
@@ -43,6 +48,10 @@ public class MetadataHandlerConfig {
 	private OntologyManager ontologyManager = null;
 	private MetadataHandler implementor = null;
 
+	/**
+	 * startup method of the application
+	 * @param args first optional argument, which points to the location of optional properties file
+	 */
 	public static void main(String[] args) {
 
 		LOGGER.info("Starting Server");
@@ -64,14 +73,22 @@ public class MetadataHandlerConfig {
 		}
 	}
 
+	/**
+	 * Load default application properties
+	 */
 	private void loadProperties() {
-		try(InputStream stream = getClass().getResourceAsStream(Constants.DEFAULT_PROPERTIES_FILE)){
+		String propertyFile = String.format("/%s.properties", MetadataHandlerConfig.class.getSimpleName());
+		try(InputStream stream = getClass().getResourceAsStream(propertyFile)){
 			loadProperties(stream);
 		}catch (IOException | RuntimeException e) {
-			throw new MetadataHandlerException(String.format("Could not read data from '%s' property file", Constants.DEFAULT_PROPERTIES_FILE), e);
+			throw new MetadataHandlerException(String.format("Could not read data from '%s' property file", propertyFile), e);
 		}
 	}
 
+	/**
+	 * Load optional application properties from external property file
+	 * @param propertyFile path to the external property file
+	 */
 	private void loadProperties(String propertyFile) {
 		try(InputStream stream = new FileInputStream(propertyFile)){
 			loadProperties(stream);
@@ -80,6 +97,10 @@ public class MetadataHandlerConfig {
 		}
 	}
 
+	/**
+	 * Load properties from the provided {@link InputStream}
+	 * @param stream {@link InputStream}
+	 */
 	private void loadProperties(InputStream stream) {
 		try {
 			properties.load(stream);
@@ -88,6 +109,10 @@ public class MetadataHandlerConfig {
 		}
 	}
 
+	/**
+	 * Loads ontology from the location obtained from property files
+	 * @throws OntologyException problem while loading ontology
+	 */
 	private void initOntology() throws OntologyException {
 
 		LOGGER.info("Initialising ontology {}", properties.getProperty(Constants.ONTOLOGY));
@@ -103,6 +128,9 @@ public class MetadataHandlerConfig {
 		}
 	}
 
+	/**
+	 * Initializes SOAP CXF web service interface
+	 */
 	private void initService() {
 
 		LOGGER.info("Initialising web service using address {}", properties.getProperty(Constants.ADDRESS));
