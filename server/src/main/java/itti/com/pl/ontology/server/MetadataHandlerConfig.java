@@ -13,6 +13,7 @@ import javax.xml.ws.Endpoint;
 import itti.com.pl.ontology.common.exception.OntologyException;
 import itti.com.pl.ontology.core.ontology.LocalOntologyRepository;
 import itti.com.pl.ontology.core.ontology.OntologyManager;
+import itti.com.pl.ontology.server.exeption.MetadataHandlerException;
 import itti.com.pl.ontology.server.ws.MetadataHandler;
 
 import org.apache.cxf.Bus;
@@ -49,32 +50,33 @@ public class MetadataHandlerConfig {
 		try {
 			LOGGER.info("Loading default properties");
 			config.loadProperties();
+
 			if(args.length > 0){
 				LOGGER.info("Loading custom propeties from file {}", args[1]);
 				config.loadProperties(args[0]);				
 			}
 			config.initOntology();
 			config.initService();
+
+		} catch (OntologyException exc) {
 		} catch (MetadataHandlerException exc) {
-			LOGGER.error("Terminating application");
+			LOGGER.error(exc.getLocalizedMessage(), exc);
 		}
 	}
 
 	private void loadProperties() {
 		try(InputStream stream = getClass().getResourceAsStream(Constants.DEFAULT_PROPERTIES_FILE)){
 			loadProperties(stream);
-		}catch (IOException e) {
-			LOGGER.error(String.format("Could not read data from '%s' property file", Constants.DEFAULT_PROPERTIES_FILE), e);
-			throw new MetadataHandlerException();
+		}catch (IOException | RuntimeException e) {
+			throw new MetadataHandlerException(String.format("Could not read data from '%s' property file", Constants.DEFAULT_PROPERTIES_FILE), e);
 		}
 	}
 
 	private void loadProperties(String propertyFile) {
 		try(InputStream stream = new FileInputStream(propertyFile)){
 			loadProperties(stream);
-		}catch (IOException e) {
-			LOGGER.error(String.format("Could not read data from '%s' property file", propertyFile), e);
-			throw new MetadataHandlerException();
+		}catch (IOException | RuntimeException e) {
+			throw new MetadataHandlerException(String.format("Could not read data from '%s' property file", propertyFile), e);
 		}
 	}
 
@@ -82,12 +84,11 @@ public class MetadataHandlerConfig {
 		try {
 			properties.load(stream);
 		} catch (IOException e) {
-			LOGGER.error("Could not load property data", e);
-			throw new MetadataHandlerException();
+			throw new MetadataHandlerException("Could not load property data", e);
 		}
 	}
 
-	private void initOntology() {
+	private void initOntology() throws OntologyException {
 
 		LOGGER.info("Initialising ontology {}", properties.getProperty(Constants.ONTOLOGY));
 
@@ -97,9 +98,8 @@ public class MetadataHandlerConfig {
 			ontologyManager = (OntologyManager) ontologyRepository
 					.loadOntology(properties.getProperty(Constants.ONTOLOGY));
 			ontologyManager.setOntologyNamespace(properties.getProperty(Constants.NAMESPACE));
-		} catch (OntologyException | RuntimeException e) {
-			LOGGER.error("Could not load ontology", e);
-			throw new MetadataHandlerException();
+		} catch (RuntimeException e) {
+			throw new MetadataHandlerException("Could not load ontology", e);
 		}
 	}
 
@@ -113,8 +113,7 @@ public class MetadataHandlerConfig {
 		try {
 			Endpoint.publish(properties.getProperty(Constants.ADDRESS), implementor);
 		} catch (RuntimeException e) {
-			LOGGER.error("Could not publish an endpoint", e);
-			throw new MetadataHandlerException();
+			throw new MetadataHandlerException("Could not publish an endpoint", e);
 		}
 
 	}
