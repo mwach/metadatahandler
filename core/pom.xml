@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>itti.com.pl.ontology</groupId>
-		<artifactId>OntologyModule</artifactId>
+		<artifactId>metdatahandler</artifactId>
 		<version>0.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>core</artifactId>
