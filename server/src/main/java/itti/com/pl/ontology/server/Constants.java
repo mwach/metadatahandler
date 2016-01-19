@@ -34,4 +34,32 @@ public final class Constants {
 	 * Default: http://localhost:9000/metadataHandler
 	 */
 	public static final String ADDRESS = "address";
+
+	public enum Class{
+		Service("Service"), 
+		Device("Device"),
+		Network("Network");
+		
+		private String ontologyName;
+
+		private Class(String ontologyName){
+			this.ontologyName = ontologyName;
+		}
+		public String getOntologyName(){
+			return ontologyName;
+		}
+	}
+
+	public enum Property{
+		TypeOfNode("Type_of_node");
+
+		private String ontologyName;
+
+		private Property(String ontologyName){
+			this.ontologyName = ontologyName;
+		}
+		public String getOntologyName(){
+			return ontologyName;
+		}
+	}
 }

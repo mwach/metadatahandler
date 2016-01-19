@@ -23,12 +23,19 @@ public enum ErrorMessages {
     ONTOLOGY_COULD_NOT_FIND_PARENT_CLASS(306, "Could not find class for instance '%s'"),
     ONTOLOGY_CLASS_WITH_PROPERTY_NOT_FOUND(307, "No instance found with given instance properry: %s"),
     ONTOLOGY_CLASS_ALREADY_EXIST(308, "Class '%s' already defined in ontology"),
+    ONTOLOGY_INVALID_INSTANCE_CORE(309, "Value '%s' is neither an ontology instance, nor simple type"),
+    ONTOLOGY_INSTANCE_ALREADY_EXIST(310, "Instance '%s' already defined in ontology"),
+    ONTOLOGY_PROPERTY_NOT_FOUND_FOR_INSTANCE(311, "Property '%s' was not found for instance '%s'"),
 
     SWRL_CANNOT_ADD_RULE(800, "Cannot add SWRL rule to the ontology.Details: %s"),
     SWRL_EMPTY_RULE(801, "An attempt to add empty rule to ontology"),
     SWRL_ENGINE_FAILED(802, "Could not run SWRL engine. Details: %s"),
     SWRL_CANNOT_COLLECT_RULES(803, "Could not collect rule names from ontology. Details: %s"),
     SWRL_CANNOT_GET_RULE(804, "Cannot find SWRL rule identified by it's name: '%s'"), 
+    
+    REFLECTION_ISSUE_METHOD(900, "Reflection issue occured for method '%s'"), 
+    REFLECTION_ISSUE_CLASS(901, "Reflection issue occured for instance '%s'"), 
+
     ;
 
     /*

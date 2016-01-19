@@ -1,11 +1,16 @@
 package itti.com.pl.ontology.server.ws;
 
-import itti.com.pl.ontology.server.ws.bean.DependenciesList;
-import itti.com.pl.ontology.server.ws.bean.MetadataObject;
-import itti.com.pl.ontology.server.ws.bean.TSINodeType;
-import itti.com.pl.ontology.server.ws.bean.TypeOfObject;
+import java.util.List;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlElement;
+
+import itti.com.pl.ontology.common.dto.DependenciesList;
+import itti.com.pl.ontology.common.dto.Device;
+import itti.com.pl.ontology.common.dto.MetadataObject;
+import itti.com.pl.ontology.common.dto.TSINodeType;
+import itti.com.pl.ontology.common.dto.TypeOfObject;
 
 @WebService
 public interface MetadataHandlerWS {
@@ -17,9 +22,8 @@ public interface MetadataHandlerWS {
 	 * 
 	 * @param tsiNodeType
 	 *            TSINodeType : {@link TSINodeType}
-	 * @return true, if operation succeeded, false otherwise
 	 */
-	public boolean setTSINodeType(TSINodeType tsiNodeType);
+	public void setTSINodeType(@WebParam(name = "tsiNodeType") TSINodeType tsiNodeType);
 
 	/**
 	 * stores metadata about some object which type could be: user facing
@@ -31,10 +35,19 @@ public interface MetadataHandlerWS {
 	 *            {@link TypeOfObject}
 	 * @param metadataObject
 	 *            {@link MetadataObject}
-	 * @return true, if operation succeeded, false otherwise
 	 */
-	public boolean registerMetadataObject(TypeOfObject typeOfObject,
-			MetadataObject metadataObject);
+	public void registerMetadataObject(
+			@WebParam(name = "typeOfObject") @XmlElement(required = true) TypeOfObject typeOfObject,
+			@WebParam(name = "metadataObject") @XmlElement(required = true) MetadataObject metadataObject);
+
+	/**
+	 * Stores metadata about Device.
+	 * 
+	 * @param device
+	 *            {@link Device}
+	 */
+	public void registerDeviceMetadata(
+			@WebParam(name = "deviceMetadata") @XmlElement(required = true) Device device);
 
 	/**
 	 * refreshes the collected metadata object and check whether components
@@ -47,10 +60,10 @@ public interface MetadataHandlerWS {
 	 *            {@link TypeOfObject}
 	 * @param metadataObject
 	 *            {@link MetadataObject}
-	 * @return true, if operation succeeded, false otherwise
 	 */
-	public boolean updateMetadataObject(TypeOfObject typeOfObject,
-			MetadataObject metadataObject);
+	public void updateMetadataObject(
+			@WebParam(name = "typeOfObject") @XmlElement(required = true) TypeOfObject typeOfObject,
+			@WebParam(name = "metadataObject") @XmlElement(required = true) MetadataObject metadataObject);
 
 	/**
 	 * searches for metadata objects which satisfy the given Query (e.g. search
@@ -62,9 +75,11 @@ public interface MetadataHandlerWS {
 	 *            {@link TypeOfObject}
 	 * @param query
 	 *            searcu query
-	 * @return {@link MetadataObject}
+	 * @return list of {@link MetadataObject} matching provided criteria
 	 */
-	public MetadataObject searchMetadata(TypeOfObject typeOfObject, String query);
+	public List<MetadataObject> searchMetadata(
+			@WebParam(name = "typeOfObject") @XmlElement(required = true) TypeOfObject typeOfObject,
+			@WebParam(name = "query") @XmlElement(required = true) String query);
 
 	/**
 	 * gets metadata about particular object specific for the current TSI
@@ -75,7 +90,7 @@ public interface MetadataHandlerWS {
 	 *            unique ID
 	 * @return {@link MetadataObject}
 	 */
-	public MetadataObject getMetadata(String objectId);
+	public MetadataObject getMetadata(@WebParam(name = "objectId") @XmlElement(required = true) String objectId);
 
 	/**
 	 * reads metadata in on-demand manner and perform determined decisions
@@ -89,7 +104,7 @@ public interface MetadataHandlerWS {
 	 *            unique ID
 	 * @return {@link MetadataObject}
 	 */
-	public MetadataObject readMetadata(String objectId);
+	public MetadataObject readMetadata(@WebParam(name = "objectId") @XmlElement(required = true) String objectId);
 
 	/**
 	 * returns a list of services on which the particular service depends and
@@ -100,5 +115,5 @@ public interface MetadataHandlerWS {
 	 *            unique ID
 	 * @return {@link DependenciesList}
 	 */
-	public DependenciesList getDependencies(String objectId);
+	public DependenciesList getDependencies(@WebParam(name = "objectId") @XmlElement(required = true) String objectId);
 }

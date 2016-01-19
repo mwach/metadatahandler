@@ -47,7 +47,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>OntologyModule</finalName>
+		<finalName>MetadataHandler</finalName>
 
 		<plugins>
 			<plugin>
@@ -78,5 +78,6 @@
 		<module>common</module>
 		<module>core</module>
 		<module>server</module>
-	</modules>
+    <module>mh-common</module>
+  </modules>
 </project>

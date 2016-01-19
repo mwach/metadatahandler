@@ -31,6 +31,7 @@ public class LocalOntologyRepository implements OntologyRepository {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LocalOntologyRepository.class);
 	private static final String ONTOLOGY_SUFFIX = "owl";
+	private static final String PLUGINS_DIRECTORY_SUFFIX = "plugins/edu.stanford.smi.protegex.owl";
 
 	// location, where all the ontologies are stored
 	private String repositoryLocation = null;
@@ -98,7 +99,7 @@ public class LocalOntologyRepository implements OntologyRepository {
 	@Override
 	public void removeOntology(String fileName) throws OntologyException {
 
-		LOGGER.info("Removinf ontology file: {}", fileName);
+		LOGGER.info("Removing ontology file: {}", fileName);
 		verifyFileName(fileName);
 		verifyRepository();
 
@@ -118,7 +119,7 @@ public class LocalOntologyRepository implements OntologyRepository {
 
 		JenaOWLModel model = null;
 
-		LOGGER.debug("Init model: {} from repository {}", fileName,
+		LOGGER.info("Init model: {} from repository {}", fileName,
 				getRepositoryLocation());
 
 		verifyRepository();
@@ -127,6 +128,10 @@ public class LocalOntologyRepository implements OntologyRepository {
 		File ontologyLocation = new File(new File(getRepositoryLocation()), fileName);
 
 		try (InputStream ontologyInputStream = new FileInputStream(ontologyLocation)) {
+
+			File pluginFolder = new File(getRepositoryLocation(), PLUGINS_DIRECTORY_SUFFIX);
+			LOGGER.info("Using plugin folder {}", pluginFolder.getAbsolutePath());
+			ProtegeOWL.setPluginFolder(pluginFolder);
 			model = ProtegeOWL
 					.createJenaOWLModelFromInputStream(ontologyInputStream);
 		} catch (Exception exc) {

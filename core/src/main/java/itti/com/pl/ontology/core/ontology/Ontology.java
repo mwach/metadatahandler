@@ -1,6 +1,7 @@
 package itti.com.pl.ontology.core.ontology;
 
 import itti.com.pl.ontology.common.bean.Instance;
+import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 
 import java.util.List;
@@ -58,12 +59,25 @@ public interface Ontology {
     public String getInstanceClass(String instanceName);
 
     /**
-     * creates simple instance in the ontology model
+     * Creates simple instance in the ontology model
      * 
-     * @param instance
-     *            instance
+     * @param instance new instance
      */
     public void createInstance(Instance instance);
+
+    /**
+     * Updates existing instance in the ontology model
+     * 
+     * @param instance instance to be updated
+     */
+    public void updateInstance(Instance instance);
+
+    /**
+     * Returns an instance from the ontology
+     * @param instanceName name of the instance
+     * @return instance object
+     */
+	public Instance getInstance(String instanceName);
 
     /**
      * Checks, if instance with given name exists in the ontology
@@ -142,5 +156,19 @@ public interface Ontology {
      * Runs SWRL engine on existing model
      */
     public void runSwrlEngine();
+
+    /**
+     * Returns a list of instances matching provided criteria
+     * @param criteria search criteria
+     * @return list of instance names matching criteria
+     */
+	public List<String> query(List<InstanceProperty<?>> criteria);
+
+	/**
+	 * Updates value of the property for given instance
+	 * @param instanceName name of the instance
+	 * @param property property name and its values
+	 */
+	void updateProperty(String instanceName, InstanceProperty<?> property);
 
 }

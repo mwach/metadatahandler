@@ -10,7 +10,8 @@ public enum OntologyType {
 	String("string"),
 	Date("date"),
 	DateTime("dateTime"),
-	Time("time");
+	Time("time"),
+	Class("class");
 
 	String rdfType = null;
 

@@ -1,7 +1,7 @@
 package itti.com.pl.ontology.common.bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -13,7 +13,7 @@ public class OntologyClass {
 	private String name;
 	private String parent;
 
-	private List<OntologyProperty> properties = new ArrayList<>();
+	private Set<OntologyProperty> properties = new HashSet<>();
 
 	public OntologyClass(String className) {
 		this.name = className;
@@ -24,12 +24,22 @@ public class OntologyClass {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<OntologyProperty> getProperties() {
-		return new ArrayList<>(properties);
+	public Set<OntologyProperty> getProperties() {
+		return new HashSet<>(properties);
 	}
 	public void add(OntologyProperty property) {
 		this.properties.add(property);
 	}
+
+	public boolean hasPropertyType(String propertyName) {
+		for (OntologyProperty ontologyProperty : properties) {
+			if(StringUtils.equals(ontologyProperty.getName(), propertyName)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public OntologyType getPropertyType(String propertyName) {
 		for (OntologyProperty ontologyProperty : properties) {
 			if(StringUtils.equals(ontologyProperty.getName(), propertyName)){
@@ -38,7 +48,16 @@ public class OntologyClass {
 		}
 		return null;
 	}
-	
+
+	public OntologyProperty getProperty(String propertyName) {
+		for (OntologyProperty ontologyProperty : properties) {
+			if(StringUtils.equals(ontologyProperty.getName(), propertyName)){
+				return ontologyProperty;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

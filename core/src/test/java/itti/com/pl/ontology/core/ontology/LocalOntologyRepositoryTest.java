@@ -11,10 +11,12 @@ import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+@Ignore
 public class LocalOntologyRepositoryTest {
 
 	private static final String REPO_LOCATION = "src/test/resources/tmp";

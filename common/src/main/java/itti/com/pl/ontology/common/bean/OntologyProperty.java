@@ -8,12 +8,19 @@ public class OntologyProperty {
 
 	private String name;
 	private OntologyType type;
+	private String range;
 
 	public OntologyProperty(){}
 
 	public OntologyProperty(String name, OntologyType type){
 		this.name = name;
 		this.type = type;
+	}
+
+	public OntologyProperty(String name, OntologyType type, String range){
+		this.name = name;
+		this.type = type;
+		this.range = range;
 	}
 
 	public String getName() {
@@ -28,6 +35,10 @@ public class OntologyProperty {
 
 	public void setType(OntologyType type) {
 		this.type = type;
+	}
+
+	public String getRange() {
+		return range;
 	}
 
 	@Override

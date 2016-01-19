@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import itti.com.pl.ontology.common.bean.Instance;
 import itti.com.pl.ontology.common.bean.InstanceProperty;
@@ -17,6 +19,7 @@ import itti.com.pl.ontology.core.exception.ErrorMessages;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -57,7 +60,7 @@ public class OntologyManagerTest {
 	}
 
 	@Test
-    public void testCreateClass() throws OntologyRuntimeException {
+    public void createClass() throws OntologyRuntimeException {
 
     	String className = "testCreateClass";
 
@@ -87,7 +90,7 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testAddInstance() throws OntologyRuntimeException, ParseException {
+    public void addInstance() throws OntologyRuntimeException, ParseException {
 
     	OntologyClass ontologyClass = new OntologyClass("taiwp");
     	ontologyClass.add(new OntologyProperty("taiwpInt", OntologyType.Int));
@@ -122,7 +125,7 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testRemoveInstance() throws OntologyRuntimeException {
+    public void removeInstance() throws OntologyRuntimeException {
         // create a new instance in ontology
     	String className = "dummyClass_" + System.currentTimeMillis();
         String instanceName = "inst_" + className;
@@ -139,7 +142,7 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testRemoveNonExistingInstance() throws OntologyRuntimeException {
+    public void removeNonExistingInstance() throws OntologyRuntimeException {
 
         // try to delete an non-existing instance
         String instanceName = "dummyBuilding_tt_" + System.currentTimeMillis();
@@ -150,7 +153,7 @@ public class OntologyManagerTest {
     }
 
     @Test
-    public void testAddSubclass() throws OntologyRuntimeException {
+    public void addSubclass() throws OntologyRuntimeException {
 
     	OntologyClass parent = new OntologyClass("addSubclassParentClass");
     	ontologyManager.createClass(parent);
@@ -173,5 +176,79 @@ public class OntologyManagerTest {
     	assertEquals(childInstance, ontologyManager.getNonDirectInstances(parent.getName()).get(0));
     	assertEquals(parentInstance, ontologyManager.getDirectInstances(parent.getName()).get(0));
     	assertEquals(parent.getName(), ontologyManager.getOntologyClass(child.getName()).getParent());
+    }
+
+    @Test
+    @Ignore
+    public void runSwrlEngine(){
+    	ontologyManager.runSwrlEngine();
+    }
+
+    @Test
+    public void query(){
+
+    	OntologyClass ontologyClass = new OntologyClass("query");
+    	ontologyClass.add(new OntologyProperty("queryInt", OntologyType.Int));
+    	ontologyClass.add(new OntologyProperty("queryBoolean", OntologyType.Boolean));
+
+    	ontologyManager.createClass(ontologyClass);
+
+    	Instance instanceA = new Instance(ontologyClass, "queryInstanceA");
+    	instanceA.addProperty(new InstanceProperty<Integer>("queryInt", 23));
+    	instanceA.addProperty(new InstanceProperty<Boolean>("queryBoolean", false));
+    	ontologyManager.createInstance(instanceA);
+
+    	Instance instanceB = new Instance(ontologyClass, "queryInstanceB");
+    	instanceB.addProperty(new InstanceProperty<Integer>("queryInt", 26));
+    	instanceB.addProperty(new InstanceProperty<Boolean>("queryBoolean", false));
+    	ontologyManager.createInstance(instanceB);
+
+    	List<String> result = null;
+
+    	List<InstanceProperty<?>> criteriaA = new ArrayList<>();
+    	criteriaA.add(new InstanceProperty<Integer>("queryInt", 21));
+    	result = ontologyManager.query(criteriaA);
+    	assertTrue(result.isEmpty());
+
+    	List<InstanceProperty<?>> criteriaB = new ArrayList<>();
+    	criteriaB.add(new InstanceProperty<Integer>("queryInt", 23));
+    	result = ontologyManager.query(criteriaB);
+    	assertEquals(1, result.size());
+    	assertEquals(instanceA.getName(), result.get(0));
+
+    	List<InstanceProperty<?>> criteriaC = new ArrayList<>();
+    	criteriaC.add(new InstanceProperty<Boolean>("queryBoolean", false));
+    	result = ontologyManager.query(criteriaC);
+    	assertEquals(2, result.size());
+    	assertTrue(result.contains(instanceA.getName()));
+    	assertTrue(result.contains(instanceB.getName()));
+
+    	List<InstanceProperty<?>> criteriaD = new ArrayList<>();
+    	criteriaD.add(new InstanceProperty<Integer>("queryInt", 26));
+    	criteriaD.add(new InstanceProperty<Boolean>("queryBoolean", false));
+    	result = ontologyManager.query(criteriaD);
+    	assertEquals(1, result.size());
+    	assertEquals(instanceB.getName(), result.get(0));
+    }
+
+    @Test
+    public void queryClassProperty(){
+
+    	OntologyClass ontologyClass = new OntologyClass("queryClassProp");
+    	ontologyClass.add(new OntologyProperty("queryIntClassProp", OntologyType.Int));
+    	ontologyManager.createClass(ontologyClass);
+
+    	OntologyClass ontologyClass2 = new OntologyClass("queryClassProp2");
+    	ontologyClass2.add(new OntologyProperty("queryInstClassProp2", OntologyType.Class, "queryClassProp"));
+    	ontologyManager.createClass(ontologyClass2);
+
+    	Instance instanceA = new Instance(ontologyClass, "queryInstanceClassA");
+    	instanceA.addProperty(new InstanceProperty<Integer>("queryIntClassProp", 23));
+    	ontologyManager.createInstance(instanceA);
+
+    	Instance instanceB = new Instance(ontologyClass2, "queryInstanceClassB");
+    	instanceB.addProperty(new InstanceProperty<Instance>("queryInstClassProp2", instanceA));
+    	ontologyManager.createInstance(instanceB);
+
     }
 }

@@ -27,8 +27,10 @@ import edu.stanford.smi.protege.model.SimpleInstance;
 import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
 import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 import edu.stanford.smi.protegex.owl.model.OWLNamedClass;
+import edu.stanford.smi.protegex.owl.model.OWLProperty;
 import edu.stanford.smi.protegex.owl.model.RDFProperty;
 import edu.stanford.smi.protegex.owl.model.RDFResource;
+import edu.stanford.smi.protegex.owl.model.impl.DefaultOWLDataRange;
 import edu.stanford.smi.protegex.owl.model.impl.DefaultRDFSLiteral;
 import edu.stanford.smi.protegex.owl.model.query.QueryResults;
 import edu.stanford.smi.protegex.owl.swrl.SWRLRuleEngine;
@@ -51,6 +53,12 @@ public class OntologyManager implements Ontology {
 	private static final String QUERY_GET_INSTANCES = "PREFIX ns:<%s> SELECT ?%s WHERE { ?%s rdf:type ?subclass. "
 			+ "?subclass rdfs:subClassOf ns:%s }";
 	private static final String QUERY_GET_INSTANCE_CLASS = "PREFIX ns:<%s> SELECT ?%s WHERE { ns:%s rdf:type ?%s }";
+
+	private static final String QUERY_CRITERIA = "PREFIX ns:<%s> SELECT ?instance WHERE { %s }";
+	private static final String QUERY_CRITERIA_SUBQUERY = "?instance ns:%s ?val%d FILTER (?val%d = %s)";
+
+	// variable used for querying ontology
+	private static final String VAR = "instance";
 
 	private JenaOWLModel model = null;
 
@@ -82,12 +90,10 @@ public class OntologyManager implements Ontology {
 		return ontologyNamespace;
 	}
 
-	// variable used for querying ontology
-	protected final String VAR = "instance";
-
 	/**
 	 * {@link Constructor}
-	 * @param model 
+	 * 
+	 * @param model
 	 */
 	public OntologyManager(JenaOWLModel model) {
 		this.model = model;
@@ -130,8 +136,7 @@ public class OntologyManager implements Ontology {
 		if (StringUtils.isEmpty(className)) {
 			return new ArrayList<>();
 		}
-		String query = String.format(QUERY_GET_DIRECT_INSTANCES,
-				getOntologyNamespace(), VAR, VAR, className);
+		String query = String.format(QUERY_GET_DIRECT_INSTANCES, getOntologyNamespace(), VAR, VAR, className);
 		return executeSparqlQuery(query, VAR);
 	}
 
@@ -149,8 +154,7 @@ public class OntologyManager implements Ontology {
 		if (StringUtils.isEmpty(className)) {
 			return new ArrayList<>();
 		}
-		String query = String.format(QUERY_GET_INSTANCES,
-				getOntologyNamespace(), VAR, VAR, className);
+		String query = String.format(QUERY_GET_INSTANCES, getOntologyNamespace(), VAR, VAR, className);
 
 		return (executeSparqlQuery(query, VAR));
 	}
@@ -169,17 +173,13 @@ public class OntologyManager implements Ontology {
 
 		if (StringUtils.isEmpty(instanceName)) {
 			LOGGER.error("Null instance name provided");
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_EMPTY_INSTANCE_NAME.getMessage());
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_EMPTY_INSTANCE_NAME.getMessage());
 		}
-		String query = String.format(QUERY_GET_INSTANCE_CLASS,
-				getOntologyNamespace(), VAR, instanceName, VAR);
+		String query = String.format(QUERY_GET_INSTANCE_CLASS, getOntologyNamespace(), VAR, instanceName, VAR);
 		List<String> results = executeSparqlQuery(query, VAR);
 		if (results.isEmpty()) {
 			LOGGER.warn("No results were found for instance '{}'", instanceName);
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND
-							.getMessage(instanceName));
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(instanceName));
 		}
 		return results.get(0);
 	}
@@ -208,8 +208,7 @@ public class OntologyManager implements Ontology {
 				} else if (value instanceof DefaultRDFSLiteral) {
 					result = ((DefaultRDFSLiteral) value).getBrowserText();
 				} else {
-					LOGGER.warn(
-							"Unrecognized query results class: '{}'", value);
+					LOGGER.warn("Unrecognized query results class: '{}'", value);
 				}
 				resultList.add(result);
 
@@ -230,25 +229,137 @@ public class OntologyManager implements Ontology {
 	 * .lang.String, java.lang.String, java.util.Map)
 	 */
 	@Override
-	public void createInstance(
-			itti.com.pl.ontology.common.bean.Instance instance) {
+	public void createInstance(itti.com.pl.ontology.common.bean.Instance instance) {
 
 		LOGGER.debug("Creating instance '{}' for class '{}'", instance, instance.getBaseClass());
 
 		// create individual, or get the existing one
 		OWLIndividual individual = null;
 		if (getInstances(instance.getBaseClass().getName()).contains(instance.getName())) {
+			LOGGER.warn("Instance '{}' already exists in the ontology", instance.getName());
+			throw new OntologyRuntimeException(
+					ErrorMessages.ONTOLOGY_INSTANCE_ALREADY_EXIST.getMessage(instance.getName()));
+		} else {
+
+			validateProperties(instance);
+			individual = createInstanceOnly(instance.getBaseClass().getName(), instance.getName());
+		}
+
+		// individual created, now add all the properties
+		for (InstanceProperty<?> instanceProperty : instance.getProperties()) {
+			updateProperty(individual, instanceProperty);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * itti.com.pl.ontology.server.ontology.Ontology#createSimpleInstance(java
+	 * .lang.String, java.lang.String, java.util.Map)
+	 */
+	@Override
+	public void updateInstance(itti.com.pl.ontology.common.bean.Instance instance) {
+
+		LOGGER.debug("Updating instance '{}' for class '{}'", instance, instance.getBaseClass());
+
+		// create individual, or get the existing one
+		OWLIndividual individual = null;
+		if (getInstances(instance.getBaseClass().getName()).contains(instance.getName())) {
 			individual = getOwlInstance(instance.getName());
 		} else {
-			individual = createInstanceOnly(instance.getBaseClass().getName(),
-					instance.getName());
+			LOGGER.warn("Instance '{}' not found in the ontology", instance.getName());
+			throw new OntologyRuntimeException(
+					ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(instance.getName()));
 		}
+		validateProperties(instance);
 
 		// individual created, now add all the properties
 		for (InstanceProperty<?> instanceProperty : instance.getProperties()) {
 
 			updateProperty(individual, instanceProperty);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.core.ontology.Ontology#updateProperty(java.lang.String, itti.com.pl.ontology.common.bean.InstanceProperty)
+	 */
+	@Override
+	public void updateProperty(String instanceName, InstanceProperty<?> property) {
+		OWLIndividual individual = getOwlInstance(instanceName);
+		updateProperty(individual, property);
+	}
+
+	/**
+	 * Validates if properties defined for given instance are defined in the
+	 * ontology
+	 * 
+	 * @param instance
+	 *            instance to be validated
+	 */
+	@SuppressWarnings("deprecation")
+	private void validateProperties(itti.com.pl.ontology.common.bean.Instance instance) {
+
+		OntologyClass ontologyClass = getOntologyClass(instance.getBaseClass().getName());
+		for (InstanceProperty<?> property : instance.getProperties()) {
+			OntologyProperty ontologyProperty = ontologyClass.getProperty(property.getName());
+
+			// property not found in ontology
+			if (ontologyProperty == null) {
+				LOGGER.warn("Property '{}' is invalid for instance {}", property.getName(), instance.getName());
+				throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_PROPERTY_NOT_FOUND_FOR_INSTANCE
+						.getMessage(property.getName(), instance.getName()));
+
+			}
+			// object property
+			if (ontologyProperty.getType() == null) {
+				OWLProperty owlProperty = getModel().getOWLProperty(property.getName());
+				RDFResource range = owlProperty.getRange();
+
+				Collection<?> rangeInstances = null;
+				if (range instanceof DefaultOWLDataRange) {
+					//range
+					rangeInstances = ((DefaultOWLDataRange) range).getOneOfValueLiterals();
+				} else {
+					// objects/instances
+					rangeInstances = getModel().getInstances((OWLNamedClass) range);
+				}
+				for (Object propertyValue : property.getValues()) {
+					if (!instanceExists(propertyValue, rangeInstances)) {
+						LOGGER.warn("Property '{}' is invalid for instance {}", property.getName(),
+								instance.getName());
+						throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_PROPERTY_NOT_FOUND_FOR_INSTANCE
+								.getMessage(property.getName(), instance.getName()));
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks if given instanceName exists in provided set of instances
+	 * 
+	 * @param instanceName
+	 *            name of the instance
+	 * @param instances
+	 *            collection of instances
+	 * @return true, if instanceName exists in the collection, false otherwise
+	 */
+	private boolean instanceExists(Object instanceName, Collection<?> instances) {
+		String innerQueryInstanceName = instanceName.toString();
+		if(instanceName instanceof itti.com.pl.ontology.common.bean.Instance){
+			innerQueryInstanceName = ((itti.com.pl.ontology.common.bean.Instance)instanceName).getName();
+		}
+		for (Object instance : instances) {
+			String innerInstanceName = instance.toString();
+			if (instance instanceof OWLIndividual) {
+				innerInstanceName = ((OWLIndividual) instance).getLocalName();
+			}
+			if (innerInstanceName.equals(innerQueryInstanceName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -265,36 +376,28 @@ public class OntologyManager implements Ontology {
 		return getModel().getOWLIndividual(instanceName);
 	}
 
-	private OWLIndividual createInstanceOnly(String className,
-			String instanceName) throws OntologyException {
+	private OWLIndividual createInstanceOnly(String className, String instanceName) throws OntologyException {
 
 		OWLNamedClass parentClass = getModel().getOWLNamedClass(className);
 		OWLIndividual individual = null;
 		if (parentClass == null) {
 			LOGGER.warn("Base class '{}' not found in the ontology", className);
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST
-							.getMessage(className));
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
 		}
 		try {
 			individual = parentClass.createOWLIndividual(instanceName);
 		} catch (RuntimeException exc) {
-			LOGGER
-					.error(String.format(
-									"Cannot create instance '{}' of class '{}'. Probably a duplicate",
-									instanceName, className), exc);
+			LOGGER.error(String.format("Cannot create instance '{}' of class '{}'. Probably a duplicate", instanceName,
+					className), exc);
 			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_COULD_NOT_ADD_INSTANCE.getMessage(
-							instanceName, className));
+					ErrorMessages.ONTOLOGY_COULD_NOT_ADD_INSTANCE.getMessage(instanceName, className));
 		}
 		return individual;
 	}
 
-	private void updateProperty(OWLIndividual individual,
-			InstanceProperty<?> property) {
+	private void updateProperty(OWLIndividual individual, InstanceProperty<?> property) {
 
-		LOGGER.debug("Creting property '{}' for instance {}", property.getName(),
-				individual.getName());
+		LOGGER.debug("Creting property '{}' for instance {}", property.getName(), individual.getName());
 
 		// get the property
 		RDFProperty rdfProperty = getModel().getRDFProperty(property.getName());
@@ -304,12 +407,14 @@ public class OntologyManager implements Ontology {
 
 		// now, set property value
 		for (Object value : property.getValues()) {
+			if(value instanceof itti.com.pl.ontology.common.bean.Instance){
+				value = ((itti.com.pl.ontology.common.bean.Instance)value).getName();
+			}
 			// find value as an instance
-			OWLIndividual valueInd = getModel().getOWLIndividual(
-					value.toString());
+			OWLIndividual valueInd = getModel().getOWLIndividual(value.toString());
 			if (valueInd != null) {
 				addPropertyValue(individual, rdfProperty, valueInd);
-			} else{ 
+			} else {
 				value = formatValue(value, type);
 				addPropertyValue(individual, rdfProperty, value);
 			}
@@ -317,22 +422,22 @@ public class OntologyManager implements Ontology {
 	}
 
 	private Object formatValue(Object value, OntologyType type) {
-		if(type == OntologyType.Date){
-			return new SimpleDateFormat("yyyy-MM-dd").format(((Date)value));
-		} else if(type == OntologyType.DateTime){
-			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(((Date)value));
-		} else if(type == OntologyType.Time){
-			return new SimpleDateFormat("HH:mm:ss").format(((Date)value));
+		if (type == OntologyType.Date) {
+			return new SimpleDateFormat("yyyy-MM-dd").format(((Date) value));
+		} else if (type == OntologyType.DateTime) {
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(((Date) value));
+		} else if (type == OntologyType.Time) {
+			return new SimpleDateFormat("HH:mm:ss").format(((Date) value));
 		}
 		return value;
 	}
 
 	private Object unformatValue(Object value, OntologyType type) throws ParseException {
-		if(type == OntologyType.Date){
+		if (type == OntologyType.Date) {
 			return new SimpleDateFormat("yyyy-MM-dd").parse(value.toString());
-		} else if(type == OntologyType.DateTime){
+		} else if (type == OntologyType.DateTime) {
 			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value.toString());
-		} else if(type == OntologyType.Time){
+		} else if (type == OntologyType.Time) {
 			return new SimpleDateFormat("HH:mm:ss").parse(value.toString());
 		}
 		return value;
@@ -347,18 +452,14 @@ public class OntologyManager implements Ontology {
 	 * @throws OntologyException
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public itti.com.pl.ontology.common.bean.Instance getInstance(String instanceName)
-			throws OntologyException {
+	@Override
+	public itti.com.pl.ontology.common.bean.Instance getInstance(String instanceName) throws OntologyException {
 
 		LOGGER.debug("Collecting properties for instance '{}'", instanceName);
 		OWLIndividual individual = getModel().getOWLIndividual(instanceName);
 		if (individual == null) {
-			LOGGER
-					.warn("Instance '{}' was not found in the ontology",
-							instanceName);
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND
-							.getMessage(instanceName));
+			LOGGER.warn("Instance '{}' was not found in the ontology", instanceName);
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(instanceName));
 		}
 
 		itti.com.pl.ontology.common.bean.Instance instance = new itti.com.pl.ontology.common.bean.Instance();
@@ -367,19 +468,17 @@ public class OntologyManager implements Ontology {
 		OntologyClass ontologyClass = getOntologyClass(className);
 		instance.setBaseClass(ontologyClass);
 
-		Collection<RDFProperty> instanceProperties = individual
-				.getRDFProperties();
+		Collection<RDFProperty> instanceProperties = individual.getRDFProperties();
 
 		for (RDFProperty rdfProperty : instanceProperties) {
 			String propertyPrefix = rdfProperty.getNamespacePrefix();
 			String propertyName = rdfProperty.getLocalName();
 
-			if(isPropertyIgnored(propertyPrefix, propertyName)){
+			if (isPropertyIgnored(propertyPrefix, propertyName)) {
 				continue;
 			}
 			OntologyType propertyClass = ontologyClass.getPropertyType(propertyName);
-			Collection rawPropertyValues = individual
-					.getPropertyValues(rdfProperty);
+			Collection rawPropertyValues = individual.getPropertyValues(rdfProperty);
 			Collection formattedProperties = new ArrayList<>();
 			for (Object object : rawPropertyValues) {
 				try {
@@ -388,8 +487,7 @@ public class OntologyManager implements Ontology {
 					LOGGER.warn("Could not parse value {}. Exception: {}", object, e.getLocalizedMessage());
 				}
 			}
-			LOGGER.debug("Collected {} values for property '{}'", rawPropertyValues,
-					propertyName);
+			LOGGER.debug("Collected {} values for property '{}'", rawPropertyValues, propertyName);
 			instance.addProperty(new InstanceProperty(propertyName, formattedProperties));
 		}
 		return instance;
@@ -399,13 +497,17 @@ public class OntologyManager implements Ontology {
 		return ignoredProperties.contains(String.format("%s:%s", propertyPrefix, propertyName));
 	}
 
-	/* (non-Javadoc)
-	 * @see itti.com.pl.ontology.core.ontology.Ontology#getOntologyClass(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * itti.com.pl.ontology.core.ontology.Ontology#getOntologyClass(java.lang.
+	 * String)
 	 */
 	@Override
 	public OntologyClass getOntologyClass(String className) {
 		OWLNamedClass owlClass = getModel().getOWLNamedClass(className);
-		if(owlClass == null){
+		if (owlClass == null) {
 			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
 		}
 		OntologyClass ontologyClass = new OntologyClass(className);
@@ -413,26 +515,33 @@ public class OntologyManager implements Ontology {
 		ontologyClass.setParentClass(getParentClassName(owlClass));
 
 		@SuppressWarnings("unchecked")
-		Collection<RDFProperty> classProperties = owlClass.getUnionDomainProperties();
+		Collection<RDFProperty> classProperties = owlClass.getAssociatedProperties();
 
 		for (RDFProperty rdfProperty : classProperties) {
 			RDFResource range = rdfProperty.getRange();
-			if(range != null){
-				ontologyClass.add(new OntologyProperty(rdfProperty.getLocalName(), OntologyType.getType(range.getLocalName())));
-			}else{
-				
+			if (range != null) {
+				ontologyClass.add(
+						new OntologyProperty(rdfProperty.getLocalName(), OntologyType.getType(range.getLocalName())));
+			} else {
+
 			}
 		}
 		return ontologyClass;
 	}
 
-
+	/**
+	 * Returns name of the parent for given class
+	 * 
+	 * @param owlClass
+	 *            input class
+	 * @return name of the parent for input class
+	 */
 	private String getParentClassName(OWLNamedClass owlClass) {
-		if(owlClass.hasNamedSuperclass()){
+		if (owlClass.hasNamedSuperclass()) {
 			for (Object parentClassObj : owlClass.getNamedSuperclasses()) {
-				OWLNamedClass parentClass = (OWLNamedClass)parentClassObj;
-				if(parentClass.getNamespace().equals(getOntologyNamespace())){
-					return parentClass.getLocalName();					
+				OWLNamedClass parentClass = (OWLNamedClass) parentClassObj;
+				if (parentClass.getNamespace().equals(getOntologyNamespace())) {
+					return parentClass.getLocalName();
 				}
 			}
 		}
@@ -442,9 +551,8 @@ public class OntologyManager implements Ontology {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * itti.com.pl.ontology.server.ontology.Ontology#hasInstance(java.lang.String
-	 * )
+	 * @see itti.com.pl.ontology.server.ontology.Ontology#hasInstance(java.lang.
+	 * String )
 	 */
 	@Override
 	public boolean hasInstance(String instanceName) {
@@ -467,14 +575,11 @@ public class OntologyManager implements Ontology {
 		if (StringUtils.isNotEmpty(instanceName)) {
 			Instance instance = getOwlInstance(instanceName);
 			if (instance == null) {
-				throw new OntologyRuntimeException(
-						ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND
-								.getMessage(instanceName));
+				throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_INSTANCE_NOT_FOUND.getMessage(instanceName));
 			}
 			getModel().deleteInstance(instance);
 		} else {
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_EMPTY_INSTANCE_NAME.getMessage());
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_EMPTY_INSTANCE_NAME.getMessage());
 		}
 	}
 
@@ -485,29 +590,29 @@ public class OntologyManager implements Ontology {
 
 		// check for parent class
 		OWLNamedClass parent = null;
-		if(ontologyClass.getParent() != null){
+		if (ontologyClass.getParent() != null) {
 			parent = getModel().getOWLNamedClass(ontologyClass.getParent());
 		}
 		// check, if class existed in the ontology
 		if (getModel().getOWLIndividual(ontologyClass.getName()) == null) {
 
 			// if not, try to create it
-			OWLNamedClass individual = (parent != null) ? 
-					getModel().createOWLNamedSubclass(ontologyNamespace + ontologyClass.getName(), parent) :
-					getModel().createOWLNamedClass(
-					ontologyNamespace + ontologyClass.getName());
-			for (OntologyProperty ontologyProperty : ontologyClass
-					.getProperties()) {
-				RDFProperty property = null;
-					property = getModel().createOWLDatatypeProperty(
-							ontologyProperty.getName());
+			OWLNamedClass individual = (parent != null)
+					? getModel().createOWLNamedSubclass(ontologyNamespace + ontologyClass.getName(), parent)
+					: getModel().createOWLNamedClass(ontologyNamespace + ontologyClass.getName());
+			for (OntologyProperty ontologyProperty : ontologyClass.getProperties()) {
+				if(ontologyProperty.getType() == OntologyType.Class){
+					RDFProperty property = getModel().createOWLObjectProperty(ontologyProperty.getName());
+					property.setRange(getModel().getOWLNamedClass(ontologyProperty.getRange()));
+					property.setDomain(individual);
+				}else{
+					RDFProperty property = getModel().createOWLDatatypeProperty(ontologyProperty.getName());
 					property.setRange(getDatatypeRange(ontologyProperty.getType()));
-				property.setDomain(individual);
+					property.setDomain(individual);
+				}
 			}
 		} else {
-			throw new OntologyRuntimeException(
-					ErrorMessages.ONTOLOGY_CLASS_ALREADY_EXIST
-							.getMessage(ontologyClass));
+			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_ALREADY_EXIST.getMessage(ontologyClass));
 		}
 	}
 
@@ -526,7 +631,7 @@ public class OntologyManager implements Ontology {
 	@Override
 	public void removeClass(String className) {
 		OWLNamedClass classToDelete = getModel().getOWLNamedClass(className);
-		if(classToDelete == null){
+		if (classToDelete == null) {
 			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_CLASS_DOESNT_EXIST.getMessage(className));
 		}
 
@@ -543,8 +648,7 @@ public class OntologyManager implements Ontology {
 	 * @param value
 	 *            value to be set
 	 */
-	private void addPropertyValue(OWLIndividual instance, RDFProperty property,
-			Object value) {
+	private void addPropertyValue(OWLIndividual instance, RDFProperty property, Object value) {
 		// set new value of the property
 		instance.addPropertyValue(property, value);
 	}
@@ -557,8 +661,7 @@ public class OntologyManager implements Ontology {
 	 * @param property
 	 *            property
 	 */
-	private void removePropertyValues(OWLIndividual individual,
-			RDFProperty property) {
+	private void removePropertyValues(OWLIndividual individual, RDFProperty property) {
 		// remove current value of the property
 		int propsCount = individual.getPropertyValueCount(property);
 		for (int i = 0; i < propsCount; i++) {
@@ -567,7 +670,6 @@ public class OntologyManager implements Ontology {
 		}
 
 	}
-
 
 	/**
 	 * Adds a new rule to the ontology
@@ -579,13 +681,11 @@ public class OntologyManager implements Ontology {
 	 * @throws OntologyException
 	 */
 	@Override
-	public void addSwrlRule(String ruleName, String ruleContent)
-			throws OntologyException {
+	public void addSwrlRule(String ruleName, String ruleContent) throws OntologyException {
 
 		LOGGER.info("Upading models with SWRL rule '{}'", ruleName);
 
-		if (StringUtils.isNotEmpty(ruleName)
-				&& StringUtils.isNotEmpty(ruleContent)) {
+		if (StringUtils.isNotEmpty(ruleName) && StringUtils.isNotEmpty(ruleContent)) {
 
 			// create rule factory
 			SWRLFactory factory = new SWRLFactory(model);
@@ -594,20 +694,16 @@ public class OntologyManager implements Ontology {
 
 				// add rule to the model
 				factory.createImp(ruleName, ruleContent);
-				LOGGER
-						.debug("Rule '{}' added suffessfully. Content of the rule: {}",
-								ruleName, ruleContent);
+				LOGGER.debug("Rule '{}' added suffessfully. Content of the rule: {}", ruleName, ruleContent);
 			} catch (SWRLParseException | RuntimeException exc) {
 				LOGGER.error("Failed to add rule", exc);
 				throw new OntologyRuntimeException(
-						ErrorMessages.SWRL_CANNOT_ADD_RULE.getMessage(exc
-								.getLocalizedMessage()), exc);
+						ErrorMessages.SWRL_CANNOT_ADD_RULE.getMessage(exc.getLocalizedMessage()), exc);
 			}
 
 		} else {
 			LOGGER.warn("Cannot update model with swrl rule. Empty rule provided");
-			throw new OntologyRuntimeException(
-					ErrorMessages.SWRL_EMPTY_RULE.getMessage());
+			throw new OntologyRuntimeException(ErrorMessages.SWRL_EMPTY_RULE.getMessage());
 		}
 	}
 
@@ -633,25 +729,20 @@ public class OntologyManager implements Ontology {
 			// get list of imps
 			for (Object imp : factory.getImps()) {
 				if ((imp instanceof SimpleInstance)
-						&& StringUtils.equalsIgnoreCase(ruleName,
-								((SimpleInstance) imp).getName())) {
+						&& StringUtils.equalsIgnoreCase(ruleName, ((SimpleInstance) imp).getName())) {
 					SimpleInstance si = (SimpleInstance) imp;
 					ruleContent = si.getBrowserText();
 					break;
 				}
 			}
 			if (StringUtils.isEmpty(ruleContent)) {
-				throw new OntologyRuntimeException(
-						ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(ruleName));
+				throw new OntologyRuntimeException(ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(ruleName));
 			}
-			LOGGER
-					.debug("Suffessfully colleted rule. Rule content: {}",
-							ruleContent);
+			LOGGER.debug("Suffessfully colleted rule. Rule content: {}", ruleContent);
 		} catch (RuntimeException exc) {
 			LOGGER.error("Failed to collect rule", exc);
 			throw new OntologyRuntimeException(
-					ErrorMessages.SWRL_CANNOT_COLLECT_RULES.getMessage(exc
-							.getLocalizedMessage()), exc);
+					ErrorMessages.SWRL_CANNOT_COLLECT_RULES.getMessage(exc.getLocalizedMessage()), exc);
 		}
 		return ruleContent;
 	}
@@ -686,15 +777,13 @@ public class OntologyManager implements Ontology {
 				}
 			}
 			if (!found) {
-				throw new OntologyRuntimeException(
-						ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(ruleName));
+				throw new OntologyRuntimeException(ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(ruleName));
 			}
 			LOGGER.debug("Suffessfully removed rule. Rule name: {}", ruleName);
 		} catch (RuntimeException exc) {
 			LOGGER.error("Failed to collect rule", exc);
-			throw new OntologyRuntimeException(
-					ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(exc
-							.getLocalizedMessage()), exc);
+			throw new OntologyRuntimeException(ErrorMessages.SWRL_CANNOT_GET_RULE.getMessage(exc.getLocalizedMessage()),
+					exc);
 		}
 	}
 
@@ -722,13 +811,11 @@ public class OntologyManager implements Ontology {
 					rules.add(((SimpleInstance) imp).getName());
 				}
 			}
-			LOGGER.debug("Suffessfully colleted rule names. Defined rules: {}",
-					rules);
+			LOGGER.debug("Suffessfully colleted rule names. Defined rules: {}", rules);
 		} catch (RuntimeException exc) {
 			LOGGER.error("Failed to collect rule names", exc);
 			throw new OntologyRuntimeException(
-					ErrorMessages.SWRL_CANNOT_COLLECT_RULES.getMessage(exc
-							.getLocalizedMessage()), exc);
+					ErrorMessages.SWRL_CANNOT_COLLECT_RULES.getMessage(exc.getLocalizedMessage()), exc);
 		}
 		return rules;
 	}
@@ -742,12 +829,13 @@ public class OntologyManager implements Ontology {
 		LOGGER.info("Swrl Rule bridge will be run now");
 
 		try {
-			// SWRLFactory factory = new SWRLFactory(getModel());
-			// factory.createImp("Man(?x) ∧ Object_is_in_parking_zone(?x, ?y) ∧ Parking_zone_gives_properties(?y, ?z) →  Man_has_properties(?x, ?z)");
-			// SWRLRuleEngineBridge bridge =
-			// BridgeFactory.createBridge("SWRLJessBridge", getModel());
-			SWRLRuleEngineFactory.registerRuleEngine("Jess",
-					new JessSWRLRuleEngineCreator());
+//			 SWRLFactory factory = new SWRLFactory(getModel());
+			// factory.createImp("Man(?x) ∧ Object_is_in_parking_zone(?x, ?y) ∧
+			// Parking_zone_gives_properties(?y, ?z) → Man_has_properties(?x,
+			// ?z)");
+//			 SWRLRuleEngineBridge bridge =
+//			 BridgeFactory.createBridge("SWRLJessBridge", getModel());
+			SWRLRuleEngineFactory.registerRuleEngine("SWRLJessBridge", new JessSWRLRuleEngineCreator());
 			SWRLRuleEngine bridge = SWRLRuleEngineFactory.create(getModel());
 
 			LOGGER.debug("Bridge infer");
@@ -758,16 +846,32 @@ public class OntologyManager implements Ontology {
 
 			// model = (JenaOWLModel) bridge.getOWLModel();
 		} catch (Throwable exc) {
-			LOGGER.error(String.format("Error during using SWRL bridge: {}",
-							exc.toString()), exc);
-			throw new OntologyRuntimeException(
-					ErrorMessages.SWRL_ENGINE_FAILED.getMessage(exc
-							.getLocalizedMessage()), exc);
+			LOGGER.error(String.format("Error during using SWRL bridge: {}", exc.toString()), exc);
+			throw new OntologyRuntimeException(ErrorMessages.SWRL_ENGINE_FAILED.getMessage(exc.getLocalizedMessage()),
+					exc);
 		}
 	}
 
 	@Override
 	public JenaOWLModel getUnderlyingModel() {
 		return model;
+	}
+
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.core.ontology.Ontology#query(java.util.List)
+	 */
+	@Override
+	public List<String> query(List<InstanceProperty<?>> criteria) {
+		StringBuilder criteriaBuilder = new StringBuilder();
+		for(int pos = 0 ; pos<criteria.size() ; pos++){
+			criteriaBuilder.append(String.format(QUERY_CRITERIA_SUBQUERY, criteria.get(pos).getName(), pos, pos, criteria.get(pos).getValues().get(0)));
+			criteriaBuilder.append(". ");
+		}
+		//PREFIX ns:<http://www.owl-ontologies.com/Ontology1350654591.owl#>
+		//SELECT ?subject
+		//		WHERE { ?subject ns:queryBoolean ?val FILTER (?val = false)}
+		String query = String.format(QUERY_CRITERIA, getOntologyNamespace(), criteriaBuilder.toString());
+		List<String> result = executeSparqlQuery(query, VAR);
+		return result;
 	}
 }
