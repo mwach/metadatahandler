@@ -15,6 +15,7 @@ import itti.com.pl.ontology.core.ontology.LocalOntologyRepository;
 import itti.com.pl.ontology.core.ontology.OntologyManager;
 import itti.com.pl.ontology.server.exeption.MetadataHandlerException;
 import itti.com.pl.ontology.server.ws.MetadataHandler;
+import itti.com.pl.ontology.server.ws.MetadataHandlerAdmin;
 
 //import org.apache.cxf.Bus;
 //import org.apache.cxf.BusException;
@@ -40,13 +41,14 @@ import org.slf4j.LoggerFactory;
  */
 public class MetadataHandlerConfig {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandler.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandlerConfig.class);
 
 	private Properties properties = new Properties();
 
 	private LocalOntologyRepository ontologyRepository = null;
 	private OntologyManager ontologyManager = null;
-	private MetadataHandler implementor = null;
+	private MetadataHandler serviceImplementor = null;
+	private MetadataHandlerAdmin adminImplementor = null;
 
 	/**
 	 * startup method of the application
@@ -122,7 +124,7 @@ public class MetadataHandlerConfig {
 
 			ontologyManager = (OntologyManager) ontologyRepository
 					.loadOntology(properties.getProperty(Constants.ONTOLOGY));
-			ontologyManager.setOntologyNamespace(properties.getProperty(Constants.NAMESPACE));
+			ontologyManager.setNamespace(properties.getProperty(Constants.NAMESPACE));
 		} catch (RuntimeException e) {
 			throw new MetadataHandlerException("Could not load ontology", e);
 		}
@@ -134,12 +136,17 @@ public class MetadataHandlerConfig {
 	private void initService() {
 
 		LOGGER.info("Initialising web service using address {}", properties.getProperty(Constants.ADDRESS));
+		serviceImplementor = new MetadataHandler();
+		serviceImplementor.setOntology(ontologyManager);
 
-		implementor = new MetadataHandler();
-		implementor.setOntology(ontologyManager);
+		LOGGER.info("Initialising admin web service using address {}", properties.getProperty(Constants.ADDRESS_ADMIN));
+		adminImplementor = new MetadataHandlerAdmin();
+		adminImplementor.setRepository(ontologyRepository);
+		adminImplementor.setOntology(ontologyManager);
 
 		try {
-			Endpoint.publish(properties.getProperty(Constants.ADDRESS), implementor);
+			Endpoint.publish(properties.getProperty(Constants.ADDRESS), serviceImplementor);
+			Endpoint.publish(properties.getProperty(Constants.ADDRESS_ADMIN), adminImplementor);
 		} catch (RuntimeException e) {
 			throw new MetadataHandlerException("Could not publish an endpoint", e);
 		}

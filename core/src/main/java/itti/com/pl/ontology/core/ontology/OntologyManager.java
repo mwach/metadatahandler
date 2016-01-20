@@ -82,12 +82,18 @@ public class OntologyManager implements Ontology {
 	 * @param ontologyNamespace
 	 *            namespace used by the ontology
 	 */
-	public final void setOntologyNamespace(String ontologyNamespace) {
+	public final void setNamespace(String ontologyNamespace) {
 		this.ontologyNamespace = ontologyNamespace;
 	}
 
-	protected final String getOntologyNamespace() {
+	@Override
+	public String getNamespace() {
 		return ontologyNamespace;
+	}
+
+	@Override
+	public JenaOWLModel getUnderlyingModel() {
+		return model;
 	}
 
 	/**
@@ -136,7 +142,7 @@ public class OntologyManager implements Ontology {
 		if (StringUtils.isEmpty(className)) {
 			return new ArrayList<>();
 		}
-		String query = String.format(QUERY_GET_DIRECT_INSTANCES, getOntologyNamespace(), VAR, VAR, className);
+		String query = String.format(QUERY_GET_DIRECT_INSTANCES, getNamespace(), VAR, VAR, className);
 		return executeSparqlQuery(query, VAR);
 	}
 
@@ -154,7 +160,7 @@ public class OntologyManager implements Ontology {
 		if (StringUtils.isEmpty(className)) {
 			return new ArrayList<>();
 		}
-		String query = String.format(QUERY_GET_INSTANCES, getOntologyNamespace(), VAR, VAR, className);
+		String query = String.format(QUERY_GET_INSTANCES, getNamespace(), VAR, VAR, className);
 
 		return (executeSparqlQuery(query, VAR));
 	}
@@ -175,7 +181,7 @@ public class OntologyManager implements Ontology {
 			LOGGER.error("Null instance name provided");
 			throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_EMPTY_INSTANCE_NAME.getMessage());
 		}
-		String query = String.format(QUERY_GET_INSTANCE_CLASS, getOntologyNamespace(), VAR, instanceName, VAR);
+		String query = String.format(QUERY_GET_INSTANCE_CLASS, getNamespace(), VAR, instanceName, VAR);
 		List<String> results = executeSparqlQuery(query, VAR);
 		if (results.isEmpty()) {
 			LOGGER.warn("No results were found for instance '{}'", instanceName);
@@ -540,7 +546,7 @@ public class OntologyManager implements Ontology {
 		if (owlClass.hasNamedSuperclass()) {
 			for (Object parentClassObj : owlClass.getNamedSuperclasses()) {
 				OWLNamedClass parentClass = (OWLNamedClass) parentClassObj;
-				if (parentClass.getNamespace().equals(getOntologyNamespace())) {
+				if (parentClass.getNamespace().equals(getNamespace())) {
 					return parentClass.getLocalName();
 				}
 			}
@@ -852,11 +858,6 @@ public class OntologyManager implements Ontology {
 		}
 	}
 
-	@Override
-	public JenaOWLModel getUnderlyingModel() {
-		return model;
-	}
-
 	/* (non-Javadoc)
 	 * @see itti.com.pl.ontology.core.ontology.Ontology#query(java.util.List)
 	 */
@@ -870,8 +871,14 @@ public class OntologyManager implements Ontology {
 		//PREFIX ns:<http://www.owl-ontologies.com/Ontology1350654591.owl#>
 		//SELECT ?subject
 		//		WHERE { ?subject ns:queryBoolean ?val FILTER (?val = false)}
-		String query = String.format(QUERY_CRITERIA, getOntologyNamespace(), criteriaBuilder.toString());
+		String query = String.format(QUERY_CRITERIA, getNamespace(), criteriaBuilder.toString());
 		List<String> result = executeSparqlQuery(query, VAR);
 		return result;
+	}
+
+	@Override
+	public void updateModel(Ontology ontology) {
+		this.model = ontology.getUnderlyingModel();
+		this.ontologyNamespace = ontology.getNamespace();
 	}
 }

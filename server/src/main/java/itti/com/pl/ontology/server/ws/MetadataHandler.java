@@ -77,13 +77,7 @@ public class MetadataHandler implements MetadataHandlerWS {
 	 */
 	@Override
 	public MetadataObject getMetadata(String objectId) {
-		Instance metatada = ontology.getInstance(objectId);
-		OntologyClass ontologyClass = metatada.getBaseClass();
-		MetadataObject object = ReflectionUtils.createInstance(ontologyClass.getName());
-			object.setName(objectId);
-			object.setType(ontologyClass.getName());
-			ReflectionUtils.populateObject(object, metatada);
-			return object;
+		return metadataHandlerService.getMetadataObject(objectId);
 	}
 
 	/* (non-Javadoc)

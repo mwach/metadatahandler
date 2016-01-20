@@ -29,7 +29,7 @@ public class MetadataHandlerTest {
 		metadataHandler = new MetadataHandler();
 		OntologyManager ontology = (OntologyManager) new LocalOntologyRepository("src/test/resources/")
 				.loadOntology("aao_service.owl");
-		ontology.setOntologyNamespace("http://afro.wil.waw.pl/AAO.owl#");
+		ontology.setNamespace("http://afro.wil.waw.pl/AAO.owl#");
 		metadataHandler.setOntology(ontology);
 	}
 

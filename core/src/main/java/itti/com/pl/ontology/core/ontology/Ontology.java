@@ -22,6 +22,12 @@ public interface Ontology {
 	 */
 	public JenaOWLModel getUnderlyingModel();
 
+	/**
+	 * Returns namespace of the ontology
+	 * @return namespace
+	 */
+	public String getNamespace();
+
     /**
      * Returns list of instances of given ontology class
      * 
@@ -170,5 +176,11 @@ public interface Ontology {
 	 * @param property property name and its values
 	 */
 	void updateProperty(String instanceName, InstanceProperty<?> property);
+
+	/**
+	 * Updates underlying OWL model
+	 * @param ontology model to be used
+	 */
+	public void updateModel(Ontology ontology);
 
 }
