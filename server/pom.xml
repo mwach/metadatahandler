@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>itti.com.pl.ontology</groupId>
 		<artifactId>metdatahandler</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>0.1</version>
 	</parent>
 	<artifactId>server</artifactId>
 	<name>server</name>
@@ -18,13 +18,13 @@
 		<dependency>
 			<groupId>itti.com.pl.ontology</groupId>
 			<artifactId>core</artifactId>
-			<version>0.2-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>itti.com.pl.ontology</groupId>
 			<artifactId>mh-common</artifactId>
-			<version>0.2-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 
 		<dependency>

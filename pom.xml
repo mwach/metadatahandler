@@ -4,7 +4,7 @@
 	<groupId>itti.com.pl.ontology</groupId>
 	<artifactId>metdatahandler</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>metdatahandler</name>
 	<url>http://www.itti.com.pl/en/</url>
 
