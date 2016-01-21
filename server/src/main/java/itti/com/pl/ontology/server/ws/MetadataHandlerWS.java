@@ -7,7 +7,6 @@ import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 
 import itti.com.pl.ontology.common.dto.DependenciesList;
-import itti.com.pl.ontology.common.dto.Device;
 import itti.com.pl.ontology.common.dto.MetadataObject;
 import itti.com.pl.ontology.common.dto.TSINodeType;
 import itti.com.pl.ontology.common.dto.TypeOfObject;
@@ -39,15 +38,6 @@ public interface MetadataHandlerWS {
 	public void registerMetadataObject(
 			@WebParam(name = "typeOfObject") @XmlElement(required = true) TypeOfObject typeOfObject,
 			@WebParam(name = "metadataObject") @XmlElement(required = true) MetadataObject metadataObject);
-
-	/**
-	 * Stores metadata about Device.
-	 * 
-	 * @param device
-	 *            {@link Device}
-	 */
-	public void registerDeviceMetadata(
-			@WebParam(name = "deviceMetadata") @XmlElement(required = true) Device device);
 
 	/**
 	 * refreshes the collected metadata object and check whether components

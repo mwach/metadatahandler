@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MetadataObject {
+public abstract class MetadataObject {
 
 	// eg laptop
 	private String type;
@@ -33,7 +33,7 @@ public class MetadataObject {
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	private void setType(String type) {
 		this.type = type;
 	}
 

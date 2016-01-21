@@ -40,7 +40,7 @@ public class OntologyManagerTest {
 
     	LocalOntologyRepository ontologyRepository = new LocalOntologyRepository(ONTOLOGY_REPOSITORY);
     	ontologyManager = (OntologyManager) ontologyRepository.loadOntology(ONTOLOGY_LOCATION);
-    	ontologyManager.setOntologyNamespace(ONTOLOGY_NAMESPACE);
+    	ontologyManager.setNamespace(ONTOLOGY_NAMESPACE);
     }
 
     @AfterClass
