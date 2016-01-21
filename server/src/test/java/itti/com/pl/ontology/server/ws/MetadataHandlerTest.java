@@ -56,8 +56,7 @@ public class MetadataHandlerTest {
 
 		String deviceName = "rdms_1";
 
-		Device device = new Device();
-		device.setType("Laptop");
+		Device device = new Laptop();
 		device.setDeviceID(UUID.randomUUID().toString());
 		device.setName(deviceName);
 		device.setHasDisplayProperties("Full_20");
@@ -78,7 +77,7 @@ public class MetadataHandlerTest {
 		device.setHasDisplayProperties(propertyValue);
 		Exception exc = null;
 		try {
-			metadataHandler.registerDeviceMetadata(device);
+			metadataHandler.registerMetadataObject(TypeOfObject.Device, device);
 		} catch (Exception e) {
 			exc = e;
 		}

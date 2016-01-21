@@ -3,7 +3,6 @@ package itti.com.pl.ontology.server.ws;
 import itti.com.pl.ontology.common.bean.Instance;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 import itti.com.pl.ontology.common.dto.DependenciesList;
-import itti.com.pl.ontology.common.dto.Device;
 import itti.com.pl.ontology.common.dto.MetadataObject;
 import itti.com.pl.ontology.common.dto.TSINodeType;
 import itti.com.pl.ontology.common.dto.TypeOfObject;
@@ -41,14 +40,6 @@ public class MetadataHandler implements MetadataHandlerWS {
 
 		ReflectionUtils.populateInstanceFromMap(metadataInsance, metadataObject.getProperties());
 		ontology.createInstance(metadataInsance);
-	}
-
-	/* (non-Javadoc)
-	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#registerDeviceMetadata(itti.com.pl.ontology.server.ws.bean.Device)
-	 */
-	@Override
-	public void registerDeviceMetadata(Device device) {
-		registerMetadataObject(TypeOfObject.Device, device);
 	}
 
 	/* (non-Javadoc)
