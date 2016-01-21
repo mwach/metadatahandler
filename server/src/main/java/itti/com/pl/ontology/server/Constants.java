@@ -34,4 +34,26 @@ public final class Constants {
 	 * Default: http://localhost:9000/metadataHandler
 	 */
 	public static final String ADDRESS = "address";
+
+	/**
+	 * Publishing address for the Metadata Handler Admin web service
+	 * Default: http://localhost:9000/metadataHandlerAdmin
+	 */
+	public static final String ADDRESS_ADMIN = "addressAdmin";
+
+
+	public static final String TSI_NODE_CLASS_NAME = "Service";
+
+	public enum Property{
+		TypeOfNode("Type_of_node");
+
+		private String ontologyName;
+
+		private Property(String ontologyName){
+			this.ontologyName = ontologyName;
+		}
+		public String getOntologyName(){
+			return ontologyName;
+		}
+	}
 }

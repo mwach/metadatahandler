@@ -4,7 +4,7 @@
 	<groupId>itti.com.pl.ontology</groupId>
 	<artifactId>metdatahandler</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.4</version>
+	<version>0.1</version>
 	<name>metdatahandler</name>
 	<url>http://www.itti.com.pl/en/</url>
 
@@ -47,7 +47,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>OntologyModule</finalName>
+		<finalName>MetadataHandler</finalName>
 
 		<plugins>
 			<plugin>
@@ -78,5 +78,6 @@
 		<module>common</module>
 		<module>core</module>
 		<module>server</module>
-	</modules>
+    <module>mh-common</module>
+  </modules>
 </project>

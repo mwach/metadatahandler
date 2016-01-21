@@ -15,6 +15,14 @@ public class MetadataHandlerException extends RuntimeException{
 	/**
 	 * Constructor class
 	 * @param message message
+	 */
+	public MetadataHandlerException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Constructor class
+	 * @param message message
 	 * @param throwable throwable
 	 */
 	public MetadataHandlerException(String message, Throwable throwable) {

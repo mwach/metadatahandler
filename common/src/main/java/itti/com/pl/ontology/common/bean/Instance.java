@@ -1,7 +1,7 @@
 package itti.com.pl.ontology.common.bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,7 +15,7 @@ public class Instance {
 
 	private OntologyClass baseClass;
 	private String name;
-	private List<InstanceProperty<?>> properties = new ArrayList<InstanceProperty<?>>();
+	private Set<InstanceProperty<?>> properties = new HashSet<InstanceProperty<?>>();
 
 	public Instance(){}
 	
@@ -36,8 +36,8 @@ public class Instance {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<InstanceProperty<?>> getProperties() {
-		return new ArrayList<>(properties);
+	public Set<InstanceProperty<?>> getProperties() {
+		return new HashSet<>(properties);
 	}
 	public void addProperty(InstanceProperty<?> property) {
 		this.properties.add(property);

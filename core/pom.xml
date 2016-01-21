@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>itti.com.pl.ontology</groupId>
 		<artifactId>metdatahandler</artifactId>
-		<version>0.0.4</version>
+		<version>0.1</version>
 	</parent>
 	<artifactId>core</artifactId>
 	<name>core</name>
@@ -12,7 +12,7 @@
 		<dependency>
 			<groupId>itti.com.pl.ontology</groupId>
 			<artifactId>common</artifactId>
-			<version>0.0.4</version>
+			<version>0.1</version>
 		</dependency>
 
 		<dependency>
@@ -98,15 +98,13 @@
 			<artifactId>swrl-jess-bridge</artifactId>
 			<version>3.4.8</version>
 		</dependency>
-
-<!-- 
+<!--
 		<dependency>
 			<groupId>jessrules.com</groupId>
 			<artifactId>jess</artifactId>
 			<version>7.1</version>
 		</dependency>
- -->
-		<!-- Logging -->
+-->		<!-- Logging -->
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

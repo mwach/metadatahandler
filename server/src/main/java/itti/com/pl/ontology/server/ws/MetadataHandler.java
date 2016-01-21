@@ -1,65 +1,101 @@
-
 package itti.com.pl.ontology.server.ws;
 
-import itti.com.pl.ontology.core.ontology.OntologyManager;
-import itti.com.pl.ontology.server.ws.bean.DependenciesList;
-import itti.com.pl.ontology.server.ws.bean.MetadataObject;
-import itti.com.pl.ontology.server.ws.bean.TSINodeType;
-import itti.com.pl.ontology.server.ws.bean.TypeOfObject;
+import itti.com.pl.ontology.common.bean.Instance;
+import itti.com.pl.ontology.common.bean.OntologyClass;
+import itti.com.pl.ontology.common.dto.DependenciesList;
+import itti.com.pl.ontology.common.dto.MetadataObject;
+import itti.com.pl.ontology.common.dto.TSINodeType;
+import itti.com.pl.ontology.common.dto.TypeOfObject;
+import itti.com.pl.ontology.core.ontology.Ontology;
+import itti.com.pl.ontology.server.service.MetadataHandlerService;
+import itti.com.pl.ontology.server.utils.ReflectionUtils;
+
+import java.util.List;
 
 import javax.jws.WebService;
 
 @WebService(endpointInterface = "itti.com.pl.ontology.server.ws.MetadataHandlerWS")
 public class MetadataHandler implements MetadataHandlerWS {
 
-	private OntologyManager manager = null;
+	private MetadataHandlerService metadataHandlerService = null;
+	private Ontology ontology = null;
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#setTSINodeType(itti.com.pl.ontology.server.ws.bean.TSINodeType)
+	 */
 	@Override
-	public boolean setTSINodeType(TSINodeType tsiNodeType) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setTSINodeType(TSINodeType tsiNodeType) {
+		metadataHandlerService.updateTsiNodeType(tsiNodeType.getDescription());
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#registerMetadataObject(itti.com.pl.ontology.server.ws.bean.TypeOfObject, itti.com.pl.ontology.server.ws.bean.MetadataObject)
+	 */
 	@Override
-	public boolean registerMetadataObject(TypeOfObject typeOfObject,
+	public void registerMetadataObject(TypeOfObject typeOfObject,
 			MetadataObject metadataObject) {
-		// TODO Auto-generated method stub
-		return false;
+
+		OntologyClass deviceClass = ontology.getOntologyClass(metadataObject.getType());
+		Instance metadataInsance = new Instance(deviceClass, metadataObject.getName());
+
+		ReflectionUtils.populateInstanceFromMap(metadataInsance, metadataObject.getProperties());
+		ontology.createInstance(metadataInsance);
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#updateMetadataObject(itti.com.pl.ontology.server.ws.bean.TypeOfObject, itti.com.pl.ontology.server.ws.bean.MetadataObject)
+	 */
 	@Override
-	public boolean updateMetadataObject(TypeOfObject typeOfObject,
+	public void updateMetadataObject(TypeOfObject typeOfObject,
 			MetadataObject metadataObject) {
-		// TODO Auto-generated method stub
-		return false;
+		OntologyClass deviceClass = ontology.getOntologyClass(metadataObject.getType());
+		Instance metadataInstance = new Instance(deviceClass, metadataObject.getName());
+
+		ReflectionUtils.populateInstance(metadataInstance, metadataObject);
+		ontology.updateInstance(metadataInstance);
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#searchMetadata(itti.com.pl.ontology.server.ws.bean.TypeOfObject, java.lang.String)
+	 */
 	@Override
-	public MetadataObject searchMetadata(TypeOfObject typeOfObject, String query) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MetadataObject> searchMetadata(TypeOfObject typeOfObject, String query) {
+		return metadataHandlerService.searchMetadata(typeOfObject, query);
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#getMetadata(java.lang.String)
+	 */
 	@Override
 	public MetadataObject getMetadata(String objectId) {
-		// TODO Auto-generated method stub
-		return null;
+		return metadataHandlerService.getMetadataObject(objectId);
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#readMetadata(java.lang.String)
+	 */
 	@Override
 	public MetadataObject readMetadata(String objectId) {
-		// TODO Auto-generated method stub
-		return null;
+		ontology.runSwrlEngine();
+		return getMetadata(objectId);
 	}
 
+	/* (non-Javadoc)
+	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#getDependencies(java.lang.String)
+	 */
 	@Override
 	public DependenciesList getDependencies(String objectId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void setOntology(OntologyManager manager) {
-		this.manager = manager;
+	/**
+	 * @param manager
+	 */
+	public void setOntology(Ontology manager) {
+		this.ontology = manager;
+		this.metadataHandlerService = new MetadataHandlerService(manager);
 	}
+
 
 }

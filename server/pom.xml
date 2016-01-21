@@ -4,12 +4,13 @@
 	<parent>
 		<groupId>itti.com.pl.ontology</groupId>
 		<artifactId>metdatahandler</artifactId>
-		<version>0.0.4</version>
+		<version>0.1</version>
 	</parent>
 	<artifactId>server</artifactId>
 	<name>server</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cxf.version>3.1.3</cxf.version>
 	</properties>
 	<packaging>jar</packaging>
 	<dependencies>
@@ -17,7 +18,13 @@
 		<dependency>
 			<groupId>itti.com.pl.ontology</groupId>
 			<artifactId>core</artifactId>
-			<version>0.0.4</version>
+			<version>0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>itti.com.pl.ontology</groupId>
+			<artifactId>mh-common</artifactId>
+			<version>0.1</version>
 		</dependency>
 
 		<dependency>
@@ -29,29 +36,29 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>3.1.3</version>
+			<version>${cxf.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>3.1.3</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>3.1.3</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-local</artifactId>
-			<version>3.1.3</version>
+			<version>${cxf.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>3.1.3</version>
+			<version>${cxf.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
