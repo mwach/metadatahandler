@@ -14,7 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -287,8 +289,12 @@ public class OntologyManager implements Ontology {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see itti.com.pl.ontology.core.ontology.Ontology#updateProperty(java.lang.String, itti.com.pl.ontology.common.bean.InstanceProperty)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * itti.com.pl.ontology.core.ontology.Ontology#updateProperty(java.lang.
+	 * String, itti.com.pl.ontology.common.bean.InstanceProperty)
 	 */
 	@Override
 	public void updateProperty(String instanceName, InstanceProperty<?> property) {
@@ -324,7 +330,7 @@ public class OntologyManager implements Ontology {
 
 				Collection<?> rangeInstances = null;
 				if (range instanceof DefaultOWLDataRange) {
-					//range
+					// range
 					rangeInstances = ((DefaultOWLDataRange) range).getOneOfValueLiterals();
 				} else {
 					// objects/instances
@@ -332,8 +338,7 @@ public class OntologyManager implements Ontology {
 				}
 				for (Object propertyValue : property.getValues()) {
 					if (!instanceExists(propertyValue, rangeInstances)) {
-						LOGGER.warn("Property '{}' is invalid for instance {}", property.getName(),
-								instance.getName());
+						LOGGER.warn("Property '{}' is invalid for instance {}", property.getName(), instance.getName());
 						throw new OntologyRuntimeException(ErrorMessages.ONTOLOGY_PROPERTY_NOT_FOUND_FOR_INSTANCE
 								.getMessage(property.getName(), instance.getName()));
 					}
@@ -353,8 +358,8 @@ public class OntologyManager implements Ontology {
 	 */
 	private boolean instanceExists(Object instanceName, Collection<?> instances) {
 		String innerQueryInstanceName = instanceName.toString();
-		if(instanceName instanceof itti.com.pl.ontology.common.bean.Instance){
-			innerQueryInstanceName = ((itti.com.pl.ontology.common.bean.Instance)instanceName).getName();
+		if (instanceName instanceof itti.com.pl.ontology.common.bean.Instance) {
+			innerQueryInstanceName = ((itti.com.pl.ontology.common.bean.Instance) instanceName).getName();
 		}
 		for (Object instance : instances) {
 			String innerInstanceName = instance.toString();
@@ -413,8 +418,8 @@ public class OntologyManager implements Ontology {
 
 		// now, set property value
 		for (Object value : property.getValues()) {
-			if(value instanceof itti.com.pl.ontology.common.bean.Instance){
-				value = ((itti.com.pl.ontology.common.bean.Instance)value).getName();
+			if (value instanceof itti.com.pl.ontology.common.bean.Instance) {
+				value = ((itti.com.pl.ontology.common.bean.Instance) value).getName();
 			}
 			// find value as an instance
 			OWLIndividual valueInd = getModel().getOWLIndividual(value.toString());
@@ -607,11 +612,11 @@ public class OntologyManager implements Ontology {
 					? getModel().createOWLNamedSubclass(ontologyNamespace + ontologyClass.getName(), parent)
 					: getModel().createOWLNamedClass(ontologyNamespace + ontologyClass.getName());
 			for (OntologyProperty ontologyProperty : ontologyClass.getProperties()) {
-				if(ontologyProperty.getType() == OntologyType.Class){
+				if (ontologyProperty.getType() == OntologyType.Class) {
 					RDFProperty property = getModel().createOWLObjectProperty(ontologyProperty.getName());
 					property.setRange(getModel().getOWLNamedClass(ontologyProperty.getRange()));
 					property.setDomain(individual);
-				}else{
+				} else {
 					RDFProperty property = getModel().createOWLDatatypeProperty(ontologyProperty.getName());
 					property.setRange(getDatatypeRange(ontologyProperty.getType()));
 					property.setDomain(individual);
@@ -801,10 +806,10 @@ public class OntologyManager implements Ontology {
 	 * @throws OntologyException
 	 */
 	@Override
-	public List<String> getSwrlRules() throws OntologyException {
+	public Map<String, String> getSwrlRules() throws OntologyException {
 
 		LOGGER.info("Collecting list of rules defined for given model");
-		List<String> rules = new ArrayList<>();
+		Map<String, String> rules = new LinkedHashMap<>();
 
 		// create rule factory
 		SWRLFactory factory = new SWRLFactory(model);
@@ -814,7 +819,7 @@ public class OntologyManager implements Ontology {
 			// get list of imps
 			for (Object imp : factory.getImps()) {
 				if (imp instanceof SimpleInstance) {
-					rules.add(((SimpleInstance) imp).getName());
+					rules.put(((SimpleInstance) imp).getName(), null);
 				}
 			}
 			LOGGER.debug("Suffessfully colleted rule names. Defined rules: {}", rules);
@@ -835,12 +840,12 @@ public class OntologyManager implements Ontology {
 		LOGGER.info("Swrl Rule bridge will be run now");
 
 		try {
-//			 SWRLFactory factory = new SWRLFactory(getModel());
+			// SWRLFactory factory = new SWRLFactory(getModel());
 			// factory.createImp("Man(?x) ∧ Object_is_in_parking_zone(?x, ?y) ∧
 			// Parking_zone_gives_properties(?y, ?z) → Man_has_properties(?x,
 			// ?z)");
-//			 SWRLRuleEngineBridge bridge =
-//			 BridgeFactory.createBridge("SWRLJessBridge", getModel());
+			// SWRLRuleEngineBridge bridge =
+			// BridgeFactory.createBridge("SWRLJessBridge", getModel());
 			SWRLRuleEngineFactory.registerRuleEngine("SWRLJessBridge", new JessSWRLRuleEngineCreator());
 			SWRLRuleEngine bridge = SWRLRuleEngineFactory.create(getModel());
 
@@ -858,19 +863,57 @@ public class OntologyManager implements Ontology {
 		}
 	}
 
-	/* (non-Javadoc)
+	@Override
+	public void enableSwrlRule(String ruleName) {
+
+		LOGGER.info("Enabling SWRL rule '{}'", ruleName);
+		changeRuleStatus(ruleName, true);
+	}
+
+	@Override
+	public void disableSwrlRule(String ruleName) {
+		LOGGER.info("Disabling SWRL rule '{}'", ruleName);
+		changeRuleStatus(ruleName, false);
+	}
+
+	private void changeRuleStatus(String ruleName, boolean enable) {
+		if (StringUtils.isEmpty(ruleName)) {
+			LOGGER.warn("Empty rule name provided");
+			throw new OntologyRuntimeException(ErrorMessages.SWRL_EMPTY_NAME_PROVIDED.getMessage());
+		}
+		// create rule factory
+		SWRLFactory factory = new SWRLFactory(model);
+		try {
+			// add rule to the model
+			if (enable) {
+				factory.enableAll(ruleName);
+			} else {
+				factory.disableAll(ruleName);
+			}
+			LOGGER.debug("Rule '{}' state changed suffessfully", ruleName);
+		} catch (RuntimeException exc) {
+			LOGGER.error("Failed to change rule status", exc);
+			throw new OntologyRuntimeException(ErrorMessages.SWRL_CANNOT_CHANGE_RULE_STATE.getMessage(ruleName), exc);
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see itti.com.pl.ontology.core.ontology.Ontology#query(java.util.List)
 	 */
 	@Override
 	public List<String> query(List<InstanceProperty<?>> criteria) {
 		StringBuilder criteriaBuilder = new StringBuilder();
-		for(int pos = 0 ; pos<criteria.size() ; pos++){
-			criteriaBuilder.append(String.format(QUERY_CRITERIA_SUBQUERY, criteria.get(pos).getName(), pos, pos, criteria.get(pos).getValues().get(0)));
+		for (int pos = 0; pos < criteria.size(); pos++) {
+			criteriaBuilder.append(String.format(QUERY_CRITERIA_SUBQUERY, criteria.get(pos).getName(), pos, pos,
+					criteria.get(pos).getValues().get(0)));
 			criteriaBuilder.append(". ");
 		}
-		//PREFIX ns:<http://www.owl-ontologies.com/Ontology1350654591.owl#>
-		//SELECT ?subject
-		//		WHERE { ?subject ns:queryBoolean ?val FILTER (?val = false)}
+		// PREFIX ns:<http://www.owl-ontologies.com/Ontology1350654591.owl#>
+		// SELECT ?subject
+		// WHERE { ?subject ns:queryBoolean ?val FILTER (?val = false)}
 		String query = String.format(QUERY_CRITERIA, getNamespace(), criteriaBuilder.toString());
 		List<String> result = executeSparqlQuery(query, VAR);
 		return result;

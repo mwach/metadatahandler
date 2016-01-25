@@ -41,6 +41,12 @@ public final class Constants {
 	 */
 	public static final String ADDRESS_ADMIN = "addressAdmin";
 
+	/**
+	 * Publishing address for the Ontology Core web service
+	 * Default: http://localhost:9000/ontologyCore
+	 */
+	public static final String ADDRESS_ONTOLOGY = "addressOntology";
+
 
 	public static final String TSI_NODE_CLASS_NAME = "Service";
 

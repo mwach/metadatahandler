@@ -16,6 +16,7 @@ import itti.com.pl.ontology.core.ontology.OntologyManager;
 import itti.com.pl.ontology.server.exeption.MetadataHandlerException;
 import itti.com.pl.ontology.server.ws.MetadataHandler;
 import itti.com.pl.ontology.server.ws.MetadataHandlerAdmin;
+import itti.com.pl.ontology.server.ws.OntologyCore;
 
 //import org.apache.cxf.Bus;
 //import org.apache.cxf.BusException;
@@ -39,15 +40,16 @@ import org.slf4j.LoggerFactory;
  * @author marcin
  *
  */
-public class MetadataHandlerConfig {
+public class MetadataHandlerApplication {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandlerConfig.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(MetadataHandlerApplication.class);
 
 	private Properties properties = new Properties();
 
 	private LocalOntologyRepository ontologyRepository = null;
 	private OntologyManager ontologyManager = null;
-	private MetadataHandler serviceImplementor = null;
+	private MetadataHandler metadataHandlerImplementor = null;
+	private OntologyCore ontologyCoreImplementor = null;
 	private MetadataHandlerAdmin adminImplementor = null;
 
 	/**
@@ -57,7 +59,7 @@ public class MetadataHandlerConfig {
 	public static void main(String[] args) {
 
 		LOGGER.info("Starting Server");
-		MetadataHandlerConfig config = new MetadataHandlerConfig();
+		MetadataHandlerApplication config = new MetadataHandlerApplication();
 		try {
 			LOGGER.info("Loading default properties");
 			config.loadProperties();
@@ -79,7 +81,7 @@ public class MetadataHandlerConfig {
 	 * Load default application properties
 	 */
 	private void loadProperties() {
-		String propertyFile = String.format("/%s.properties", MetadataHandlerConfig.class.getSimpleName());
+		String propertyFile = String.format("/%s.properties", MetadataHandlerApplication.class.getSimpleName());
 		try(InputStream stream = getClass().getResourceAsStream(propertyFile)){
 			loadProperties(stream);
 		}catch (IOException | RuntimeException e) {
@@ -136,8 +138,12 @@ public class MetadataHandlerConfig {
 	private void initService() {
 
 		LOGGER.info("Initialising web service using address {}", properties.getProperty(Constants.ADDRESS));
-		serviceImplementor = new MetadataHandler();
-		serviceImplementor.setOntology(ontologyManager);
+		metadataHandlerImplementor = new MetadataHandler();
+		metadataHandlerImplementor.setOntology(ontologyManager);
+
+		LOGGER.info("Initialising ontology web service using address {}", properties.getProperty(Constants.ADDRESS_ONTOLOGY));
+		ontologyCoreImplementor = new OntologyCore();
+		ontologyCoreImplementor.setOntology(ontologyManager);
 
 		LOGGER.info("Initialising admin web service using address {}", properties.getProperty(Constants.ADDRESS_ADMIN));
 		adminImplementor = new MetadataHandlerAdmin();
@@ -145,7 +151,8 @@ public class MetadataHandlerConfig {
 		adminImplementor.setOntology(ontologyManager);
 
 		try {
-			Endpoint.publish(properties.getProperty(Constants.ADDRESS), serviceImplementor);
+			Endpoint.publish(properties.getProperty(Constants.ADDRESS), metadataHandlerImplementor);
+			Endpoint.publish(properties.getProperty(Constants.ADDRESS_ONTOLOGY), ontologyCoreImplementor);
 			Endpoint.publish(properties.getProperty(Constants.ADDRESS_ADMIN), adminImplementor);
 		} catch (RuntimeException e) {
 			throw new MetadataHandlerException("Could not publish an endpoint", e);

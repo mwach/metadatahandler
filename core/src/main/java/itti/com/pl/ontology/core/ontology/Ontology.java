@@ -5,6 +5,7 @@ import itti.com.pl.ontology.common.bean.InstanceProperty;
 import itti.com.pl.ontology.common.bean.OntologyClass;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.stanford.smi.protegex.owl.jena.JenaOWLModel;
 
@@ -156,12 +157,24 @@ public interface Ontology {
      * 
      * @return list of SWRL rules. If there are no rules, empty list will be returned
      */
-    public List<String> getSwrlRules();
+    public Map<String, String> getSwrlRules();
 
     /**
      * Runs SWRL engine on existing model
      */
     public void runSwrlEngine();
+
+    /**
+     * Enables a given SWRL rule
+     * @param ruleName name of the rule
+     */
+	public void enableSwrlRule(String ruleName);
+
+    /**
+     * Disables a given SWRL rule
+     * @param ruleName name of the rule
+     */
+	public void disableSwrlRule(String ruleName);
 
     /**
      * Returns a list of instances matching provided criteria

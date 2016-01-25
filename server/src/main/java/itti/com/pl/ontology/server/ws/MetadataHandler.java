@@ -58,6 +58,7 @@ public class MetadataHandler implements MetadataHandlerWS {
 	/* (non-Javadoc)
 	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#searchMetadata(itti.com.pl.ontology.server.ws.bean.TypeOfObject, java.lang.String)
 	 */
+	//TODO: to be implemented
 	@Override
 	public List<MetadataObject> searchMetadata(TypeOfObject typeOfObject, String query) {
 		return metadataHandlerService.searchMetadata(typeOfObject, query);
@@ -83,6 +84,7 @@ public class MetadataHandler implements MetadataHandlerWS {
 	/* (non-Javadoc)
 	 * @see itti.com.pl.ontology.server.ws.MetadataHandlerWS#getDependencies(java.lang.String)
 	 */
+	//TODO: to be implemented
 	@Override
 	public DependenciesList getDependencies(String objectId) {
 		// TODO Auto-generated method stub

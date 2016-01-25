@@ -32,6 +32,8 @@ public enum ErrorMessages {
     SWRL_ENGINE_FAILED(802, "Could not run SWRL engine. Details: %s"),
     SWRL_CANNOT_COLLECT_RULES(803, "Could not collect rule names from ontology. Details: %s"),
     SWRL_CANNOT_GET_RULE(804, "Cannot find SWRL rule identified by it's name: '%s'"), 
+    SWRL_EMPTY_NAME_PROVIDED(805, "Empty name provided for SWRL rule"), 
+    SWRL_CANNOT_CHANGE_RULE_STATE(806, "Cannot change state of rule '%s'"), 
     
     REFLECTION_ISSUE_METHOD(900, "Reflection issue occured for method '%s'"), 
     REFLECTION_ISSUE_CLASS(901, "Reflection issue occured for instance '%s'"), 
