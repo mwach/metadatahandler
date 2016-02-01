@@ -72,7 +72,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>itti.com.pl.ontology.server.MetadataHandlerConfig</mainClass>
+							<mainClass>itti.com.pl.ontology.server.MetadataHandlerApplication</mainClass>
 							<classpathPrefix>dependency-jars/</classpathPrefix>
 						</manifest>
 					</archive>

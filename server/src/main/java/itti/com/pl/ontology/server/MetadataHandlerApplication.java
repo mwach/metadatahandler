@@ -17,6 +17,7 @@ import itti.com.pl.ontology.server.exeption.MetadataHandlerException;
 import itti.com.pl.ontology.server.ws.MetadataHandler;
 import itti.com.pl.ontology.server.ws.MetadataHandlerAdmin;
 import itti.com.pl.ontology.server.ws.OntologyCore;
+import itti.com.pl.utils.NetworkUtils;
 
 //import org.apache.cxf.Bus;
 //import org.apache.cxf.BusException;
@@ -137,27 +138,41 @@ public class MetadataHandlerApplication {
 	 */
 	private void initService() {
 
-		LOGGER.info("Initialising web service using address {}", properties.getProperty(Constants.ADDRESS));
+		String ipAddress = NetworkUtils.getIpAddress();
+		LOGGER.info("Obtained IP address of the host {}", ipAddress);
+
+		String mhServiceAddress = getEndpointAddress(Constants.ADDRESS, ipAddress);
+		LOGGER.info("Initialising web service using address {}", mhServiceAddress);
 		metadataHandlerImplementor = new MetadataHandler();
 		metadataHandlerImplementor.setOntology(ontologyManager);
 
-		LOGGER.info("Initialising ontology web service using address {}", properties.getProperty(Constants.ADDRESS_ONTOLOGY));
+		String ocServiceAddress = getEndpointAddress(Constants.ADDRESS_ONTOLOGY, ipAddress);
+		LOGGER.info("Initialising ontology web service using address {}", ocServiceAddress);
 		ontologyCoreImplementor = new OntologyCore();
 		ontologyCoreImplementor.setOntology(ontologyManager);
 
-		LOGGER.info("Initialising admin web service using address {}", properties.getProperty(Constants.ADDRESS_ADMIN));
+		String aServiceAddress = getEndpointAddress(Constants.ADDRESS_ADMIN, ipAddress);
+		LOGGER.info("Initialising admin web service using address {}", aServiceAddress);
 		adminImplementor = new MetadataHandlerAdmin();
 		adminImplementor.setRepository(ontologyRepository);
 		adminImplementor.setOntology(ontologyManager);
 
 		try {
-			Endpoint.publish(properties.getProperty(Constants.ADDRESS), metadataHandlerImplementor);
-			Endpoint.publish(properties.getProperty(Constants.ADDRESS_ONTOLOGY), ontologyCoreImplementor);
-			Endpoint.publish(properties.getProperty(Constants.ADDRESS_ADMIN), adminImplementor);
+			Endpoint.publish(mhServiceAddress, metadataHandlerImplementor);
+			Endpoint.publish(ocServiceAddress, ontologyCoreImplementor);
+			Endpoint.publish(aServiceAddress, adminImplementor);
 		} catch (RuntimeException e) {
 			throw new MetadataHandlerException("Could not publish an endpoint", e);
 		}
 
+	}
+
+	private String getEndpointAddress(String propertyName, String ipAddress) {
+		String propertyAddress = properties.getProperty(propertyName);
+		if(!propertyAddress.startsWith("http")){
+			return "http://" + ipAddress + propertyAddress;
+		}
+		return propertyAddress;
 	}
 
 //	private void createCustomTransport(Bus bus) {
