@@ -10,4 +10,8 @@ public class MetadataHandlerException extends RuntimeException{
 	public MetadataHandlerException(String message, Throwable throwable){
 		super(message, throwable);
 	}
+
+	public MetadataHandlerException(String message) {
+		super(message);
+	}
 }
