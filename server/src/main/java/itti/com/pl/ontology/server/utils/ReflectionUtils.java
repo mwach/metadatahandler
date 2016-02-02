@@ -28,10 +28,12 @@ public final class ReflectionUtils {
 
 		for (Method method : dataObject.getClass().getMethods()) {
 			if(method.getName().startsWith("get") && !excludedMethods.contains(method.getName())){
+				Object value = null;
+				StringBuilder name = null;
 				try {
-					Object value = method.invoke(dataObject, (Object[])null);
+					value = method.invoke(dataObject, (Object[])null);
 					if(value != null){
-						StringBuilder name = new StringBuilder(method.getName());
+						name = new StringBuilder(method.getName());
 						name.delete(0, 3);
 						name.setCharAt(0, name.toString().toLowerCase().charAt(0));
 						outputInstance.addProperty(new InstanceProperty<String>(name.toString(), (String)value));
