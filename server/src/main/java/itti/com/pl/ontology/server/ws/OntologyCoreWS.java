@@ -1,5 +1,6 @@
 package itti.com.pl.ontology.server.ws;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.jws.WebParam;
@@ -7,6 +8,8 @@ import javax.jws.WebService;
 
 @WebService
 public interface OntologyCoreWS {
+
+	public List<String> getClassProperties(@WebParam(name = "className") String className);
 
 	public void addSwrlRule(@WebParam(name = "ruleName") String ruleName, @WebParam(name = "ruleContent") String ruleContent);
 

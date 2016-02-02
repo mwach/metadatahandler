@@ -35,11 +35,15 @@ public class MetadataHandler implements MetadataHandlerWS {
 	public void registerMetadataObject(TypeOfObject typeOfObject,
 			MetadataObject metadataObject) {
 
-		OntologyClass deviceClass = ontology.getOntologyClass(metadataObject.getType());
-		Instance metadataInsance = new Instance(deviceClass, metadataObject.getName());
+		OntologyClass type = ontology.getOntologyClass(metadataObject.getType());
+		Instance metadataInsance = new Instance(type, metadataObject.getName());
 
 		ReflectionUtils.populateInstanceFromMap(metadataInsance, metadataObject.getProperties());
-		ontology.createInstance(metadataInsance);
+		if(ontology.hasInstance(metadataInsance.getName())){
+			ontology.updateInstance(metadataInsance);			
+		}else{
+			ontology.createInstance(metadataInsance);
+		}
 	}
 
 	/* (non-Javadoc)
